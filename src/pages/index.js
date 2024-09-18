@@ -1,0 +1,9 @@
+export { default as HomeLayout } from './HomeLayout';
+export { default as Landing } from './Landing';
+export { default as SingleBooking } from './SingleBooking';
+export { default as Bookings } from './Bookings';
+export { default as MyBookings } from './MyBookings';
+export { default as ErrorPage } from './ErrorPage';
+export { default as About } from './About';
+export { default as Login } from './Login';
+export { default as Register } from './Register';
