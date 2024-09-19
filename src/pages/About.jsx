@@ -25,6 +25,7 @@ const About = () => {
           ensuring convenience and peace of mind. Join us in transforming your
           parking experience!
         </p>
+      
       </div>
     </div>
   );
