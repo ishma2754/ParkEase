@@ -8,8 +8,8 @@ const SelectInput = ({ name, value, options, onChange }) => {
     >
       <option value="">Select {name}</option>
       {options.map((option) => (
-        <option key={option.name} value={option.name}>
-          {option.name}
+        <option key={option.name || option} value={option.name || option}>
+          {option.name || option}
         </option>
       ))}
     </select>

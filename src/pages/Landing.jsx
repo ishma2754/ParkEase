@@ -1,5 +1,5 @@
 import styles from "../style";
-import { Navbar, Hero, Footer } from "../components/index";
+import {Hero} from "../components/index";
 
 const Landing = () => {
   return (

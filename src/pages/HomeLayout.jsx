@@ -11,7 +11,6 @@ const HomeLayout = () => {
         </div>
       </div>
       <section className="align-element">
-    
         <Outlet />
       </section>
     </div>

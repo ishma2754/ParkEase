@@ -15,8 +15,8 @@ export const fetchParkingData = createAsyncThunk(
   async () => {
     try {
       const urls = [
-        "https://3a6d787dc8464cb0b00c0e55dadfcaae.api.mockbin.io/",
-        "https://45fab13749c849ea8304626ced8cc935.api.mockbin.io/",
+        "https://mocki.io/v1/1ba0d9d1-1adf-41ee-8f34-6e6ac1ac19d6",
+        "https://mocki.io/v1/2674794f-d5f8-4cd4-bbac-afa159be9c0a",
       ];
 
       const [citiesResponse, itParksResponse] = await Promise.all(

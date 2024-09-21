@@ -11,6 +11,7 @@ const Header = () => {
           >
             Sign in
           </Link>
+
           <Link
             to="/register"
             className="text-xs sm:text-sm hover:text-blue-400 transition-colors text-gray-100"

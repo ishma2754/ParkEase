@@ -1,26 +1,16 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCity,
-  selectComplex,
-} from "../features/bookings/parkingSlice";
+import { selectCity, selectComplex } from "../features/bookings/parkingSlice";
 import { control } from "../assets";
-import {  SelectInput } from "./index";
+import { SelectInput, Button } from "./index";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const { cities, selectedCity, selectedComplex} = useSelector(
+  const { cities, selectedCity, selectedComplex } = useSelector(
     (state) => state.parking
   );
 
-  /*
-  useEffect(() => {
-    dispatch(fetchParkingData());
-    console.log(cities)
-  }, []);
-*/
-  
   const handleCityChange = (e) => {
     const city = e.target.value;
     dispatch(selectCity(city));
@@ -32,7 +22,7 @@ const Sidebar = () => {
   };
 
   const complexes = selectedCity
-    ? cities.find((city) => city.name === selectedCity)?.complexes || []
+    ? cities.find((city) => city.name == selectedCity)?.complex || []
     : [];
 
   const handleReset = () => {
@@ -40,10 +30,9 @@ const Sidebar = () => {
     dispatch(selectComplex(""));
   };
 
- 
   return (
     <div
-      className={`bg-gradient-to-r from-pink-500 to-violet-500 p-5 pt-8 rounded-lg  duration-300 ${
+      className={`bg-gradient-to-r from-teal-400 to-blue-500 p-5 pt-8 rounded-lg  duration-300 ${
         open ? "w-72" : "w-20"
       } transition-all fixed left-1 top-[132px]`}
     >
@@ -56,7 +45,7 @@ const Sidebar = () => {
       />
       <div className="flex gap-x-4 items-center">
         <h1
-          className={`origin-left font-medium text-xl duration-200 text-gradient ${
+          className={`origin-left font-medium text-xl duration-200 text-gray-900 font-poppins ${
             !open && "scale-0"
           }`}
         >
@@ -78,20 +67,13 @@ const Sidebar = () => {
             options={cities}
             onChange={handleCityChange}
           />
-          <select
+          <SelectInput
             name="complex"
             value={selectedComplex || ""}
             onChange={handleComplexChange}
-            className="w-full  p-1 border border-gray-300 rounded-lg focus:outline-none"
+            options={complexes}
             disabled={!selectedCity}
-          >
-            <option>Select Complex</option>
-            {complexes.map((complex) => (
-              <option key={complex} value={complex}>
-                {complex}
-              </option>
-            ))}
-          </select>
+          />
         </div>
       ) : (
         <div className="flex flex-col items-center mt-8 cursor-pointer">
@@ -101,15 +83,15 @@ const Sidebar = () => {
           <span style={{ fontSize: "30px", marginBottom: "8px" }}>🏙️</span>
         </div>
       )}
-      <button
-        type="button"
-        onClick={handleReset}
-        className={`bg-black-gradient text-white py-1 font-bold px-4 mt-4 rounded-lg ${
+      <Button
+      onClick={handleReset}
+      className={`mt-4  ${
           open ? "block" : "hidden"
         }`}
       >
         Reset
-      </button>
+      </Button>
+     
     </div>
   );
 };
