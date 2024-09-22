@@ -32,9 +32,9 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`bg-gradient-to-r from-teal-400 to-blue-500 p-5 pt-8 rounded-lg  duration-300 ${
+      className={`p-5 pt-8 rounded-lg  duration-300 shadow-md shadow-cyan-500/50 bg-gray-900 ${
         open ? "w-72" : "w-20"
-      } transition-all fixed left-1 top-[132px]`}
+      } transition-all fixed left-1 top-[132px] z-50`}
     >
       <img
         src={control}
@@ -45,7 +45,7 @@ const Sidebar = () => {
       />
       <div className="flex gap-x-4 items-center">
         <h1
-          className={`origin-left font-medium text-xl duration-200 text-gray-900 font-poppins ${
+          className={`origin-left font-bold text-xl duration-200 text-gradient font-poppins ${
             !open && "scale-0"
           }`}
         >
@@ -66,11 +66,13 @@ const Sidebar = () => {
             value={selectedCity || ""}
             options={cities}
             onChange={handleCityChange}
+            className="bg-gray-800 text-gray-100 font-medium"
           />
           <SelectInput
             name="complex"
             value={selectedComplex || ""}
             onChange={handleComplexChange}
+            className="bg-gray-800 text-gray-100 font-medium"
             options={complexes}
             disabled={!selectedCity}
           />
@@ -84,14 +86,11 @@ const Sidebar = () => {
         </div>
       )}
       <Button
-      onClick={handleReset}
-      className={`mt-4  ${
-          open ? "block" : "hidden"
-        }`}
+        onClick={handleReset}
+        className={`mt-4  ${open ? "block" : "hidden"}`}
       >
         Reset
       </Button>
-     
     </div>
   );
 };

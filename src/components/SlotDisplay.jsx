@@ -4,7 +4,7 @@ const SlotDisplay = ({ availableSlots }) => {
   const spots = Array.from({ length: 6 }, (_, i) => `A${i + 1}`);
 
   return (
-    <div className="flex flex-col items-center w-full max-w-sm mx-auto p-2 rounded border border-yellow-500 bg-gray-900">
+    <div className="flex flex-col items-center w-full h-full max-w-lg mx-auto py-2 rounded  bg-gray-900">
       <div className="flex flex-col items-center w-full mb-2">
         <div className="flex items-center">
           <div className="flex flex-col items-center">
@@ -24,7 +24,7 @@ const SlotDisplay = ({ availableSlots }) => {
                 disabled={slot.status === "Occupied"}
               />
               <div
-                className={`flex items-center justify-center w-20 h-20 border-l-2 border-t-2 border-b-2 border-orange-400 bg-gray-900 relative group ${
+                className={`flex items-center justify-center w-20 h-20 border-l-2 border-t-2 border-b-2 border-orange-400 bg-gray-900 relative group transition-colors duration-200 ${
                   slot.status === "Occupied" ? "opacity-50" : "group"
                 }`}
               >

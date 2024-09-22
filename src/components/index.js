@@ -1,7 +1,6 @@
 export { default as Navbar } from "./Navbar";
 export { default as Hero } from "./Hero";
 export { default as Header } from "./Header";
-
 export { default as Footer } from "./Footer";
 export { default as GetStarted } from "./GetStarted";
 export { default as ErrorElement } from "./ErrorElement";
@@ -14,3 +13,4 @@ export { default as BookingFilters } from "./BookingFilters";
 export { default as InformationSection } from "./InformationSection";
 export { default as SlotDisplay } from "./SlotDisplay";
 export { default as Button } from "./Button";
+import {default as InputField} from "./InputField"

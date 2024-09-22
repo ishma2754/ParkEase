@@ -1,21 +1,16 @@
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
-import styles from "../style";
-
-
 
 const ParksGrid = () => {
-  const { itParks, selectedComplex } = useSelector(
-    (state) => state.parking
-  );
+  const { itParks, selectedComplex } = useSelector((state) => state.parking);
 
   const filteredItParks = selectedComplex
     ? itParks.filter((itPark) => itPark.complex == selectedComplex)
     : itParks;
 
   return (
-    <div className="p-5 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <div className="p-5 grid gap-8 md:grid-cols-2 lg:grid-cols-3 ">
       {filteredItParks.length > 0 ? (
         filteredItParks.map((itPark) => {
           const {
@@ -30,24 +25,24 @@ const ParksGrid = () => {
             <Link
               key={id}
               to={`/bookings/${id}`}
-              className="w-full bg-gradient-to-r from-teal-400 to-blue-500 shadow-xl hover:shadow-2xl transition-shadow duration-300 rounded-lg overflow-hidden rounded-br-3xl"
+              className="w-full shadow-md shadow-cyan-500/50 hover:shadow-lg hover:shadow-gray-200  transition-shadow duration-300 rounded-lg overflow-hidden rounded-br-3xl"
             >
-              <figure className="px-4 pt-4">
+              <figure className="relative">
                 <img
                   src={image_url}
                   alt={name}
-                  className="rounded-xl h-64 md:h-48 w-full object-cover"
+                  className="h-48 lg:h-55 md:h-48  w-full object-cover"
                 />
+                <div className="absolute top-1 left-1 bg-gray-800 text-white px-2 py-1 rounded font-semibold font-poppins tracking-wide">
+                  ${price_per_hour} / hr
+                </div>
               </figure>
               <div className="p-4 text-center">
-                <h2 className="text-gray-900 font-bold font-poppins tracking-wide" >
+                <h2 className="text-gray-200 font-bold font-poppins tracking-wide mb-2">
                   {address}
                 </h2>
-                <p className="font-poppins text-md font-semibold capitalize tracking-wide  text-gray-900">
+                <p className="font-poppins text-md font-semibold capitalize tracking-wide  text-gray-200">
                   Total Basements: {basement_total}
-                </p>
-                <p className="font-poppins text-md font-semibold  tracking-wide  text-gray-900">
-                  ${price_per_hour} / hr
                 </p>
               </div>
             </Link>
