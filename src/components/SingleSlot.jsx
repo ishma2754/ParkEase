@@ -1,16 +1,26 @@
 import { InputField } from "../components/index";
+import { car } from "../assets";
 
-const SingleSlot = ({ slot }) => {
+const SingleSlot = ({ slot, isSelected, onSelect }) => {
+  const isOccupied = slot.status === "Occupied";
+
+  const handleChange = () => {
+    if(!isOccupied){
+      onSelect(slot)
+    }
+  }
   return (
     <label className="flex items-center cursor-pointer mb-1">
       <InputField
         type="checkbox"
         className="hidden"
-        disabled={slot.status === "Occupied"}
+        disabled={isOccupied}
+        checked={isSelected}
+        onChange={handleChange}
       />
       <div
         className={`flex items-center justify-center w-20 h-20 border-l-2 border-t-2 border-b-2 border-orange-400 bg-gray-900 relative group transition-colors duration-200 ${
-          slot.status === "Occupied" ? "opacity-50" : "group"
+          isOccupied ? "opacity-50" : isSelected ? "bg-yellow-400" : ""
         }`}
       >
         {slot.status === "Occupied" ? (
