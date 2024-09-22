@@ -6,11 +6,13 @@ export { default as GetStarted } from "./GetStarted";
 export { default as ErrorElement } from "./ErrorElement";
 export { default as Sidebar } from "./Sidebar";
 export { default as SelectInput } from "./SelectInput";
-export { default as SearchInput } from "./SearchInput";
+export {default as Search} from "./Search"
+export {default as Dropdown} from "./Dropdown"
 export { default as ParksGrid } from "./ParksGrid";
 export { default as Loader } from "./Loader";
 export { default as BookingFilters } from "./BookingFilters";
 export { default as InformationSection } from "./InformationSection";
 export { default as SlotDisplay } from "./SlotDisplay";
 export { default as Button } from "./Button";
-import {default as InputField} from "./InputField"
+export {default as InputField} from "./InputField"
+export {default as SingleSlot} from "./SingleSlot"

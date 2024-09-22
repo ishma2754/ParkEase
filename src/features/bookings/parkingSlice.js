@@ -6,6 +6,7 @@ const initialState = {
   itParks: [],
   selectedCity: "",
   selectedComplex: "",
+  searchQuery: "",
   loading: false,
   error: null,
 };
@@ -16,7 +17,7 @@ export const fetchParkingData = createAsyncThunk(
     try {
       const urls = [
         "https://mocki.io/v1/1ba0d9d1-1adf-41ee-8f34-6e6ac1ac19d6",
-        "https://mocki.io/v1/2674794f-d5f8-4cd4-bbac-afa159be9c0a",
+        "https://mocki.io/v1/a2215b7c-0557-4fc3-83c4-e3eb8971edbf",
       ];
 
       const [citiesResponse, itParksResponse] = await Promise.all(
@@ -78,6 +79,9 @@ const parkingSlice = createSlice({
     selectComplex: (state, action) => {
       state.selectedComplex = action.payload;
     },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -109,5 +113,5 @@ const parkingSlice = createSlice({
   },
 });
 
-export const { selectCity, selectComplex } = parkingSlice.actions;
+export const { selectCity, selectComplex, setSearchQuery } = parkingSlice.actions;
 export default parkingSlice.reducer;

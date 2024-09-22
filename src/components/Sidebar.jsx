@@ -34,7 +34,7 @@ const Sidebar = () => {
     <div
       className={`p-5 pt-8 rounded-lg  duration-300 shadow-md shadow-cyan-500/50 bg-gray-900 ${
         open ? "w-72" : "w-20"
-      } transition-all fixed left-1 top-[132px] z-50`}
+      } transition-all fixed left-[10px] top-[163px] lg:top-[166px] z-50`}
     >
       <img
         src={control}
@@ -54,13 +54,6 @@ const Sidebar = () => {
       </div>
       {open ? (
         <div className="pt-6 space-y-4">
-          {/** 
-          <SearchInput
-            name="search"
-            value={formData.search}
-            onChange={handleChange}
-          />
-*/}
           <SelectInput
             name="city"
             value={selectedCity || ""}
@@ -79,8 +72,6 @@ const Sidebar = () => {
         </div>
       ) : (
         <div className="flex flex-col items-center mt-8 cursor-pointer">
-          {/*<span style={{ fontSize: "30px", marginBottom: "8px" }}>🔍</span>*/}
-
           <span style={{ fontSize: "30px", marginBottom: "8px" }}>🏙️</span>
           <span style={{ fontSize: "30px", marginBottom: "8px" }}>🏙️</span>
         </div>

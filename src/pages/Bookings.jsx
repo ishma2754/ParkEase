@@ -1,5 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ParksGrid, Sidebar, Loader, ErrorElement } from "../components/index";
+import {
+  ParksGrid,
+  Sidebar,
+  Loader,
+  ErrorElement,
+  Search,
+} from "../components/index";
 import { useEffect } from "react";
 import { fetchParkingData } from "../features/bookings/parkingSlice";
 
@@ -19,12 +25,19 @@ const Bookings = () => {
   }
 
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1">
-        <ParksGrid />
+    <>
+      <div className="flex flex-col">
+        <div className="mx-auto">
+          <Search />
+        </div>
+        <div>
+          <Sidebar />
+        </div>
+        <div className="flex-1">
+          <ParksGrid />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
