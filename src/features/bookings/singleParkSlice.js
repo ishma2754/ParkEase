@@ -12,7 +12,7 @@ export const fetchSingleParkData = createAsyncThunk(
   async () => {
     try {
       const singleParkResponse = await axios.get(
-        "https://mocki.io/v1/5885dd13-577b-4d4e-880b-dd7a4ecb663b"
+        "https://mocki.io/v1/34062cd0-483f-4c3b-8b93-bea384584bd8"
       );
       const singleParkData = singleParkResponse.data.IT_parks;
       return singleParkData;

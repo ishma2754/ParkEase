@@ -5,5 +5,7 @@ import parking from "./parking.png";
 import logo from "./logo.png";
 import control from "./control.png"
 import car from "./car.png"
+import flag from "./flag.svg"
+import location from "./location.svg"
 
-export { menu, close, arrowUp, parking, logo, control, car };
+export { menu, close, arrowUp, parking, logo, control, car, flag, location };

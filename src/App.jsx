@@ -8,6 +8,7 @@ import {
   About,
   Register,
   Login,
+  MapBookings,
 } from "./pages";
 import { ErrorElement } from "./components";
 
@@ -26,6 +27,11 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <About />,
+      },
+      {
+        path: "mapbookings",
+        element: <MapBookings/>,
+        errorElement: <ErrorElement/>
       },
       {
         path: "bookings",

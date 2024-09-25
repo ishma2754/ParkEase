@@ -16,3 +16,7 @@ export { default as SlotDisplay } from "./SlotDisplay";
 export { default as Button } from "./Button";
 export {default as InputField} from "./InputField"
 export {default as SingleSlot} from "./SingleSlot"
+export {default as Map} from "./Map"
+export {default as Places} from "./Places"
+export {default as InfoPark} from "./InfoPark"
+export {default as Distance} from "./Distance"

@@ -2,21 +2,26 @@ export const navLinks = [
   {
     id: "home",
     title: "Home",
-    url: "/"
+    url: "/",
   },
   {
     id: "about",
     title: "About",
-    url: "/about"
+    url: "/about",
+  },
+  {
+    id: "mapbookings",
+    title: "MapBookings",
+    url: "/mapbookings",
   },
   {
     id: "booking",
     title: "Bookings",
-    url: "/bookings"
+    url: "/bookings",
   },
   {
     id: "myBookings",
     title: "My Bookings",
-    url: "/mybookings"
+    url: "/mybookings",
   },
 ];

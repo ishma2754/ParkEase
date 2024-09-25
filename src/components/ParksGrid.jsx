@@ -38,7 +38,7 @@ const ParksGrid = () => {
                   className="h-40 lg:h-55 md:h-48  w-full object-cover"
                 />
                 <div className="absolute top-1 left-1 bg-gray-800 text-white px-2 py-1 rounded font-semibold font-poppins tracking-wide">
-                  ${price_per_hour} / hr
+                  Rs {price_per_hour} / hr
                 </div>
               </figure>
               <div className="p-4 text-center">
