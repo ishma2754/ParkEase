@@ -1,67 +1,8 @@
-// import usePlacesAutocomplete, {
-//   getGeocode,
-//   getLatLng,
-// } from "use-places-autocomplete";
-// import {
-//   Combobox,
-//   ComboboxInput,
-//   ComboboxPopover,
-//   ComboboxList,
-//   ComboboxOption,
-// } from "@reach/combobox";
-// import "@reach/combobox/styles.css";
-
-// export default function Places({ setOffice }) {
-//   const {
-//     ready,
-//     value,
-//     setValue,
-//     suggestions: { status, data },
-//     clearSuggestions,
-//   } = usePlacesAutocomplete();
-
-//   const handleSelect = async (val) => {
-//     setValue(val, false);
-//     clearSuggestions();
-//     const results = await getGeocode({ address: val });
-//     const { lat, lng } = await getLatLng(results[0]);
-//     setOffice({ lat, lng });
-//   };
-
-//   return (
-//     <Combobox onSelect={handleSelect}>
-//       <ComboboxInput
-//         value={value}
-//         onChange={(e) => setValue(e.target.value)}
-//         className="w-full p-2 text-gray-900 rounded-2xl"
-//         placeholder="search your location"
-//       />
-//       <ComboboxPopover>
-//         <ComboboxList>
-//           {status === "OK" &&
-//             data.map(({ place_id, description }) => (
-//               <ComboboxOption key={place_id} value={description} />
-//             ))}
-//         </ComboboxList>
-//       </ComboboxPopover>
-//     </Combobox>
-//   );
-// }
-
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
-import "@reach/combobox/styles.css";
+import { useState } from "react";
+import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 
 export default function Places({ setOffice }) {
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
   const {
     ready,
     value,
@@ -73,6 +14,7 @@ export default function Places({ setOffice }) {
   const handleSelect = async (val) => {
     setValue(val, false);
     clearSuggestions();
+    setDropdownVisible(false);
 
     const results = await getGeocode({ address: val });
     const { lat, lng } = await getLatLng(results[0]);
@@ -80,22 +22,34 @@ export default function Places({ setOffice }) {
   };
 
   return (
-    <Combobox onSelect={handleSelect}>
-      <ComboboxInput
+    <div className="relative">
+      <input
+        type="text"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => {
+          setValue(e.target.value);
+          setDropdownVisible(true);
+        }}
         disabled={!ready}
-        className="w-full p-2 font-semibold text-gray-900"
+        className="w-full p-2 font-semibold text-gray-900 rounded"
         placeholder="Search office address"
       />
-      <ComboboxPopover>
-        <ComboboxList>
-          {status === "OK" &&
-            data.map(({ place_id, description }) => (
-              <ComboboxOption key={place_id} value={description} />
-            ))}
-        </ComboboxList>
-      </ComboboxPopover>
-    </Combobox>
+      {isDropdownVisible && status === "OK" && (
+        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded shadow-lg">
+          {data.map(({ place_id, description }) => (
+            <li
+              key={place_id}
+              onClick={() => handleSelect(description)}
+              className="p-2 cursor-pointer hover:bg-gray-100 text-gray-900"
+            >
+              {description}
+            </li>
+          ))}
+        </ul>
+      )}
+      {isDropdownVisible && status !== "OK" && (
+        <p className="text-gray-600">No results found</p>
+      )}
+    </div>
   );
 }
