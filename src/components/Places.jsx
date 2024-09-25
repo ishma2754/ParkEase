@@ -35,7 +35,7 @@ export default function Places({ setOffice }) {
         placeholder="Search office address"
       />
       {isDropdownVisible && status === "OK" && (
-        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded shadow-lg">
+        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded shadow-lg max-h-60  overflow-y-auto">
           {data.map(({ place_id, description }) => (
             <li
               key={place_id}
