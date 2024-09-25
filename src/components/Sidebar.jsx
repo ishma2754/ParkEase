@@ -34,7 +34,7 @@ const Sidebar = () => {
     <div
       className={`p-5 pt-8 rounded-lg  duration-300 shadow-md shadow-cyan-500/50 bg-gray-900 ${
         open ? "w-72" : "w-20"
-      } transition-all fixed left-[10px] top-[163px] lg:top-[166px] z-50`}
+      } transition-all fixed left-[10px] top-[165px] lg:top-[166px] z-40`}
     >
       <img
         src={control}

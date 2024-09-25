@@ -14,7 +14,7 @@ const ParksGrid = () => {
   
 
   return (
-    <div className="p-5 grid gap-8 md:grid-cols-2 lg:grid-cols-3 ">
+    <div className="p-5 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {filteredItParks.length > 0 ? (
         filteredItParks.map((itPark) => {
           const {
@@ -35,7 +35,7 @@ const ParksGrid = () => {
                 <img
                   src={image_url}
                   alt={name}
-                  className="h-40 lg:h-55 md:h-48  w-full object-cover"
+                  className="h-40 lg:h-55 md:h-48  w-full object-cover z-30"
                 />
                 <div className="absolute top-1 left-1 bg-gray-800 text-white px-2 py-1 rounded font-semibold font-poppins tracking-wide">
                   Rs {price_per_hour} / hr

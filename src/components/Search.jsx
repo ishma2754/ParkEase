@@ -17,7 +17,7 @@ const Search = () => {
   const filterParks = (value) => {
     if (value) {
       const searchResults = itParks.filter((park) =>
-        park.name.toLowerCase().includes(value.toLowerCase())
+        park.address.toLowerCase().includes(value.toLowerCase())
       );
       setFilteredParks(searchResults);
     } else {
