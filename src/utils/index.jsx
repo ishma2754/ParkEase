@@ -13,3 +13,16 @@ export const generateDurationOptions = (number) => {
     return duration
   });
 };
+
+export const getDateRange = () => {
+  const today = new Date()
+  const formattedToday = today.toISOString().split('T')[0]
+  const maxDate = new Date()
+  maxDate.setDate(maxDate.getDate() + 3)
+  const formattedMaxDate = maxDate.toISOString().split('T')[0]
+
+  return{
+    min: formattedToday,
+    max: formattedMaxDate
+  }
+}

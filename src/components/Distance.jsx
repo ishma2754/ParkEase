@@ -21,7 +21,7 @@ export default function Distance({ leg, park }) {
           <img
             src={park.image_url}
             alt={park.name}
-            className="h-24 md:h-32 w-full object-cover" // Reduced height for mobile
+            className="h-24 md:h-32 w-full object-cover" 
           />
           <div className="absolute top-1 left-1 bg-gray-800 text-white px-2 py-1 rounded font-semibold">
             Rs {park.price_per_hour} / hr

@@ -1,6 +1,6 @@
 import { SingleSlot } from "../components/index";
 import { useState } from "react";
-const SlotDisplay = ({ availableSlots }) => {
+const SlotDisplay = ({ availableSlots, data }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const handleSlotSelect = (slot) => {
     setSelectedSlot(slot);
@@ -36,9 +36,12 @@ const SlotDisplay = ({ availableSlots }) => {
       <span className="text-white mt-2">Exit</span>
       <span className="text-white">&#8592;</span>
       {selectedSlot && (
-        <div className="text-white mt-2">
+        <>
+        <div className="text-gray-100 mt-2">
           Selected Slot: {selectedSlot.spot} 
         </div>
+      <p className="text-gray-100">Rs {data.price_per_hour} </p>
+      </>
       )}
     </div>
   );

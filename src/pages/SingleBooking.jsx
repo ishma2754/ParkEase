@@ -26,7 +26,7 @@ const SingleBooking = () => {
 
   const singlePark = singleParkData.find((park) => park.id === Number(id));
 
-  const handleBooking = (basement, hour, duration) => {
+  const handleBooking = (basement, hour, duration, date) => {
     if (singlePark) {
       checkAvailability(singlePark.basements, basement, hour, duration);
     }
@@ -49,7 +49,7 @@ const SingleBooking = () => {
           <BookingFilters basements={basements} onSubmit={handleBooking} />
         </div>
         <div>
-          <SlotDisplay availableSlots={availableSlots} />
+          <SlotDisplay availableSlots={availableSlots} data={singlePark}/>
         </div>
       </div>
     </div>

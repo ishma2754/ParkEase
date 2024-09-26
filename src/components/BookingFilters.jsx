@@ -1,22 +1,29 @@
 import { useState } from "react";
 import styles from "../style";
 import { Button, SelectInput } from "../components/index";
-import { generateDurationOptions, generateHourOptions } from "../utils/index";
+import {
+  generateDurationOptions,
+  generateHourOptions,
+  getDateRange,
+} from "../utils/index";
 import InputField from "./InputField";
 
 const BookingFilters = ({ onSubmit, basements }) => {
+  const { min, max } = getDateRange();
   const [selectedBasement, setSelectedBasement] = useState("Basement 1");
   const [selectedHour, setSelectedHour] = useState(8);
   const [selectedDuration, setSelectedDuration] = useState(1);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(min);
 
   const handleSubmit = () => {
-    if (selectedBasement && selectedHour && selectedDuration) {
-      onSubmit(selectedBasement, selectedHour, selectedDuration);
+    if (selectedBasement && selectedHour && selectedDuration && selectedDate) {
+      onSubmit(selectedBasement, selectedHour, selectedDuration, selectedDate);
     }
   };
 
-  const maxDuration = selectedHour === 22 ? 1 : selectedHour === 21 ? 2 : 3;
+  
+  
+  // const maxDuration = selectedHour === 22 ? 1 : selectedHour === 21 ? 2 : 3;
 
   const hourOptions = generateHourOptions();
 
@@ -28,6 +35,8 @@ const BookingFilters = ({ onSubmit, basements }) => {
         <InputField
           type="date"
           value={selectedDate}
+          min={min}
+          max={max}
           onChange={(e) => setSelectedDate(e.target.value)}
           className={`text-center px-2 py-2 cursor-pointer rounded-xl w-full font-bold text-gray-900`}
         />

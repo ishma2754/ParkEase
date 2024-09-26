@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 
-import {Distance} from "../components/index";
+import { Distance } from "../components/index";
 import {
   GoogleMap,
   Marker,
@@ -192,70 +192,70 @@ const Map = () => {
 
   return (
     <div className="flex flex-col md:flex-row h-full pb-2">
-    <div className="flex-1 h-full">
-      <GoogleMap
-        zoom={10}
-        center={center}
-        mapContainerClassName="w-full h-full rounded-lg"
-        options={options}
-        onLoad={onLoad}
-      >
-        {directions && (
-          <DirectionsRenderer
-            directions={directions}
-            key={directions.routes[0].legs[0].duration.value}
-            options={{
-              polylineOptions: {
-                zIndex: 50,
-                strokeColor: "#1976D2",
-                strokeWeight: 5,
-              },
-            }}
-          />
-        )}
-        {office && (
-          <>
-            <Marker position={office} icon={flag} />
-            {parks.map((park) => (
-              <Marker
-                key={park.id}
-                position={{ lat: park.latitude, lng: park.longitude }}
-                onClick={() => {
-                  fetchDirections(park);
-                }}
-                label={{
-                  text: park.name,
-                  color: "white",
-                  fontSize: "18px",
-                  fontWeight: "bold",
-                }}
-              />
-            ))}
-            <Circle center={office} radius={15000} options={closeOptions} />
-            <Circle center={office} radius={30000} options={middleOptions} />
-            <Circle center={office} radius={45000} options={farOptions} />
-          </>
-        )}
-      </GoogleMap>
-    </div>
-    <div className="w-full md:w-1/5 p-4 bg-[#14161a] text-gray-200 rounded-lg flex flex-col">
-      <h1 className="text-xl mt-2">Parking?</h1>
-      <p className="text-lg mb-2">Enter your location here</p>
+      <div className="w-full md:w-1/5 p-4 bg-[#14161a] text-gray-200 rounded-lg flex flex-col">
+        <h1 className="text-xl mt-2">Parking?</h1>
+        <p className="text-lg mb-2">Enter your location here</p>
 
-      <Places
-        setOffice={(position) => {
-          setOffice(position);
-          mapRef.current?.panTo(position);
-        }}
-      />
-      {!office && <p>Enter the address of your location</p>}
-      {directions && (
-        <div className="flex flex-col md:flex-row mt-4">
-          <Distance leg={directions.routes[0].legs[0]} park={selectedPark} />
-        </div>
-      )}
+        <Places
+          setOffice={(position) => {
+            setOffice(position);
+            mapRef.current?.panTo(position);
+          }}
+        />
+        {!office && <p>Enter the address of your location</p>}
+        {directions && (
+          <div className="flex flex-col md:flex-row mt-4">
+            <Distance leg={directions.routes[0].legs[0]} park={selectedPark} />
+          </div>
+        )}
+      </div>
+      <div className="flex-1 h-full">
+        <GoogleMap
+          zoom={10}
+          center={center}
+          mapContainerClassName="w-full h-full rounded-lg"
+          options={options}
+          onLoad={onLoad}
+        >
+          {directions && (
+            <DirectionsRenderer
+              directions={directions}
+              key={directions.routes[0].legs[0].duration.value}
+              options={{
+                polylineOptions: {
+                  zIndex: 50,
+                  strokeColor: "#1976D2",
+                  strokeWeight: 5,
+                },
+              }}
+            />
+          )}
+          {office && (
+            <>
+              <Marker position={office} icon={flag} />
+              {parks.map((park) => (
+                <Marker
+                  key={park.id}
+                  position={{ lat: park.latitude, lng: park.longitude }}
+                  onClick={() => {
+                    fetchDirections(park);
+                  }}
+                  label={{
+                    text: park.name,
+                    color: "white",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                  }}
+                />
+              ))}
+              <Circle center={office} radius={15000} options={closeOptions} />
+              <Circle center={office} radius={30000} options={middleOptions} />
+              <Circle center={office} radius={45000} options={farOptions} />
+            </>
+          )}
+        </GoogleMap>
+      </div>
     </div>
-  </div>
   );
 };
 
