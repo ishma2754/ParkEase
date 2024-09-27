@@ -4,6 +4,7 @@ const initialState = {
   singlePark: null,
   userLocation: "",
   selectedPark: null,
+  leg: "",
 
   bookingsDetails: {
     date: "",
@@ -49,7 +50,7 @@ const bookingsSlice = createSlice({
       const { userName, vehicleNumber } = action.payload;
       state.userDetails = {
         userName,
-        vehicleNumber
+        vehicleNumber,
       };
     },
     setUserLocation(state, action) {
@@ -58,6 +59,9 @@ const bookingsSlice = createSlice({
 
     setSelectedPark(state, action) {
       state.selectedPark = action.payload;
+    },
+    setLeg(state, action) {
+      state.leg = action.payload;
     },
   },
 });
@@ -70,6 +74,7 @@ export const {
   setUserDetails,
   setUserLocation,
   setSelectedPark,
+  setLeg
 } = bookingsSlice.actions;
 
 export default bookingsSlice.reducer;

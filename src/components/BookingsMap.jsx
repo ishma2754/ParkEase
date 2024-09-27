@@ -12,8 +12,7 @@ const BookingsMap = () => {
     return <div className="text-gray-200">Loading map...</div>;
   }
 
-  console.log("User Location:", userLocation);
-  console.log("Selected Park:", selectedPark);
+  
 
   const mapRef = useRef();
 

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState} from "react";
 import { useDispatch } from "react-redux";
-import { setUserLocation, setSelectedPark } from "../features/bookings/bookingsSlice";
+import { setUserLocation, setSelectedPark, setLeg} from "../features/bookings/bookingsSlice";
 import { Distance } from "../components/index";
 import {
   GoogleMap,
@@ -189,6 +189,7 @@ const Map = () => {
           setDirections(result);
           setSelectedParkLocal(park);
           dispatch(setSelectedPark(park))
+          dispatch(setLeg(result.routes[0].legs[0]))
         }
       }
     );
@@ -206,7 +207,7 @@ const Map = () => {
     [userCity, cities]
   );
 
-  
+  console.log(userCity)
   return (
     <div className="flex flex-col md:flex-row h-full pb-2">
       <div className="w-full md:w-1/5 p-4 bg-[#14161a] text-gray-200 rounded-lg flex flex-col">
