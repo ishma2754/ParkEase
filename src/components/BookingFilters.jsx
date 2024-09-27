@@ -6,6 +6,7 @@ import {
   generateHourOptions,
   getDateRange,
 } from "../utils/index";
+
 import InputField from "./InputField";
 
 const BookingFilters = ({ onSubmit, basements }) => {
@@ -21,8 +22,6 @@ const BookingFilters = ({ onSubmit, basements }) => {
     }
   };
 
-  
-  
   // const maxDuration = selectedHour === 22 ? 1 : selectedHour === 21 ? 2 : 3;
 
   const hourOptions = generateHourOptions();
@@ -91,7 +90,6 @@ const BookingFilters = ({ onSubmit, basements }) => {
         onChange={(e) => setSelectedDuration(Number(e.target.value))}
       />
 
-      <p className="text-gray-100">Time</p>
       <Button
         type="submit"
         onClick={handleSubmit}

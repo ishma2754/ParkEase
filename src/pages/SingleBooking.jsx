@@ -1,19 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleParkData } from "../features/bookings/singleParkSlice";
 import {
+  setSinglePark,
+  setBookingDetails,
+  reSelectedSlot
+} from "../features/bookings/bookingsSlice";
+import {
   InformationSection,
   BookingFilters,
   SlotDisplay,
   Loader,
   ErrorElement,
 } from "../components/index";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import useCheckAvailability from "../hooks/availability/useCheckAvailability";
 
 const SingleBooking = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { singleParkData, loading, error } = useSelector(
     (state) => state.singlePark
   );
@@ -26,15 +32,39 @@ const SingleBooking = () => {
 
   const singlePark = singleParkData.find((park) => park.id === Number(id));
 
+  useEffect(() => {
+    if (singlePark) {
+      dispatch(setSinglePark(singlePark));
+    }
+  }, [singlePark]);
+
   const handleBooking = (basement, hour, duration, date) => {
     if (singlePark) {
+      dispatch(reSelectedSlot())
       checkAvailability(singlePark.basements, basement, hour, duration);
+      dispatch(setBookingDetails({ basement, hour, duration, date }));
+      console.log("Booking details set:", { basement, hour, duration, date });
     }
   };
 
   if (loading) return <Loader />;
   if (error) return <ErrorElement />;
-  if (!singlePark) return <div>No park found with this ID.</div>;
+  if (!singlePark)
+    return (
+      <div className="text-center mt-6">
+        <h2 className="text-2xl font-bold text-red-600">Park Not Found</h2>
+        <p className="mt-2 text-gray-600">
+          We couldn't find a park with that ID. Please check the URL or return
+          to the homepage.
+        </p>
+        <button
+          onClick={() => navigate("/")}
+          className="mt-4 bg-teal-500 text-white px-4 py-2 rounded"
+        >
+          Go Back to Home
+        </button>
+      </div>
+    );
 
   const basements = Object.keys(singlePark.basements);
 
@@ -49,7 +79,7 @@ const SingleBooking = () => {
           <BookingFilters basements={basements} onSubmit={handleBooking} />
         </div>
         <div>
-          <SlotDisplay availableSlots={availableSlots} data={singlePark}/>
+          <SlotDisplay availableSlots={availableSlots} data={singlePark} />
         </div>
       </div>
     </div>

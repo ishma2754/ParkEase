@@ -1,7 +1,10 @@
 import { useState } from "react";
-import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
 
-export default function Places({ setOffice }) {
+export default function Places({ setUserLocation }) {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const {
     ready,
@@ -18,7 +21,13 @@ export default function Places({ setOffice }) {
 
     const results = await getGeocode({ address: val });
     const { lat, lng } = await getLatLng(results[0]);
-    setOffice({ lat, lng });
+
+    const cityComponent = results[0].address_components.find((component) =>
+      component.types.includes("locality")
+    );
+    const city = cityComponent ? cityComponent.long_name : "unknown city";
+    console.log(city);
+    setUserLocation({ lat, lng }, city);
   };
 
   return (
@@ -32,7 +41,7 @@ export default function Places({ setOffice }) {
         }}
         disabled={!ready}
         className="w-full p-2 font-semibold text-gray-900 rounded"
-        placeholder="Search office address"
+        placeholder="Search your location"
       />
       {isDropdownVisible && status === "OK" && (
         <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded shadow-lg max-h-60  overflow-y-auto">

@@ -1,5 +1,6 @@
-import { useCallback, useMemo, useRef, useState } from "react";
-
+import { useCallback, useMemo, useRef, useState} from "react";
+import { useDispatch } from "react-redux";
+import { setUserLocation, setSelectedPark } from "../features/bookings/bookingsSlice";
 import { Distance } from "../components/index";
 import {
   GoogleMap,
@@ -12,9 +13,11 @@ import { useSelector } from "react-redux";
 import { flag } from "../assets";
 
 const Map = () => {
-  const [office, setOffice] = useState(null);
+  const dispatch = useDispatch();
+  const [userLocation, setUserLocationLocal] = useState(null);
   const [directions, setDirections] = useState(null);
-  const [selectedPark, setSelectedPark] = useState(null);
+  const [selectedPark, setSelectedParkLocal] = useState(null);
+  const [userCity, setUserCity] = useState(null);
   const mapRef = useRef();
 
   const styles = [
@@ -155,7 +158,7 @@ const Map = () => {
     },
   ];
 
-  const { itParks } = useSelector((state) => state.parking);
+  const { itParks, cities } = useSelector((state) => state.parking);
 
   const center = useMemo(() => ({ lat: 12.9716, lng: 77.5946 }), []);
 
@@ -173,38 +176,51 @@ const Map = () => {
   const onLoad = useCallback((map) => (mapRef.current = map), []);
 
   const fetchDirections = (park) => {
-    if (!office) return;
+    if (!userLocation) return;
     const service = new google.maps.DirectionsService();
     service.route(
       {
-        origin: office,
+        origin: userLocation,
         destination: { lat: park.latitude, lng: park.longitude },
         travelMode: google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
         if (status === "OK" && result) {
           setDirections(result);
-          setSelectedPark(park);
+          setSelectedParkLocal(park);
+          dispatch(setSelectedPark(park))
         }
       }
     );
   };
 
+  const handleLocationSelect = (position, city) => {
+    setUserLocationLocal(position);
+    dispatch(setUserLocation(position))
+    setUserCity(city);
+    mapRef.current?.panTo(position);
+  };
+
+  const hasParksInCity = useMemo(
+    () => userCity && cities.some((city) => city.name === userCity),
+    [userCity, cities]
+  );
+
+  
   return (
     <div className="flex flex-col md:flex-row h-full pb-2">
       <div className="w-full md:w-1/5 p-4 bg-[#14161a] text-gray-200 rounded-lg flex flex-col">
         <h1 className="text-xl mt-2">Parking?</h1>
         <p className="text-lg mb-2">Enter your location here</p>
 
-        <Places
-          setOffice={(position) => {
-            setOffice(position);
-            mapRef.current?.panTo(position);
-          }}
-        />
-        {!office && <p>Enter the address of your location</p>}
+        <Places setUserLocation={handleLocationSelect} />
+        {!userLocation && <p>Enter the address of your location</p>}
+        {!hasParksInCity && userCity && (
+              <p className="text-gray-100">No services in this area</p>
+            )}
         {directions && (
           <div className="flex flex-col md:flex-row mt-4">
+            
             <Distance leg={directions.routes[0].legs[0]} park={selectedPark} />
           </div>
         )}
@@ -230,9 +246,9 @@ const Map = () => {
               }}
             />
           )}
-          {office && (
+          {userLocation && (
             <>
-              <Marker position={office} icon={flag} />
+              <Marker position={userLocation} icon={flag} />
               {parks.map((park) => (
                 <Marker
                   key={park.id}
@@ -248,9 +264,21 @@ const Map = () => {
                   }}
                 />
               ))}
-              <Circle center={office} radius={15000} options={closeOptions} />
-              <Circle center={office} radius={30000} options={middleOptions} />
-              <Circle center={office} radius={45000} options={farOptions} />
+              <Circle
+                center={userLocation}
+                radius={15000}
+                options={closeOptions}
+              />
+              <Circle
+                center={userLocation}
+                radius={30000}
+                options={middleOptions}
+              />
+              <Circle
+                center={userLocation}
+                radius={45000}
+                options={farOptions}
+              />
             </>
           )}
         </GoogleMap>
@@ -269,6 +297,7 @@ const defaultOptions = {
   editable: false,
   visible: true,
 };
+
 const closeOptions = {
   ...defaultOptions,
   zIndex: 3,
@@ -276,6 +305,7 @@ const closeOptions = {
   strokeColor: "#8BC34A",
   fillColor: "#8BC34A",
 };
+
 const middleOptions = {
   ...defaultOptions,
   zIndex: 2,
@@ -283,6 +313,7 @@ const middleOptions = {
   strokeColor: "#FBC02D",
   fillColor: "#FBC02D",
 };
+
 const farOptions = {
   ...defaultOptions,
   zIndex: 1,
@@ -290,3 +321,4 @@ const farOptions = {
   strokeColor: "#FF5252",
   fillColor: "#FF5252",
 };
+
