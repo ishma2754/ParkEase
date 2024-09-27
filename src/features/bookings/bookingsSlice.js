@@ -28,7 +28,7 @@ const bookingsSlice = createSlice({
     },
     setBookingDetails(state, action) {
       const { basement, hour, duration, date } = action.payload;
-      const endTime = hour - 1 + duration;
+      const endTime = hour + duration;
       state.bookingsDetails = {
         basement,
         hour,
