@@ -4,29 +4,32 @@ import { selectCity, selectComplex } from "../features/bookings/parkingSlice";
 import { control } from "../assets";
 import { SelectInput, Button } from "./index";
 
-const Sidebar = () => {
+const Sidebar = ({userCity}) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const { cities, selectedCity, selectedComplex } = useSelector(
     (state) => state.parking
   );
 
-  const handleCityChange = (e) => {
-    const city = e.target.value;
-    dispatch(selectCity(city));
-  };
+  // const handleCityChange = (e) => {
+  //   const city = e.target.value;
+  //   dispatch(selectCity(city));
+  // };
 
   const handleComplexChange = (e) => {
     const complex = e.target.value;
     dispatch(selectComplex(complex));
   };
 
-  const complexes = selectedCity
-    ? cities.find((city) => city.name == selectedCity)?.complex || []
-    : [];
+  // const complexes = selectedCity
+  //   ? cities.find((city) => city.name == selectedCity)?.complex || []
+  //   : [];
+  const complexes = userCity
+  ? cities.find((city) => city.name == userCity)?.complex || []
+  : [];
 
   const handleReset = () => {
-    dispatch(selectCity(""));
+    // dispatch(selectCity(""));
     dispatch(selectComplex(""));
   };
 
@@ -52,20 +55,22 @@ const Sidebar = () => {
       {open ? (
         <>
           <div className="pt-6 space-y-4">
-            <SelectInput
+          <div className="text-gray-200">{userCity}</div>
+            
+            {/* <SelectInput
               name="city"
-              value={selectedCity || ""}
+              value={userCity}
               options={cities}
-              onChange={handleCityChange}
+              //onChange={handleCityChange}
               className="bg-gray-800 text-gray-100 font-medium"
-            />
+            />  */}
             <SelectInput
               name="complex"
               value={selectedComplex || ""}
               onChange={handleComplexChange}
               className="bg-gray-800 text-gray-100 font-medium"
               options={complexes}
-              disabled={!selectedCity}
+              disabled={!userCity}
             />
           </div>
         </>

@@ -10,7 +10,7 @@ const Confirmation = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
-  const { selectedPark, userLocation, leg, bookingsDetails, selectedSlot } =
+  const { singlePark, userLocation, leg, bookingsDetails, selectedSlot } =
     useSelector((state) => state.bookings);
   const [formData, setFormData] = useState({
     userName: "",
@@ -37,7 +37,7 @@ const Confirmation = () => {
     const isValid = validateForm();
     if (isValid) {
       const bookingData = {
-        park: selectedPark,
+        park: singlePark,
         slot: selectedSlot,
         details: bookingsDetails,
         location: userLocation,
@@ -64,7 +64,7 @@ const Confirmation = () => {
     navigate("/");
   };
 
-  if (isLoading) return <Loader/>
+  if (isLoading) return <Loader />;
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -101,12 +101,12 @@ const Confirmation = () => {
           )}
         </div>
         <div className="mb-4 text-gray-200">
-          <p>PARK NAME: {selectedPark.name}</p>
+          <p>PARK NAME: {singlePark.name}</p>
           <p>TIME RANGE: {bookingsDetails.timeRange}</p>
           <p>DATE: {bookingsDetails.date}</p>
           <p>
             TOTAL COST: Rs{" "}
-            {selectedPark.price_per_hour * bookingsDetails.duration}
+            {singlePark.price_per_hour * bookingsDetails.duration}
           </p>
         </div>
         <div className="flex justify-between">

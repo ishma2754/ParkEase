@@ -2,7 +2,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   setUserLocation,
-  setSelectedPark,
+  setSinglePark,
   setLeg,
 } from "../features/bookings/bookingsSlice";
 import {
@@ -18,7 +18,7 @@ import { mapStyles } from "../constants";
 
 const Map = () => {
   const dispatch = useDispatch();
-  const { userLocation, selectedPark } = useSelector((state) => state.bookings);
+  const { userLocation, singlePark } = useSelector((state) => state.bookings);
 
   const [directions, setDirections] = useState(null);
 
@@ -54,7 +54,8 @@ const Map = () => {
       (result, status) => {
         if (status === "OK" && result) {
           setDirections(result);
-          dispatch(setSelectedPark(park));
+          //dispatch(setSelectedPark(park));
+          dispatch(setSinglePark(park));
           dispatch(setLeg(result.routes[0].legs[0].distance.text));
         }
       }
@@ -85,7 +86,7 @@ const Map = () => {
         )}
         {directions && (
           <div className="flex flex-col md:flex-row mt-4">
-            <Distance leg={directions.routes[0].legs[0]} park={selectedPark} />
+            <Distance leg={directions.routes[0].legs[0]} park={singlePark} />
           </div>
         )}
       </div>

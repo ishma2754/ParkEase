@@ -1,14 +1,7 @@
 import { Link } from "react-router-dom";
 
-const commutesPerYear = 260 * 2;
-const secondsPerDay = 60 * 60 * 24;
-
 export default function Distance({ leg, park }) {
   if (!leg.distance || !leg.duration) return null;
-
-  const days = Math.floor(
-    (commutesPerYear * leg.duration.value) / secondsPerDay
-  );
 
   return (
     <div className="flex flex-col p-2 bg-gray-800 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg border-8 border-orange-600">
@@ -39,7 +32,7 @@ export default function Distance({ leg, park }) {
             Total Basements: {park.basement_total}
           </p>
           <p className="text-sm font-bold">
-            Distance: {leg.distance.text} | Duration: {leg.duration.text}
+            Distance: {leg} | Duration: {leg.duration.text}
           </p>
         </div>
       </Link>

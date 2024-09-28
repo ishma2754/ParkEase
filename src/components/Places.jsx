@@ -26,7 +26,7 @@ export default function Places({ setUserLocation }) {
       component.types.includes("locality")
     );
     const city = cityComponent ? cityComponent.long_name : "unknown city";
-    console.log(city);
+
     setUserLocation({ lat, lng }, city);
   };
 
@@ -40,8 +40,8 @@ export default function Places({ setUserLocation }) {
           setDropdownVisible(true);
         }}
         disabled={!ready}
-        className="w-full p-2 font-semibold text-gray-900 rounded"
-        placeholder="Search your location"
+        className="w-full p-2 font-semibold text-gray-900 rounded  focus:ring-2"
+        placeholder="Select your location"
       />
       {isDropdownVisible && status === "OK" && (
         <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded shadow-lg max-h-60  overflow-y-auto">

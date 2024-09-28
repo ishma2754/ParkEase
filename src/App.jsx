@@ -13,7 +13,6 @@ import {
 } from "./pages";
 import { ErrorElement } from "./components";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import MapProvider from "./MapProvider";
 
 const router = createBrowserRouter([
   {
@@ -31,11 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "mapbookings",
-        element: (
-          <MapProvider>
-            <MapBookings />
-          </MapProvider>
-        ),
+        element: <MapBookings />,
         errorElement: <ErrorElement />,
       },
       {
@@ -55,11 +50,7 @@ const router = createBrowserRouter([
       },
       {
         path: "mybookings",
-        element: (
-          <MapProvider>
-            <MyBookings />
-          </MapProvider>
-        ),
+        element: <MyBookings />,
       },
     ],
   },

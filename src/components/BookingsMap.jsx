@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { GoogleMap, Marker, DirectionsRenderer } from "@react-google-maps/api";
 import { flag } from "../assets";

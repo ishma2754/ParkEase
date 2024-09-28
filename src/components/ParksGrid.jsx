@@ -2,14 +2,15 @@ import { useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
 
-const ParksGrid = () => {
+const ParksGrid = ({userCity}) => {
   const { itParks, selectedComplex} = useSelector(
     (state) => state.parking
   );
 
+  const parksInCity = userCity ? itParks.filter((itPark) => itPark.city == userCity) : itParks;
   const filteredItParks = selectedComplex
-    ? itParks.filter((itPark) => itPark.complex == selectedComplex)
-    : itParks;
+    ? parksInCity.filter((itPark) => itPark.complex == selectedComplex)
+    : parksInCity;
 
   
 
