@@ -32,6 +32,7 @@ const SingleBooking = () => {
   }, []);
 
   const singlePark = singleParkData.find((park) => park.id === Number(id));
+  console.log(singlePark)
 
   useEffect(() => {
     if (singlePark) {
