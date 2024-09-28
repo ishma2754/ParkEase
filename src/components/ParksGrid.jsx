@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const ParksGrid = () => {
-  const { itParks, selectedComplex, searchQuery } = useSelector(
+  const { itParks, selectedComplex} = useSelector(
     (state) => state.parking
   );
 

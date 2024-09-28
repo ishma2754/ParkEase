@@ -1,27 +1,21 @@
 import { Button, SingleSlot } from "../components/index";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedSlot, setUserDetails } from "../features/bookings/bookingsSlice";
-import { useState } from "react";
-import Modal from "./Modal";
+import { setSelectedSlot } from "../features/bookings/bookingsSlice";
+import { useNavigate } from "react-router-dom";
 
 const SlotDisplay = ({ availableSlots, data }) => {
   const dispatch = useDispatch();
-  // const [selectedSlot, setSelectedLocalSlot] = useState(null);
+  const navigate = useNavigate();
+
   const selectedSlot = useSelector((state) => state.bookings.selectedSlot);
   const duration = useSelector(
     (state) => state.bookings.bookingsDetails.duration
   );
-  const [isMOdalOpen, setModalOpen] = useState(false);
+
   const handleSlotSelect = (slot) => {
-    //setSelectedLocalSlot(slot);
     dispatch(setSelectedSlot(slot));
   };
 
-  const handleBooking = (userName, vehicleNumber) => {
-    dispatch(setUserDetails({userName, vehicleNumber}))
-    setModalOpen(false);
-  };
-  // const spots = Array.from({ length: 6 }, (_, i) => `A${i + 1}`);
   return (
     <div className="flex flex-col items-center w-full h-full max-w-lg mx-auto py-2 rounded  bg-gray-900">
       <div className="flex flex-col items-center w-full mb-2">
@@ -79,16 +73,14 @@ const SlotDisplay = ({ availableSlots, data }) => {
             </span>
           </div>
 
-          <Button onClick={() => setModalOpen(true)} className="mt-2">
+          <Button
+            onClick={() => navigate(`/bookings/${data.id}/confirm`)}
+            className="mt-2"
+          >
             Book Now
           </Button>
         </>
       )}
-      <Modal
-        isOpen={isMOdalOpen}
-        onClose={() => setModalOpen(false)}
-        onConfirm={handleBooking}
-      />
     </div>
   );
 };

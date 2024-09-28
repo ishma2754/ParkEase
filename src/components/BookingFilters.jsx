@@ -11,18 +11,32 @@ import InputField from "./InputField";
 
 const BookingFilters = ({ onSubmit, basements }) => {
   const { min, max } = getDateRange();
-  const [selectedBasement, setSelectedBasement] = useState("Basement 1");
-  const [selectedHour, setSelectedHour] = useState(8);
-  const [selectedDuration, setSelectedDuration] = useState(1);
-  const [selectedDate, setSelectedDate] = useState(min);
+
+  const [formData, setFormData] = useState({
+    basement: "Basement 1",
+    hour: 8,
+    duration: 1,
+    date: min,
+  });
 
   const handleSubmit = () => {
-    if (selectedBasement && selectedHour && selectedDuration && selectedDate) {
-      onSubmit(selectedBasement, selectedHour, selectedDuration, selectedDate);
-    }
+    onSubmit(
+      formData.basement,
+      formData.hour,
+      formData.duration,
+      formData.date
+    );
   };
 
-  // const maxDuration = selectedHour === 22 ? 1 : selectedHour === 21 ? 2 : 3;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const updatedValue =
+      name === "hour" || name === "duration" ? Number(value) : value;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: updatedValue,
+    }));
+  };
 
   const hourOptions = generateHourOptions();
 
@@ -33,10 +47,11 @@ const BookingFilters = ({ onSubmit, basements }) => {
       <div>
         <InputField
           type="date"
-          value={selectedDate}
+          name="date"
+          value={formData.date}
           min={min}
           max={max}
-          onChange={(e) => setSelectedDate(e.target.value)}
+          onChange={handleChange}
           className={`text-center px-2 py-2 cursor-pointer rounded-xl w-full font-bold text-gray-900`}
         />
       </div>
@@ -51,7 +66,7 @@ const BookingFilters = ({ onSubmit, basements }) => {
             <div
               className={`flex items-center justify-center w-32 h-10 border border-gray-100
             ${
-              selectedBasement === basement
+              formData.basement === basement
                 ? "bg-gray-900 text-teal-400"
                 : "bg-gray-800 text-gray-100"
             } 
@@ -59,9 +74,11 @@ const BookingFilters = ({ onSubmit, basements }) => {
             >
               <input
                 type="radio"
+                name="basement"
+                value={basement}
                 className="hidden"
-                checked={selectedBasement === basement}
-                onChange={() => setSelectedBasement(basement)}
+                checked={formData.basement === basement}
+                onChange={handleChange}
               />
               {basement}
             </div>
@@ -70,9 +87,9 @@ const BookingFilters = ({ onSubmit, basements }) => {
       </div>
 
       <select
-        name="Hour"
-        value={selectedHour}
-        onChange={(e) => setSelectedHour(Number(e.target.value))}
+        name="hour"
+        value={formData.hour}
+        onChange={handleChange}
         className="pl-4 text-center py-2 cursor-pointer rounded-xl w-full bg-gray-800 text-gray-100"
       >
         <option value="">Select Time</option>
@@ -85,13 +102,14 @@ const BookingFilters = ({ onSubmit, basements }) => {
 
       <SelectInput
         options={generateDurationOptions(3)}
-        value={selectedDuration}
+        name="duration"
+        value={formData.duration}
         className="pl-4 text-center py-2 cursor-pointer rounded-xl w-full bg-gray-800 text-gray-100"
-        onChange={(e) => setSelectedDuration(Number(e.target.value))}
+        onChange={handleChange}
       />
 
       <Button
-        type="submit"
+        type="button"
         onClick={handleSubmit}
         className="bg-teal-500 hover:bg-teal-600 text-white"
       >

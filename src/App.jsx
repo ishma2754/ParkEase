@@ -9,10 +9,11 @@ import {
   Register,
   Login,
   MapBookings,
+  Confirmation,
 } from "./pages";
 import { ErrorElement } from "./components";
-
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import MapProvider from "./MapProvider";
 
 const router = createBrowserRouter([
   {
@@ -30,8 +31,12 @@ const router = createBrowserRouter([
       },
       {
         path: "mapbookings",
-        element: <MapBookings/>,
-        errorElement: <ErrorElement/>
+        element: (
+          <MapProvider>
+            <MapBookings />
+          </MapProvider>
+        ),
+        errorElement: <ErrorElement />,
       },
       {
         path: "bookings",
@@ -44,8 +49,17 @@ const router = createBrowserRouter([
         errorElement: <ErrorElement />,
       },
       {
+        path: "bookings/:id/confirm",
+        element: <Confirmation />,
+        errorElement: <ErrorElement />,
+      },
+      {
         path: "mybookings",
-        element: <MyBookings />,
+        element: (
+          <MapProvider>
+            <MyBookings />
+          </MapProvider>
+        ),
       },
     ],
   },

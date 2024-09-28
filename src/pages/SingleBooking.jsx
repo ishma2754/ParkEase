@@ -3,7 +3,7 @@ import { fetchSingleParkData } from "../features/bookings/singleParkSlice";
 import {
   setSinglePark,
   setBookingDetails,
-  reSelectedSlot
+  reSelectedSlot,
 } from "../features/bookings/bookingsSlice";
 import {
   InformationSection,
@@ -13,13 +13,14 @@ import {
   ErrorElement,
 } from "../components/index";
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useCheckAvailability from "../hooks/availability/useCheckAvailability";
 
 const SingleBooking = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const { singleParkData, loading, error } = useSelector(
     (state) => state.singlePark
   );
@@ -40,14 +41,17 @@ const SingleBooking = () => {
 
   const handleBooking = (basement, hour, duration, date) => {
     if (singlePark) {
-      dispatch(reSelectedSlot())
+      setIsLoading(true);
+      dispatch(reSelectedSlot());
       checkAvailability(singlePark.basements, basement, hour, duration);
       dispatch(setBookingDetails({ basement, hour, duration, date }));
-      console.log("Booking details set:", { basement, hour, duration, date });
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   };
 
-  if (loading) return <Loader />;
+  if (loading || isLoading) return <Loader />;
   if (error) return <ErrorElement />;
   if (!singlePark)
     return (
@@ -79,7 +83,9 @@ const SingleBooking = () => {
           <BookingFilters basements={basements} onSubmit={handleBooking} />
         </div>
         <div>
-          <SlotDisplay availableSlots={availableSlots} data={singlePark} />
+          {!isLoading && (
+            <SlotDisplay availableSlots={availableSlots} data={singlePark} />
+          )}
         </div>
       </div>
     </div>

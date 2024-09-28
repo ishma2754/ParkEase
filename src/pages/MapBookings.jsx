@@ -21,7 +21,7 @@ const MapBookings = () => {
   if (error) {
     return <ErrorElement />;
   }
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <Loader/>;
   return (
     <div className="flex flex-col h-screen">
       <Map />

@@ -1,7 +1,17 @@
-const InputField = ({ type, value, onChange, max, min, className, placeholder}) => {
+const InputField = ({
+  type,
+  value,
+  name,
+  onChange,
+  max,
+  min,
+  className,
+  placeholder,
+}) => {
   return (
     <input
       type={type}
+      name={name}
       value={value}
       onChange={onChange}
       max={max}

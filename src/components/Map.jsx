@@ -1,162 +1,29 @@
-import { useCallback, useMemo, useRef, useState} from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUserLocation, setSelectedPark, setLeg} from "../features/bookings/bookingsSlice";
-import { Distance } from "../components/index";
+import {
+  setUserLocation,
+  setSelectedPark,
+  setLeg,
+} from "../features/bookings/bookingsSlice";
 import {
   GoogleMap,
   Marker,
   Circle,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import { Places } from "../components/index";
+import { Places, Distance } from "../components/index";
 import { useSelector } from "react-redux";
 import { flag } from "../assets";
+import { mapStyles } from "../constants";
 
 const Map = () => {
   const dispatch = useDispatch();
-  const [userLocation, setUserLocationLocal] = useState(null);
+  const { userLocation, selectedPark } = useSelector((state) => state.bookings);
+
   const [directions, setDirections] = useState(null);
-  const [selectedPark, setSelectedParkLocal] = useState(null);
+
   const [userCity, setUserCity] = useState(null);
   const mapRef = useRef();
-
-  const styles = [
-    {
-      featureType: "all",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#202c3e",
-        },
-      ],
-    },
-    {
-      featureType: "all",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          gamma: 0.01,
-        },
-        {
-          lightness: 20,
-        },
-        {
-          weight: "1.39",
-        },
-        {
-          color: "#ffffff",
-        },
-      ],
-    },
-    {
-      featureType: "all",
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          weight: "0.96",
-        },
-        {
-          saturation: "9",
-        },
-        {
-          visibility: "on",
-        },
-        {
-          color: "#000000",
-        },
-      ],
-    },
-    {
-      featureType: "all",
-      elementType: "labels.icon",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "landscape",
-      elementType: "geometry",
-      stylers: [
-        {
-          lightness: 30,
-        },
-        {
-          saturation: "9",
-        },
-        {
-          color: "#29446b",
-        },
-      ],
-    },
-    {
-      featureType: "poi",
-      elementType: "geometry",
-      stylers: [
-        {
-          saturation: 20,
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "geometry",
-      stylers: [
-        {
-          lightness: 20,
-        },
-        {
-          saturation: -20,
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry",
-      stylers: [
-        {
-          lightness: 10,
-        },
-        {
-          saturation: -30,
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#193a55",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry.stroke",
-      stylers: [
-        {
-          saturation: 25,
-        },
-        {
-          lightness: 25,
-        },
-        {
-          weight: "0.01",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "all",
-      stylers: [
-        {
-          lightness: -20,
-        },
-      ],
-    },
-  ];
 
   const { itParks, cities } = useSelector((state) => state.parking);
 
@@ -166,7 +33,7 @@ const Map = () => {
 
   const options = useMemo(
     () => ({
-      styles: styles,
+      styles: mapStyles,
       disableDefaultUI: true,
       clickableIcons: false,
     }),
@@ -187,17 +54,15 @@ const Map = () => {
       (result, status) => {
         if (status === "OK" && result) {
           setDirections(result);
-          setSelectedParkLocal(park);
-          dispatch(setSelectedPark(park))
-          dispatch(setLeg(result.routes[0].legs[0]))
+          dispatch(setSelectedPark(park));
+          dispatch(setLeg(result.routes[0].legs[0].distance.text));
         }
       }
     );
   };
 
   const handleLocationSelect = (position, city) => {
-    setUserLocationLocal(position);
-    dispatch(setUserLocation(position))
+    dispatch(setUserLocation(position));
     setUserCity(city);
     mapRef.current?.panTo(position);
   };
@@ -207,7 +72,6 @@ const Map = () => {
     [userCity, cities]
   );
 
-  console.log(userCity)
   return (
     <div className="flex flex-col md:flex-row h-full pb-2">
       <div className="w-full md:w-1/5 p-4 bg-[#14161a] text-gray-200 rounded-lg flex flex-col">
@@ -217,11 +81,10 @@ const Map = () => {
         <Places setUserLocation={handleLocationSelect} />
         {!userLocation && <p>Enter the address of your location</p>}
         {!hasParksInCity && userCity && (
-              <p className="text-gray-100">No services in this area</p>
-            )}
+          <p className="text-gray-100">No services in this area</p>
+        )}
         {directions && (
           <div className="flex flex-col md:flex-row mt-4">
-            
             <Distance leg={directions.routes[0].legs[0]} park={selectedPark} />
           </div>
         )}
@@ -322,4 +185,3 @@ const farOptions = {
   strokeColor: "#FF5252",
   fillColor: "#FF5252",
 };
-

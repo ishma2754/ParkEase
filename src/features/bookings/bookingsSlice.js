@@ -5,7 +5,6 @@ const initialState = {
   userLocation: "",
   selectedPark: null,
   leg: "",
-
   bookingsDetails: {
     date: "",
     basement: "",
@@ -14,10 +13,6 @@ const initialState = {
     timeRange: "",
   },
   selectedSlot: null,
-  userDetails: {
-    userName: "",
-    vehicleNumber: "",
-  },
 };
 
 const bookingsSlice = createSlice({
@@ -46,13 +41,7 @@ const bookingsSlice = createSlice({
     reSelectedSlot(state) {
       state.selectedSlot = null;
     },
-    setUserDetails(state, action) {
-      const { userName, vehicleNumber } = action.payload;
-      state.userDetails = {
-        userName,
-        vehicleNumber,
-      };
-    },
+
     setUserLocation(state, action) {
       state.userLocation = action.payload;
     },
@@ -63,6 +52,9 @@ const bookingsSlice = createSlice({
     setLeg(state, action) {
       state.leg = action.payload;
     },
+    clearBookings(state){
+      return initialState
+    }
   },
 });
 
@@ -71,10 +63,10 @@ export const {
   setBookingDetails,
   setSelectedSlot,
   reSelectedSlot,
-  setUserDetails,
   setUserLocation,
   setSelectedPark,
-  setLeg
+  setLeg,
+  clearBookings
 } = bookingsSlice.actions;
 
 export default bookingsSlice.reducer;
