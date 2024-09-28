@@ -18,7 +18,7 @@ import { mapStyles } from "../constants";
 
 const Map = () => {
   const dispatch = useDispatch();
-  const { userLocation, singlePark } = useSelector((state) => state.bookings);
+  const { userLocation, singlePark, leg } = useSelector((state) => state.bookings);
 
   const [directions, setDirections] = useState(null);
 
@@ -86,7 +86,7 @@ const Map = () => {
         )}
         {directions && (
           <div className="flex flex-col md:flex-row mt-4">
-            <Distance leg={directions.routes[0].legs[0]} park={singlePark} />
+            <Distance leg={leg} park={singlePark} />
           </div>
         )}
       </div>
