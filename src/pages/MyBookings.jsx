@@ -4,23 +4,29 @@ import { BookingsMap } from "../components";
 
 const MyBookings = () => {
   const { isLoaded } = useMap();
-  
-  
+
   const { booked } = useSelector((state) => state.booked);
-  console.log(booked)
+  console.log(booked);
 
   if (!isLoaded) return <div className="text-gray-200">Loading map...</div>;
 
   return (
-    <div className="p-5">
+    <div className="p-5 flex flex-col items-center justify-center min-h-screen">
       {booked.length === 0 ? (
-        <p className="text-gray-200">No bookings found.</p>
+        <p className="text-gray-200 font-bold font-poppins text-xl flex justify-center">
+          No bookings found.
+        </p>
       ) : (
         booked.map((booking, index) => (
-          <div key={index} className="w-full shadow-md shadow-cyan-500/50 hover:shadow-lg hover:shadow-gray-200 transition-shadow duration-300 rounded-lg overflow-hidden mb-4">
+          <div
+            key={index}
+            className="w-full shadow-md shadow-cyan-500/50 hover:shadow-lg hover:shadow-gray-200 transition-shadow duration-300 rounded-lg overflow-hidden mb-4"
+          >
             <figure className="relative">
-              <BookingsMap   userLocation={booking.location} 
-                selectedPark={booking.park}/> 
+              <BookingsMap
+                userLocation={booking.location}
+                selectedPark={booking.park}
+              />
             </figure>
             <div className="p-4 text-center">
               <h2 className="text-gray-200 font-bold font-poppins tracking-wide mb-2">
@@ -33,9 +39,15 @@ const MyBookings = () => {
               <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
                 Distance: {booking.distance || "N/A"}
               </p>
-              <p className="text-gray-200 font-poppins">{booking.details.date}</p>
-              <p className="text-gray-200 font-poppins">{booking.details.timeRange}</p>
-              <p className="text-gray-200 font-poppins">{booking.details.basement}</p>
+              <p className="text-gray-200 font-poppins">
+                {booking.details.date}
+              </p>
+              <p className="text-gray-200 font-poppins">
+                {booking.details.timeRange}
+              </p>
+              <p className="text-gray-200 font-poppins">
+                {booking.details.basement}
+              </p>
               <p className="text-gray-200 font-poppins">{booking.slot.spot}</p>
               <p className="text-gray-200 font-poppins">
                 USERNAME: {booking.userName}

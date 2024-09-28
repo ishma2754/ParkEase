@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addBooking } from "../features/mybookings/bookedSlice";
-import { InputField, Button } from "../components/index";
+import { InputField, Button, Loader } from "../components/index";
 import { useNavigate } from "react-router-dom";
 import { clearBookings } from "../features/bookings/bookingsSlice";
 
 const Confirmation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   const { selectedPark, userLocation, leg, bookingsDetails, selectedSlot } =
     useSelector((state) => state.bookings);
@@ -16,6 +17,12 @@ const Confirmation = () => {
     vehicleNumber: "",
   });
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   const validateForm = () => {
     const newErrors = {};
@@ -39,7 +46,7 @@ const Confirmation = () => {
         vehicleNumber: formData.vehicleNumber,
       };
       dispatch(addBooking(bookingData));
-      dispatch(clearBookings())
+      dispatch(clearBookings());
       navigate("/mybookings");
     }
   };
@@ -57,10 +64,14 @@ const Confirmation = () => {
     navigate("/");
   };
 
+  if (isLoading) return <Loader/>
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl text-center text-gray-200 mb-6">Confirm Your Booking</h2>
+        <h2 className="text-2xl text-center text-gray-200 mb-6">
+          Confirm Your Booking
+        </h2>
         <div className="mb-4">
           <label className="text-gray-200">Username:</label>
           <InputField
@@ -71,7 +82,9 @@ const Confirmation = () => {
             className="input-field w-full mt-1"
             placeholder="Enter your username"
           />
-          {errors.userName && <div className="text-red-600">{errors.userName}</div>}
+          {errors.userName && (
+            <div className="text-red-600">{errors.userName}</div>
+          )}
         </div>
         <div className="mb-4">
           <label className="text-gray-200">Vehicle Number:</label>
@@ -92,7 +105,8 @@ const Confirmation = () => {
           <p>TIME RANGE: {bookingsDetails.timeRange}</p>
           <p>DATE: {bookingsDetails.date}</p>
           <p>
-            TOTAL COST: Rs {selectedPark.price_per_hour * bookingsDetails.duration}
+            TOTAL COST: Rs{" "}
+            {selectedPark.price_per_hour * bookingsDetails.duration}
           </p>
         </div>
         <div className="flex justify-between">
