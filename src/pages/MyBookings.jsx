@@ -31,7 +31,7 @@ const MyBookings = () => {
                 {booking.park.price_per_hour * booking.details.duration}
               </p>
               <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
-                Distance: {booking.distance?.text || "N/A"}
+                Distance: {booking.distance || "N/A"}
               </p>
               <p className="text-gray-200 font-poppins">{booking.details.date}</p>
               <p className="text-gray-200 font-poppins">{booking.details.timeRange}</p>
