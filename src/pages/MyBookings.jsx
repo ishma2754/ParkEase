@@ -39,6 +39,9 @@ const MyBookings = () => {
               <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
                 Distance: {booking.distance || "N/A"}
               </p>
+              <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
+                Duration: {booking.duration || "N/A"}
+              </p>
               <p className="text-gray-200 font-poppins">
                 {booking.details.date}
               </p>

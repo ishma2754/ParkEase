@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux";
 import {
   setUserLocation,
   setSinglePark,
-  setLeg,
+  setDistance,
+  setDuration,
 } from "../features/bookings/bookingsSlice";
 import {
   GoogleMap,
@@ -16,10 +17,11 @@ import { useSelector } from "react-redux";
 import { flag } from "../assets";
 import { mapStyles } from "../constants";
 
-
 const Map = () => {
   const dispatch = useDispatch();
-  const { userLocation, singlePark, leg } = useSelector((state) => state.bookings);
+  const { userLocation, singlePark, distance, duration } = useSelector(
+    (state) => state.bookings
+  );
 
   const [directions, setDirections] = useState(null);
 
@@ -27,7 +29,6 @@ const Map = () => {
   const mapRef = useRef();
 
   const { itParks, cities } = useSelector((state) => state.parking);
- 
 
   const center = useMemo(() => ({ lat: 12.9716, lng: 77.5946 }), []);
 
@@ -57,7 +58,8 @@ const Map = () => {
         if (status === "OK" && result) {
           setDirections(result);
           dispatch(setSinglePark(park));
-          dispatch(setLeg(result.routes[0].legs[0].distance.text));
+          dispatch(setDistance(result.routes[0].legs[0].distance.text));
+          dispatch(setDuration(result.routes[0].legs[0].duration.text));
         }
       }
     );
@@ -87,7 +89,7 @@ const Map = () => {
         )}
         {directions && (
           <div className="flex flex-col md:flex-row mt-4">
-            <Distance leg={leg} park={singlePark} />
+            <Distance distance={distance} duration={duration} park={singlePark} />
           </div>
         )}
       </div>

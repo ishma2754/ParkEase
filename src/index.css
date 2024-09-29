@@ -55,6 +55,13 @@
   );
 }
 
+.bg-hover {
+  background: #4B5563; 
+}
+
+
+
+
 /* .bg-black-gradient-2 {
   background: linear-gradient(
     -168.39deg,

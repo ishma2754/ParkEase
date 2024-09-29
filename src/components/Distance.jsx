@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-export default function Distance({ leg, park }) {
-  if (!leg) return null;
+export default function Distance({ distance, duration, park }) {
+  if (!distance && !duration) return null;
 
   return (
     <div className="flex flex-col p-2 bg-gray-800 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg border-8 border-orange-600">
@@ -32,7 +32,7 @@ export default function Distance({ leg, park }) {
             Total Basements: {park.basement_total}
           </p>
           <p className="text-sm font-bold">
-            Distance: {leg} | 
+            Distance: {distance} |  Duration: {duration}
           </p>
         </div>
       </Link>

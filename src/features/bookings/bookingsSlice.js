@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   singlePark: null,
   userLocation: { lat: 12.9716, lng: 77.5946 },
-  leg: "",
+  distance: "",
+  duration: "",
   bookingsDetails: {
     date: "",
     basement: "",
@@ -44,8 +45,11 @@ const bookingsSlice = createSlice({
     setUserLocation(state, action) {
       state.userLocation = action.payload;
     },
-    setLeg(state, action) {
-      state.leg = action.payload;
+    setDistance(state, action) {
+      state.distance = action.payload;
+    },
+    setDuration(state, action){
+      state.duration = action.payload;
     },
     clearBookings(state) {
       return initialState;
@@ -59,7 +63,8 @@ export const {
   setSelectedSlot,
   reSelectedSlot,
   setUserLocation,
-  setLeg,
+  setDistance,
+  setDuration,
   clearBookings,
 } = bookingsSlice.actions;
 

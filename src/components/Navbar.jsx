@@ -1,24 +1,33 @@
 import { useState } from "react";
 import { close, logo, menu } from "../assets";
 import { navLinks } from "../constants";
-import {Link} from "react-router-dom"
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar">
       <Link to="/">
-      <img src={logo} alt="ParkEase" className="w-[124px] h-[32px] "  />
+        <img src={logo} alt="ParkEase" className="w-[124px] h-[32px] " />
       </Link>
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
         {navLinks.map((nav, index) => (
           <li
             key={nav.id}
-            className={`font-poppins font-normal cursor-pointer text-[16px] text-white ${
+            className={`font-poppins font-normal cursor-pointer text-[16px] text-gray-200 ${
               index === navLinks.length - 1 ? "mr-0" : "mr-10"
             }`}
           >
-            <Link to={nav.url}>{nav.title}</Link>
+            <NavLink
+              to={nav.url}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-gradient font-poppins font-bold"
+                  : "text-gray-200"
+              }
+            >
+              {nav.title}
+            </NavLink>
           </li>
         ))}
       </ul>
@@ -43,7 +52,16 @@ const Navbar = () => {
                   index === navLinks.length - 1 ? "mb-0" : "mb-4"
                 }`}
               >
-                <Link to={nav.url}>{nav.title}</Link>
+                <NavLink
+                  to={nav.url}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-gradient  font-poppins font-bold"
+                      : "text-gray-200"
+                  }
+                >
+                  {nav.title}
+                </NavLink>
               </li>
             ))}
           </ul>

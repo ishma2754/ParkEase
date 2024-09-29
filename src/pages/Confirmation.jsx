@@ -10,7 +10,7 @@ const Confirmation = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
-  const { singlePark, userLocation, leg, bookingsDetails, selectedSlot } =
+  const { singlePark, userLocation, distance, duration, bookingsDetails, selectedSlot } =
     useSelector((state) => state.bookings);
   const [formData, setFormData] = useState({
     userName: "",
@@ -41,7 +41,8 @@ const Confirmation = () => {
         slot: selectedSlot,
         details: bookingsDetails,
         location: userLocation,
-        distance: leg,
+        distance: distance,
+        duration: duration,
         userName: formData.userName,
         vehicleNumber: formData.vehicleNumber,
       };
