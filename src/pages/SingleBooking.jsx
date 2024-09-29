@@ -20,7 +20,7 @@ const SingleBooking = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isAvailableSlots, setIsAvailableSlots] = useState(false);
   const { singleParkData, loading, error } = useSelector(
     (state) => state.singlePark
   );
@@ -32,7 +32,6 @@ const SingleBooking = () => {
   }, []);
 
   const singlePark = singleParkData.find((park) => park.id === Number(id));
-  
 
   useEffect(() => {
     if (singlePark) {
@@ -42,17 +41,17 @@ const SingleBooking = () => {
 
   const handleBooking = (basement, hour, duration, date) => {
     if (singlePark) {
-      setIsLoading(true);
+      setIsAvailableSlots(true);
       dispatch(reSelectedSlot());
       checkAvailability(singlePark.basements, basement, hour, duration);
       dispatch(setBookingDetails({ basement, hour, duration, date }));
       setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
+        setIsAvailableSlots(false);
+      }, 2000);
     }
   };
 
-  if (loading || isLoading) return <Loader />;
+  if (loading) return <Loader />;
   if (error) return <ErrorElement />;
   if (!singlePark)
     return (
@@ -83,8 +82,10 @@ const SingleBooking = () => {
         <div>
           <BookingFilters basements={basements} onSubmit={handleBooking} />
         </div>
-        <div>
-          {!isLoading && (
+        <div className="h-full flex justify-center">
+          {isAvailableSlots ? (
+            <p className="text-orange-500 text-center font-bold font-poppins ">Fetching Availability.Please Wait....</p>
+          ) : (
             <SlotDisplay availableSlots={availableSlots} data={singlePark} />
           )}
         </div>

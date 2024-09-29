@@ -11,7 +11,7 @@ const useCheckAvailability = () => {
       let isAvailable = true;
 
       for (let h = 0; h < duration; h++) {
-        const hourToCheck = hour - 1 + h;
+        const hourToCheck = hour + h;
         const hourString =
           hourToCheck < 10 ? `0${hourToCheck}:00` : `${hourToCheck}:00`;
 

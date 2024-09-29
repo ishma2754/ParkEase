@@ -7,5 +7,4 @@ import control from "./control.png"
 import car from "./car.png"
 import flag from "./flag.svg"
 import location from "./location.svg"
-
-export { menu, close, arrowUp, parking, logo, control, car, flag, location };
+export { menu, close, arrowUp, parking, logo, control, car, flag, location};
