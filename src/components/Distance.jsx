@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 
 export default function Distance({ distance, duration, park }) {
-  if (!distance && !duration) return null;
+  if (!distance.text && !duration) return null;
 
   
 
@@ -35,7 +35,7 @@ export default function Distance({ distance, duration, park }) {
             Total Basements: {park.basement_total}
           </p>
           <p className="text-sm font-bold">
-            Distance: {distance} |  Duration: {duration}
+            Distance: {distance.text} |  Duration: {duration}
           </p>
 
         </div>
