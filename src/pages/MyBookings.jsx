@@ -40,7 +40,7 @@ const MyBookings = () => {
                 {booking.park.price_per_hour * booking.details.duration}
               </p>
               <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
-                Commute Cost: Rs {(booking.distance * costPerKM).toFixed(2)}
+                Commute Cost: Rs {(booking.distance.value * costPerKM).toFixed(2)}
               </p>
               <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
                 Distance: {booking.distance || "N/A"}
