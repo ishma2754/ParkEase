@@ -40,16 +40,16 @@ export default function Places({ setUserLocation }) {
           setDropdownVisible(true);
         }}
         disabled={!ready}
-        className="w-full p-2 font-semibold text-gray-900 rounded  focus:ring-2"
+        className="w-full p-2 font-semibold text-gray-100 rounded  bg-gray-800"
         placeholder="Select your location"
       />
       {isDropdownVisible && status === "OK" && (
-        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded shadow-lg max-h-60  overflow-y-auto">
+        <ul className="absolute z-50 w-full bg-gray-800 scroll-smooth rounded shadow-lg font-poppins max-h-60  overflow-y-auto">
           {data.map(({ place_id, description }) => (
             <li
               key={place_id}
               onClick={() => handleSelect(description)}
-              className="p-2 cursor-pointer hover:bg-gray-100 text-gray-900"
+              className="p-2 cursor-pointer hover:bg-gray-700 hover:text-gray-100 text-gray-200 "
             >
               {description}
             </li>
@@ -57,7 +57,7 @@ export default function Places({ setUserLocation }) {
         </ul>
       )}
       {isDropdownVisible && status !== "OK" && (
-        <p className="text-gray-600">No results found</p>
+        <p className="text-gray-200">No results found</p>
       )}
     </div>
   );

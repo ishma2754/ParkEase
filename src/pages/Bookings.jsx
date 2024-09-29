@@ -29,7 +29,6 @@ const Bookings = () => {
     dispatch(setUserLocation(location));
     setUserCity(city);
     dispatch(selectComplex(""))
-
     setTimeout(() => {
       setCityLoading(false);
     }, 1000);
