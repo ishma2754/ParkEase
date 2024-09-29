@@ -21,6 +21,7 @@ const MyBookings = () => {
         </p>
       ) : (
         booked.map((booking, index) => (
+
           <div
             key={index}
             className="w-full shadow-md shadow-cyan-500/50 hover:shadow-lg hover:shadow-gray-200 transition-shadow duration-300 rounded-lg overflow-hidden mb-4"
@@ -40,10 +41,10 @@ const MyBookings = () => {
                 {booking.park.price_per_hour * booking.details.duration}
               </p>
               <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
-                Commute Cost: Rs {(booking.distance.value * costPerKM).toFixed(2)}
+                Commute Cost: Rs {Math.floor(((booking.distance.value) /1000) * costPerKM)}
               </p>
               <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
-                Distance: {booking.distance || "N/A"}
+                Distance: {booking.distance.text || "N/A"}
               </p>
               <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
                 Duration: {booking.duration || "N/A"}

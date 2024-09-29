@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   singlePark: null,
   userLocation: { lat: 12.9716, lng: 77.5946 },
-  distance: "",
+  distance: {},
   duration: "",
   bookingsDetails: {
     date: "",

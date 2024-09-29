@@ -27,7 +27,7 @@ const ParksGrid = ({ userCity }) => {
       (result, status) => {
         if (status === "OK" && result) {
           dispatch(setSinglePark(park));
-          dispatch(setDistance(result.routes[0].legs[0].distance.text));
+          dispatch(setDistance(result.routes[0].legs[0].distance))
           dispatch(setDuration(result.routes[0].legs[0].duration.text))
         } else {
           console.error("Error fetching directions:", status);

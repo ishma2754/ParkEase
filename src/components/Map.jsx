@@ -58,7 +58,7 @@ const Map = () => {
         if (status === "OK" && result) {
           setDirections(result);
           dispatch(setSinglePark(park));
-          dispatch(setDistance(result.routes[0].legs[0].distance.text));
+          dispatch(setDistance(result.routes[0].legs[0].distance));
           dispatch(setDuration(result.routes[0].legs[0].duration.text));
         }
       }
