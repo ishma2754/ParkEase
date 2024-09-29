@@ -2,11 +2,14 @@ import { useMap } from "../MapProvider.jsx";
 import { useSelector } from "react-redux";
 import { BookingsMap } from "../components";
 
+const litresPerKM = 1 / 19;
+const petrolCostPerLitre = 100;
+const costPerKM = litresPerKM * petrolCostPerLitre;
+
 const MyBookings = () => {
   const { isLoaded } = useMap();
 
   const { booked } = useSelector((state) => state.booked);
-  console.log(booked);
 
   if (!isLoaded) return <div className="text-gray-200">Loading map...</div>;
 
@@ -35,6 +38,9 @@ const MyBookings = () => {
               <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
                 TOTAL COST: Rs{" "}
                 {booking.park.price_per_hour * booking.details.duration}
+              </p>
+              <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
+                Commute Cost: Rs {(booking.distance * costPerKM).toFixed(2)}
               </p>
               <p className="font-poppins text-md font-semibold capitalize tracking-wide text-gray-200">
                 Distance: {booking.distance || "N/A"}
