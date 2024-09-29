@@ -10,7 +10,7 @@ import {
   Button,
 } from "../components/index";
 import { useEffect, useState, useMemo } from "react";
-import { fetchParkingData } from "../features/bookings/parkingSlice";
+import { fetchParkingData, selectComplex } from "../features/bookings/parkingSlice";
 import { setUserLocation} from "../features/bookings/bookingsSlice";
 
 const Bookings = () => {
@@ -28,6 +28,7 @@ const Bookings = () => {
     setCityLoading(true);
     dispatch(setUserLocation(location));
     setUserCity(city);
+    dispatch(selectComplex(""))
 
     setTimeout(() => {
       setCityLoading(false);
