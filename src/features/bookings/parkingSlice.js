@@ -16,8 +16,8 @@ export const fetchParkingData = createAsyncThunk(
   async () => {
     try {
       const urls = [
-        "https://mocki.io/v1/95136396-f884-4c1f-9556-561bf2e8ca2a",
-        "https://mocki.io/v1/e04a4c28-68fb-470a-ba1e-9487c46ac862",
+        "https://mocki.io/v1/1cb38734-a6b3-48b6-aa32-ffd6a756a64d",
+        "https://mocki.io/v1/4840fd82-d31e-4962-8540-2dd52273c37b",
       ];
 
       const [citiesResponse, itParksResponse] = await Promise.all(
