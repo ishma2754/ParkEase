@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { flag } from "../assets";
 import { mapStyles } from "../constants";
 
+
 const Map = () => {
   const dispatch = useDispatch();
   const { userLocation, singlePark, leg } = useSelector((state) => state.bookings);
@@ -26,6 +27,7 @@ const Map = () => {
   const mapRef = useRef();
 
   const { itParks, cities } = useSelector((state) => state.parking);
+ 
 
   const center = useMemo(() => ({ lat: 12.9716, lng: 77.5946 }), []);
 
@@ -54,7 +56,6 @@ const Map = () => {
       (result, status) => {
         if (status === "OK" && result) {
           setDirections(result);
-          //dispatch(setSelectedPark(park));
           dispatch(setSinglePark(park));
           dispatch(setLeg(result.routes[0].legs[0].distance.text));
         }

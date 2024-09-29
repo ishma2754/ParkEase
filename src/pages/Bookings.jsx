@@ -11,7 +11,7 @@ import {
 } from "../components/index";
 import { useEffect, useState, useMemo } from "react";
 import { fetchParkingData } from "../features/bookings/parkingSlice";
-import { setUserLocation } from "../features/bookings/bookingsSlice";
+import { setUserLocation} from "../features/bookings/bookingsSlice";
 
 const Bookings = () => {
   const { isLoaded } = useMap();
@@ -19,6 +19,7 @@ const Bookings = () => {
   const [cityLoading, setCityLoading] = useState(false);
   const dispatch = useDispatch();
   const { loading, error, cities } = useSelector((state) => state.parking);
+  
   useEffect(() => {
     dispatch(fetchParkingData());
   }, []);
@@ -33,6 +34,8 @@ const Bookings = () => {
     }, 1000);
   };
 
+
+ 
   const hasParksInCity = useMemo(
     () => userCity && cities.some((city) => city.name === userCity),
     [userCity, cities]
@@ -64,7 +67,7 @@ const Bookings = () => {
           <Sidebar userCity={userCity} />
         </div>
         <div className="flex-1">
-          <ParksGrid userCity={userCity} />
+          <ParksGrid userCity={userCity}/>
         </div>
       </div>
     </>

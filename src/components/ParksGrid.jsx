@@ -1,18 +1,39 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Link } from "react-router-dom";
+import { setSinglePark, setLeg } from "../features/bookings/bookingsSlice";
 
-const ParksGrid = ({userCity}) => {
-  const { itParks, selectedComplex} = useSelector(
-    (state) => state.parking
-  );
+const ParksGrid = ({ userCity }) => {
+  const dispatch = useDispatch()
+  const { itParks, selectedComplex } = useSelector((state) => state.parking);
+  const { userLocation } = useSelector((state) => state.bookings);
 
-  const parksInCity = userCity ? itParks.filter((itPark) => itPark.city == userCity) : itParks;
+  const parksInCity = userCity
+    ? itParks.filter((itPark) => itPark.city == userCity)
+    : itParks;
   const filteredItParks = selectedComplex
     ? parksInCity.filter((itPark) => itPark.complex == selectedComplex)
     : parksInCity;
 
-  
+  const fetchDirections = (userLocation, park) => {
+    if (!userLocation) return;
+    const service = new google.maps.DirectionsService();
+    service.route(
+      {
+        origin: userLocation,
+        destination: { lat: park.latitude, lng: park.longitude },
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === "OK" && result) {
+          dispatch(setSinglePark(park));
+          dispatch(setLeg(result.routes[0].legs[0].distance.text));
+        } else {
+          console.error("Error fetching directions:", status);
+        }
+      }
+    );
+  };
 
   return (
     <div className="p-5 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -31,6 +52,7 @@ const ParksGrid = ({userCity}) => {
               key={id}
               to={`/bookings/${id}`}
               className="w-full shadow-md shadow-cyan-500/50 hover:shadow-lg hover:shadow-gray-200  transition-shadow duration-300 rounded-lg overflow-hidden rounded-br-3xl"
+              onClick={() => fetchDirections(userLocation, itPark)}
             >
               <figure className="relative">
                 <img

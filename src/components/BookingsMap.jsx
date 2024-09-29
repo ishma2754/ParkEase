@@ -3,8 +3,10 @@ import { GoogleMap, Marker, DirectionsRenderer } from "@react-google-maps/api";
 import { flag } from "../assets";
 import { mapStyles } from "../constants";
 
+
 const BookingsMap = ({ userLocation, selectedPark }) => {
   const [directions, setDirections] = useState(null);
+ 
 
   if (!userLocation || !selectedPark) {
     return <div className="text-gray-200">Loading map...</div>;
