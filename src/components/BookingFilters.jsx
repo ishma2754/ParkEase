@@ -64,11 +64,11 @@ const BookingFilters = ({ onSubmit, basements }) => {
             style={{ marginLeft: index > 0 ? "-1rem" : "0" }}
           >
             <div
-              className={`${styles.flexCenter} w-32 h-10 border border-gray-100
+              className={`${styles.flexCenter} w-32 h-10 border border-gray-900 font-poppins
             ${
               formData.basement === basement
-                ? "bg-gray-900 text-teal-400"
-                : "bg-gray-800 text-gray-100"
+                ? "bg-yellow-400 text-gray-900"
+                : "bg-gray-200 text-gray-900"
             } 
             text-center rounded-full transition duration-300`}
             >

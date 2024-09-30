@@ -11,6 +11,7 @@ export default function DisplayPark({ distance, duration, park }) {
         park={park}
         distance={distance.text}
         duration={duration}
+        showButton={true}
         containerClassName="flex flex-col w-full overflow-hidden rounded-lg relative"
         imageClassName="h-24 md:h-32 park-image"
       />
