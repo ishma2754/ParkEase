@@ -12,10 +12,11 @@ import {
   Circle,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import { Places, Distance } from "../components/index";
+import { Places, DisplayPark } from "../components/index";
 import { useSelector } from "react-redux";
 import { flag } from "../assets";
 import { mapStyles } from "../constants";
+
 
 const Map = () => {
   const dispatch = useDispatch();
@@ -89,7 +90,7 @@ const Map = () => {
         )}
         {directions && (
           <div className="flex flex-col md:flex-row mt-4">
-            <Distance distance={distance} duration={duration} park={singlePark} />
+            <DisplayPark distance={distance} duration={duration} park={singlePark} />
           </div>
         )}
       </div>

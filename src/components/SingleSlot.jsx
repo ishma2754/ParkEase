@@ -1,5 +1,6 @@
 import { InputField } from "../components/index";
 import { car } from "../assets";
+import styles from "../style";
 
 const SingleSlot = ({ slot, isSelected, onSelect }) => {
   const isOccupied = slot.status === "Occupied";
@@ -19,7 +20,7 @@ const SingleSlot = ({ slot, isSelected, onSelect }) => {
         onChange={handleChange}
       />
       <div
-        className={`flex items-center justify-center w-20 h-20 border-l-2 border-t-2 border-b-2 border-orange-400 bg-gray-900 relative group transition-colors duration-200 ${
+        className={`${styles.flexCenter} w-20 h-20 border-l-2 border-t-2 border-b-2 border-orange-400 bg-gray-900 relative group transition-colors duration-200 ${
           isOccupied ? "opacity-50" : isSelected ? "bg-yellow-400" : ""
         }`}
       >

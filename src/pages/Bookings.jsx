@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useMap } from "../MapProvider";
 import {
   ParksGrid,
-  Sidebar,
+  CityFilter,
   Loader,
   ErrorElement,
   Search,
   Places,
-  Button,
+  Button
 } from "../components/index";
 import { useEffect, useState, useMemo } from "react";
 import { fetchParkingData, selectComplex } from "../features/bookings/parkingSlice";
@@ -64,7 +64,7 @@ const Bookings = () => {
           {/* <Search/> */}
         </div>
         <div>
-          <Sidebar userCity={userCity} />
+          <CityFilter userCity={userCity} />
         </div>
         <div className="flex-1">
           <ParksGrid userCity={userCity}/>

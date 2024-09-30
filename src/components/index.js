@@ -1,10 +1,9 @@
 export { default as Navbar } from "./Navbar";
 export { default as Hero } from "./Hero";
 export { default as Header } from "./Header";
-export { default as Footer } from "./Footer";
 export { default as GetStarted } from "./GetStarted";
 export { default as ErrorElement } from "./ErrorElement";
-export { default as Sidebar } from "./Sidebar";
+export { default as CityFilter } from "./CityFilter";
 export { default as SelectInput } from "./SelectInput";
 export {default as Search} from "./Search"
 export {default as Dropdown} from "./Dropdown"
@@ -18,6 +17,6 @@ export {default as InputField} from "./InputField"
 export {default as SingleSlot} from "./SingleSlot"
 export {default as Map} from "./Map"
 export {default as Places} from "./Places"
-export {default as InfoPark} from "./InfoPark"
-export {default as Distance} from "./Distance"
 export {default as BookingsMap} from "./BookingsMap"
+export {default as ParkCard} from "./ParkCard"
+export {default as DisplayPark} from "./DisplayPark"

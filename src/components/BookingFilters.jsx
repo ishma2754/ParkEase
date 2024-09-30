@@ -56,7 +56,7 @@ const BookingFilters = ({ onSubmit, basements }) => {
         />
       </div>
 
-      <div className="flex flex-wrap items-center justify-center text-gray-100">
+      <div className={`flex-wrap ${styles.flexCenter}  text-gray-100`}>
         {basements.map((basement, index) => (
           <label
             key={basement}
@@ -64,7 +64,7 @@ const BookingFilters = ({ onSubmit, basements }) => {
             style={{ marginLeft: index > 0 ? "-1rem" : "0" }}
           >
             <div
-              className={`flex items-center justify-center w-32 h-10 border border-gray-100
+              className={`${styles.flexCenter} w-32 h-10 border border-gray-100
             ${
               formData.basement === basement
                 ? "bg-gray-900 text-teal-400"

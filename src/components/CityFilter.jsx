@@ -4,7 +4,7 @@ import { selectCity, selectComplex } from "../features/bookings/parkingSlice";
 import { control } from "../assets";
 import { SelectInput, Button } from "./index";
 
-const Sidebar = ({userCity}) => {
+const CityFilter = ({userCity}) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const { cities, selectedCity, selectedComplex } = useSelector(
@@ -90,4 +90,4 @@ const Sidebar = ({userCity}) => {
   );
 };
 
-export default Sidebar;
+export default CityFilter;

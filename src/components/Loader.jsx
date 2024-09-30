@@ -1,8 +1,9 @@
 import React from 'react'
+import styles from '../style'
 
 const Loader = () => {
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className={`h-screen ${styles.flexCenter} `}>
     <svg
       aria-hidden="true"
       className="w-8 h-8 text-gray-200 animate-spin dark:text-pink-600 fill-blue-600"

@@ -7,6 +7,8 @@ const InputField = ({
   min,
   className,
   placeholder,
+  ...props
+  
 }) => {
   return (
     <input
@@ -18,6 +20,7 @@ const InputField = ({
       min={min}
       className={className}
       placeholder={placeholder}
+      {...props}
     ></input>
   );
 };

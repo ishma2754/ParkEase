@@ -68,19 +68,19 @@ const Confirmation = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl text-center text-gray-200 mb-6">
+    <div className="flex justify-center max-h-[485px] mb-4">
+      <div className="bg-gray-950 p-4 rounded-lg shadow-lg w-full max-w-md booking-card">
+        <h2 className="text-2xl text-center text-gray-200 mb-6 text-gradient font-bold font-poppins">
           Confirm Your Booking
         </h2>
         <div className="mb-4">
-          <label className="text-gray-200">Username:</label>
+          <label className="text-gray-200 font-semibold font-poppins">Username:</label>
           <InputField
             type="text"
             name="userName"
             value={formData.userName}
             onChange={handleChange}
-            className="input-field w-full mt-1"
+            className="w-full mt-1 p-2 font-semibold text-gray-100 rounded  bg-gray-800"
             placeholder="Enter your username"
           />
           {errors.userName && (
@@ -88,29 +88,29 @@ const Confirmation = () => {
           )}
         </div>
         <div className="mb-4">
-          <label className="text-gray-200">Vehicle Number:</label>
+          <label className="form-label">Vehicle Number:</label>
           <InputField
             type="text"
             name="vehicleNumber"
             value={formData.vehicleNumber}
             onChange={handleChange}
-            className="input-field w-full mt-1"
+            className="input-field"
             placeholder="Enter your vehicle number"
           />
           {errors.vehicleNumber && (
-            <div className="text-red-600">{errors.vehicleNumber}</div>
+            <div className="error-message">{errors.vehicleNumber}</div>
           )}
         </div>
-        <div className="mb-4 text-gray-200">
-          <p>PARK NAME: {singlePark.name}</p>
-          <p>TIME RANGE: {bookingsDetails.timeRange}</p>
-          <p>DATE: {bookingsDetails.date}</p>
+        <div className="booking-details">
+          <p>{singlePark.name}</p>
+          <p>{bookingsDetails.timeRange}</p>
+          <p>{bookingsDetails.date}</p>
           <p>
-            TOTAL COST: Rs{" "}
-            {singlePark.price_per_hour * bookingsDetails.duration}
+            Amount: Rs{" "}
+              {singlePark.price_per_hour * bookingsDetails.duration}
           </p>
         </div>
-        <div className="flex justify-between">
+        <div className="button-container">
           <Button onClick={handleSubmit} type="button">
             Confirm
           </Button>

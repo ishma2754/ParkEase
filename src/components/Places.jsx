@@ -3,6 +3,7 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
+import InputField from "./InputField";
 
 export default function Places({ setUserLocation }) {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -16,7 +17,6 @@ export default function Places({ setUserLocation }) {
   } = usePlacesAutocomplete();
 
   const suggestionRefs = useRef([]);
-
 
   const handleSelect = async (val) => {
     setValue(val, false);
@@ -62,10 +62,9 @@ export default function Places({ setUserLocation }) {
     }
   }, [focussedIndex]);
 
-
   return (
     <div className="relative">
-      <input
+      <InputField
         type="text"
         value={value}
         onChange={(e) => {
@@ -83,8 +82,10 @@ export default function Places({ setUserLocation }) {
             <li
               key={place_id}
               onClick={() => handleSelect(description)}
-              ref={(el) => suggestionRefs.current[index] = el}
-              className={`p-2 cursor-pointer hover:text-gray-100 text-gray-200 ${index === focussedIndex ? 'bg-gray-600' : 'hover:bg-gray-700'}`}
+              ref={(el) => (suggestionRefs.current[index] = el)}
+              className={`p-2 cursor-pointer hover:text-gray-100 text-gray-200 ${
+                index === focussedIndex ? "bg-gray-600" : "hover:bg-gray-700"
+              }`}
             >
               {description}
             </li>
