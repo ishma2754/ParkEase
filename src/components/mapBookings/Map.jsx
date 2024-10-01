@@ -86,9 +86,9 @@ const Map = () => {
         <Places setUserLocation={handleLocationSelect} />
         {!userLocation && <p>Enter the address of your location</p>}
         {!hasParksInCity && userCity && (
-          <p className="text-gray-100">No services in this area</p>
+          <p className="error-message mt-3">No services in this area</p>
         )}
-        {directions && (
+        {directions && hasParksInCity &&  (
           <div className="flex flex-col md:flex-row mt-4">
             <DisplayPark distance={distance} duration={duration} park={singlePark} />
           </div>
