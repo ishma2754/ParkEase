@@ -5,13 +5,15 @@ import {
   CityFilter,
   Loader,
   ErrorElement,
-  Search,
   Places,
-  Button
 } from "../components/index";
 import { useEffect, useState, useMemo } from "react";
-import { fetchParkingData, selectComplex } from "../features/bookings/parkingSlice";
-import { setUserLocation} from "../features/bookings/bookingsSlice";
+import {
+  fetchParkingData,
+  selectComplex,
+} from "../features/bookings/parkingSlice";
+import { setUserLocation } from "../features/bookings/bookingsSlice";
+import styles from "../style";
 
 const Bookings = () => {
   const { isLoaded } = useMap();
@@ -19,7 +21,7 @@ const Bookings = () => {
   const [cityLoading, setCityLoading] = useState(false);
   const dispatch = useDispatch();
   const { loading, error, cities } = useSelector((state) => state.parking);
-  
+
   useEffect(() => {
     dispatch(fetchParkingData());
   }, []);
@@ -28,14 +30,12 @@ const Bookings = () => {
     setCityLoading(true);
     dispatch(setUserLocation(location));
     setUserCity(city);
-    dispatch(selectComplex(""))
+    dispatch(selectComplex(""));
     setTimeout(() => {
       setCityLoading(false);
     }, 1000);
   };
 
-
- 
   const hasParksInCity = useMemo(
     () => userCity && cities.some((city) => city.name === userCity),
     [userCity, cities]
@@ -59,15 +59,16 @@ const Bookings = () => {
         <div className="mx-auto w-full lg:w-1/3">
           <Places setUserLocation={handleLocationSelect} />
           {!hasParksInCity && userCity && (
-            <p className="text-red-500">No services in this area</p>
+            <p className={`error-message mt-2 ${styles.flexCenter}`}>
+              No services in this area
+            </p>
           )}
-          {/* <Search/> */}
         </div>
         <div>
           <CityFilter userCity={userCity} />
         </div>
         <div className="flex-1">
-          <ParksGrid userCity={userCity}/>
+          <ParksGrid userCity={userCity} />
         </div>
       </div>
     </>

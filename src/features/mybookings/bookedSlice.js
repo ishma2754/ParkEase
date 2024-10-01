@@ -7,7 +7,7 @@ const bookedSlice = createSlice({
   name: "booked",
   initialState,
   reducers: {
-    addBooking(state, action) {
+    addBooking: (state, action) => {
       state.booked.push(action.payload);
     },
   },

@@ -163,3 +163,14 @@ export const mapStyles = [
     ],
   },
 ];
+
+export const slides = [
+  "https://i.ibb.co/yg8PBxR/pexels-matreding-28588397.jpg",
+  "https://i.ibb.co/d7xs8FW/pexels-jimbear-2612855.jpg",
+  "https://i.ibb.co/ZWNJJY1/pexels-carlnewton-2280148.jpg",
+  "https://i.ibb.co/n3c0P5W/pexels-introspectivedsgn-4481037.jpg",
+  "https://i.ibb.co/4YkdsL0/pexels-vlad-r-3753632-6099751.jpg",
+  "https://i.ibb.co/DGYVN8c/pexels-brett-sayles-1756957-1.jpg",
+  "https://i.ibb.co/ZWNJJY1/pexels-carlnewton-2280148.jpg"
+
+];

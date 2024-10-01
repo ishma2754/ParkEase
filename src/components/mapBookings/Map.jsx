@@ -5,17 +5,17 @@ import {
   setSinglePark,
   setDistance,
   setDuration,
-} from "../features/bookings/bookingsSlice";
+} from "../../features/bookings/bookingsSlice";
 import {
   GoogleMap,
   Marker,
   Circle,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import { Places, DisplayPark } from "../components/index";
+import { Places, DisplayPark } from "../index";
 import { useSelector } from "react-redux";
-import { flag } from "../assets";
-import { mapStyles } from "../constants";
+import { flag } from "../../assets";
+import { mapStyles } from "../../constants";
 
 
 const Map = () => {

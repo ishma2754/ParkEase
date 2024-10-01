@@ -1,7 +1,7 @@
-import styles from "../style";
+import styles from "../../style";
 import { Link } from "react-router-dom";
-import { parking } from "../assets";
-import { GetStarted } from "../components/index";
+import { parking } from "../../assets";
+import { GetStarted } from "../index";
 const Hero = () => {
   return (
     <section

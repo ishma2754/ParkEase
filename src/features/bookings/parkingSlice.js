@@ -4,9 +4,7 @@ import axios from "axios";
 const initialState = {
   cities: [],
   itParks: [],
-  selectedCity: "",
   selectedComplex: "",
-  searchQuery: "",
   loading: false,
   error: null,
 };
@@ -72,15 +70,8 @@ const parkingSlice = createSlice({
   name: "parking",
   initialState,
   reducers: {
-    selectCity: (state, action) => {
-      state.selectedCity = action.payload;
-      state.selectedComplex = null;
-    },
     selectComplex: (state, action) => {
       state.selectedComplex = action.payload;
-    },
-    setSearchQuery: (state, action) => {
-      state.searchQuery = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -113,6 +104,6 @@ const parkingSlice = createSlice({
   },
 });
 
-export const { selectCity, selectComplex, setSearchQuery } =
+export const {selectComplex} =
   parkingSlice.actions;
 export default parkingSlice.reducer;

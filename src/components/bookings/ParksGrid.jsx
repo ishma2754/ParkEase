@@ -3,9 +3,9 @@ import {
   setSinglePark,
   setDistance,
   setDuration,
-} from "../features/bookings/bookingsSlice";
-import { ParkCard } from "./index";
-import styles from "../style";
+} from "../../features/bookings/bookingsSlice";
+import {ParkCard} from "../index"
+import styles from "../../style";
 
 const ParksGrid = ({ userCity }) => {
   const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
-import InputField from "./InputField";
+import {InputField} from "../index"
 
 export default function Places({ setUserLocation }) {
   const [isDropdownVisible, setDropdownVisible] = useState(false);

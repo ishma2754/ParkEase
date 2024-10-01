@@ -1,6 +1,6 @@
-import { InputField } from "../components/index";
-import { car } from "../assets";
-import styles from "../style";
+import { InputField } from "../index";
+import { car } from "../../assets";
+import styles from "../../style";
 
 const SingleSlot = ({ slot, isSelected, onSelect }) => {
   const isOccupied = slot.status === "Occupied";

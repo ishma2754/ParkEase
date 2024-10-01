@@ -19,10 +19,10 @@ const bookingsSlice = createSlice({
   name: "bookings",
   initialState,
   reducers: {
-    setSinglePark(state, action) {
+    setSinglePark: (state, action) => {
       state.singlePark = action.payload;
     },
-    setBookingDetails(state, action) {
+    setBookingDetails: (state, action) => {
       const { basement, hour, duration, date } = action.payload;
       const endTime = hour + duration;
       state.bookingsDetails = {
@@ -35,23 +35,23 @@ const bookingsSlice = createSlice({
         }${endTime}:00`,
       };
     },
-    setSelectedSlot(state, action) {
+    setSelectedSlot: (state, action) => {
       state.selectedSlot = action.payload;
     },
-    reSelectedSlot(state) {
+    reSelectedSlot: (state) => {
       state.selectedSlot = null;
     },
 
-    setUserLocation(state, action) {
+    setUserLocation: (state, action) => {
       state.userLocation = action.payload;
     },
-    setDistance(state, action) {
+    setDistance: (state, action) => {
       state.distance = action.payload;
     },
-    setDuration(state, action){
+    setDuration:(state, action) => {
       state.duration = action.payload;
     },
-    clearBookings(state) {
+    clearBookings: (state) => {
       return initialState;
     },
   },

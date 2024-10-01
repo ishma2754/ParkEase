@@ -1,6 +1,6 @@
-import { Button, SingleSlot } from "../components/index";
+import { Button, SingleSlot } from "../index";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedSlot } from "../features/bookings/bookingsSlice";
+import { setSelectedSlot } from "../../features/bookings/bookingsSlice";
 import { useNavigate } from "react-router-dom";
 
 const SlotDisplay = ({ availableSlots, data }) => {

@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { GoogleMap, Marker, DirectionsRenderer } from "@react-google-maps/api";
-import { flag } from "../assets";
-import { mapStyles } from "../constants";
+import { flag } from "../../assets";
+import { mapStyles } from "../../constants";
 
 const BookingsMap = ({ userLocation, selectedPark }) => {
   const [directions, setDirections] = useState(null);

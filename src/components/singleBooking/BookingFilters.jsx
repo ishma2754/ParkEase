@@ -1,13 +1,13 @@
 import { useState } from "react";
-import styles from "../style";
-import { Button, SelectInput } from "../components/index";
+import styles from "../../style";
+import { Button, SelectInput } from "../index";
 import {
   generateDurationOptions,
   generateHourOptions,
   getDateRange,
-} from "../utils/index";
+} from "../../utils/index";
 
-import InputField from "./InputField";
+import InputField from "../InputField";
 
 const BookingFilters = ({ onSubmit, basements }) => {
   const { min, max } = getDateRange();
@@ -57,14 +57,15 @@ const BookingFilters = ({ onSubmit, basements }) => {
       </div>
 
       <div className={`flex-wrap ${styles.flexCenter}  text-gray-100`}>
-        {basements.map((basement, index) => (
+        {basements.map((basement) => (
           <label
             key={basement}
-            className="flex items-center cursor-pointer"
-            style={{ marginLeft: index > 0 ? "-1rem" : "0" }}
+            className="flex items-center cursor-pointer mr-2 mb-2"
           >
             <div
-              className={`${styles.flexCenter} w-32 h-10 border border-gray-900 font-poppins
+              className={`${
+                styles.flexCenter
+              } w-32 h-10 border border-gray-900 font-poppins
             ${
               formData.basement === basement
                 ? "bg-yellow-400 text-gray-900"
@@ -108,11 +109,7 @@ const BookingFilters = ({ onSubmit, basements }) => {
         onChange={handleChange}
       />
 
-      <Button
-        type="button"
-        onClick={handleSubmit}
-        className="bg-teal-500 hover:bg-teal-600 text-white"
-      >
+      <Button type="button" onClick={handleSubmit}>
         Submit
       </Button>
     </div>

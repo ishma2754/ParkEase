@@ -1,35 +1,24 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCity, selectComplex } from "../features/bookings/parkingSlice";
-import { control } from "../assets";
-import { SelectInput, Button } from "./index";
+import { selectComplex } from "../../features/bookings/parkingSlice";
+import { control } from "../../assets";
+import { SelectInput, Button } from "../index";
 
-const CityFilter = ({userCity}) => {
+const CityFilter = ({ userCity }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const { cities, selectedCity, selectedComplex } = useSelector(
-    (state) => state.parking
-  );
-
-  // const handleCityChange = (e) => {
-  //   const city = e.target.value;
-  //   dispatch(selectCity(city));
-  // };
+  const { cities, selectedComplex } = useSelector((state) => state.parking);
 
   const handleComplexChange = (e) => {
     const complex = e.target.value;
     dispatch(selectComplex(complex));
   };
 
-  // const complexes = selectedCity
-  //   ? cities.find((city) => city.name == selectedCity)?.complex || []
-  //   : [];
   const complexes = userCity
-  ? cities.find((city) => city.name == userCity)?.complex || []
-  : [];
+    ? cities.find((city) => city.name == userCity)?.complex || []
+    : [];
 
   const handleReset = () => {
-    // dispatch(selectCity(""));
     dispatch(selectComplex(""));
   };
 
@@ -55,15 +44,7 @@ const CityFilter = ({userCity}) => {
       {open ? (
         <>
           <div className="pt-6 space-y-4">
-          <div className="text-gray-200">{userCity}</div>
-            
-            {/* <SelectInput
-              name="city"
-              value={userCity}
-              options={cities}
-              //onChange={handleCityChange}
-              className="bg-gray-800 text-gray-100 font-medium"
-            />  */}
+            <div className="text-gray-200">{userCity}</div>
             <SelectInput
               name="complex"
               value={selectedComplex || ""}

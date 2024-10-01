@@ -6,11 +6,11 @@ import {
   reSelectedSlot,
 } from "../features/bookings/bookingsSlice";
 import {
-  InformationSection,
   BookingFilters,
   SlotDisplay,
   Loader,
   ErrorElement,
+  Carousel,
 } from "../components/index";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -74,8 +74,8 @@ const SingleBooking = () => {
 
   return (
     <div className="container mb-6">
-      <div className="mb-6">
-        <InformationSection data={singlePark} />
+      <div className="mb-6 mx-auto">
+        <Carousel data={singlePark} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -84,7 +84,9 @@ const SingleBooking = () => {
         </div>
         <div className="h-full flex justify-center">
           {isAvailableSlots ? (
-            <p className="text-orange-500 text-center font-bold font-poppins ">Fetching Availability.Please Wait....</p>
+            <p className="text-orange-500 text-center font-bold font-poppins ">
+              Fetching Availability.Please Wait....
+            </p>
           ) : (
             <SlotDisplay availableSlots={availableSlots} data={singlePark} />
           )}
