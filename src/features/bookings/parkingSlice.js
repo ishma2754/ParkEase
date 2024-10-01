@@ -5,6 +5,7 @@ const initialState = {
   cities: [],
   itParks: [],
   selectedComplex: "",
+  priceSort: "",
   loading: false,
   error: null,
 };
@@ -32,46 +33,15 @@ export const fetchParkingData = createAsyncThunk(
   }
 );
 
-/*
-export const fetchParkingData = createAsyncThunk(
-  "parkingData/fetchParkingData",
-  async () => {
-    try {
-      const citiesResponse = await axios.get(
-        "https://3a6d787dc8464cb0b00c0e55dadfcaae.api.mockbin.io/"
-      );
-      return {
-        cities: citiesResponse.data.cities,
-      };
-    } catch (error) {
-      throw new Error("data fetched failed");
-    }
-  }
-);
-
-export const fetchItParkData = createAsyncThunk(
-  "parkingData/fetchItParkData",
-  async () => {
-    try {
-      const itParksResponse = await axios.get(
-        "https://1b8aa86a3a41412ab3eb8156338a4c15.api.mockbin.io/"
-      );
-      return {
-        itParks: itParksResponse.data.IT_parks,
-      };
-    } catch (error) {
-      throw new Error("data fetched failed");
-    }
-  }
-);
-*/
-
 const parkingSlice = createSlice({
   name: "parking",
   initialState,
   reducers: {
     selectComplex: (state, action) => {
       state.selectedComplex = action.payload;
+    },
+    selectPriceSort: (state, action) => {
+      state.priceSort = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -88,22 +58,8 @@ const parkingSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       });
-    /*
-      .addCase(fetchItParkData.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchItParkData.fulfilled, (state, action) => {
-        state.loading = false;
-        state.itParks = action.payload.itParks;
-      })
-      .addCase(fetchItParkData.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      });
-      */
   },
 });
 
-export const {selectComplex} =
-  parkingSlice.actions;
+export const { selectComplex, selectPriceSort } = parkingSlice.actions;
 export default parkingSlice.reducer;

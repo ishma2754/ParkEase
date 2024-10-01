@@ -1,10 +1,13 @@
 import { useState } from "react";
 const useCheckAvailability = () => {
   const [availableSlots, setAvailableSlots] = useState([]);
+  const [allSlotsOccupied, setAllSlotsOccupied] = useState(false)
 
   const checkAvailability = (basements, selectedBasement, hour, duration) => {
     const spots = basements[selectedBasement].spots;
     const statusList = [];
+
+    let isAllOccupied = true;
 
     Object.keys(spots).forEach((spot) => {
       const availability = spots[spot].availability;
@@ -25,12 +28,14 @@ const useCheckAvailability = () => {
       }
 
       statusList.push({ spot, status: isAvailable ? "Available" : "Occupied" });
+      if (isAvailable) isAllOccupied = false;
     });
 
     setAvailableSlots(statusList);
+    setAllSlotsOccupied(isAllOccupied)
   };
 
-  return { availableSlots, checkAvailability };
+  return { availableSlots, checkAvailability, allSlotsOccupied };
 };
 
 export default useCheckAvailability;

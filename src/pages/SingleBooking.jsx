@@ -25,7 +25,7 @@ const SingleBooking = () => {
     (state) => state.singlePark
   );
 
-  const { availableSlots, checkAvailability } = useCheckAvailability();
+  const { availableSlots, checkAvailability, allSlotsOccupied } = useCheckAvailability();
 
   useEffect(() => {
     dispatch(fetchSingleParkData());
@@ -88,7 +88,7 @@ const SingleBooking = () => {
               Fetching Availability.Please Wait....
             </p>
           ) : (
-            <SlotDisplay availableSlots={availableSlots} data={singlePark} />
+            <SlotDisplay availableSlots={availableSlots} data={singlePark} allSlotsOccupied={allSlotsOccupied}/>
           )}
         </div>
       </div>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSelectedSlot } from "../../features/bookings/bookingsSlice";
 import { useNavigate } from "react-router-dom";
 
-const SlotDisplay = ({ availableSlots, data }) => {
+const SlotDisplay = ({ availableSlots, data, allSlotsOccupied }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -18,6 +18,12 @@ const SlotDisplay = ({ availableSlots, data }) => {
 
   return (
     <div className="flex flex-col items-center w-full h-full max-w-lg mx-auto py-2 rounded  bg-gray-900">
+      {allSlotsOccupied && (
+        <div className="text-red-500 tetx-lg mb-4">
+          All spots are currently occupied. Please select a different time.
+        </div>
+      )}
+
       <div className="flex flex-col items-center w-full mb-2">
         <div className="flex items-center">
           <div className="flex flex-col items-center">

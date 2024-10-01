@@ -3,7 +3,7 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
-import {InputField} from "../index"
+import { InputField } from "../index";
 
 export default function Places({ setUserLocation }) {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -73,7 +73,7 @@ export default function Places({ setUserLocation }) {
         }}
         disabled={!ready}
         onKeyDown={handleKeyDown}
-        className="w-full p-2 font-semibold text-gray-100 rounded  bg-gray-800"
+        className="w-full p-2 font-semibold text-gray-100 rounded  bg-gray-800 border border-gray-200"
         placeholder="Select your location"
       />
       {isDropdownVisible && status === "OK" && (

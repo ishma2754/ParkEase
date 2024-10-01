@@ -78,10 +78,10 @@ const Map = () => {
   );
 
   return (
-    <div className="flex flex-col md:flex-row h-full pb-2">
+    <div className="flex flex-col md:flex-row h-full border border-gray-200 mb-4 rounded-lg">
       <div className="w-full md:w-1/5 p-4 bg-[#14161a] text-gray-200 rounded-lg flex flex-col">
         <h1 className="text-xl mt-2">Parking?</h1>
-        <p className="text-lg mb-2">Enter your location here</p>
+        <p className="text-lg mb-2">Enter your location here <img src={flag} alt="Flag" className="inline-block ml-2 h-6 w-6" /></p>
 
         <Places setUserLocation={handleLocationSelect} />
         {!userLocation && <p>Enter the address of your location</p>}

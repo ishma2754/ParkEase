@@ -10,7 +10,7 @@ import styles from "../../style";
 
 const ParksGrid = ({ userCity }) => {
   const dispatch = useDispatch();
-  const { itParks, selectedComplex } = useSelector((state) => state.parking);
+  const { itParks, selectedComplex, priceSort } = useSelector((state) => state.parking);
   const { userLocation } = useSelector((state) => state.bookings);
 
   const parksInCity = userCity
@@ -19,6 +19,15 @@ const ParksGrid = ({ userCity }) => {
   const filteredItParks = selectedComplex
     ? parksInCity.filter((itPark) => itPark.complex == selectedComplex)
     : parksInCity;
+
+  const sortedParks = filteredItParks.sort((a, b) => {
+    if(priceSort === "low"){
+      return a.price_per_hour - b.price_per_hour
+    }else if (priceSort === "high"){
+      return b.price_per_hour - a.price_per_hour
+    }
+    return 0
+  })
 
   const fetchDirections = (userLocation, park) => {
     if (!userLocation) return;
@@ -43,8 +52,8 @@ const ParksGrid = ({ userCity }) => {
 
   return (
     <div className="p-5 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {filteredItParks.length > 0 ? (
-        filteredItParks.map((itPark) => (
+      {sortedParks.length > 0 ? (
+        sortedParks.map((itPark) => (
           <ParkCard
             key={itPark.id}
             park={itPark}

@@ -17,7 +17,7 @@ const Hero = () => {
             <span className="text-gradient">Parking</span>{" "}
           </h1>
           <div className="ss:flex hidden md:mr-4 mr-0">
-            <Link to="/mapbookings">
+            <Link to="/bookings">
               <GetStarted />
             </Link>
           </div>
@@ -44,7 +44,7 @@ const Hero = () => {
       </div>
 
       <div className={`ss:hidden ${styles.flexCenter}`}>
-        <Link to="/mapbookings">
+        <Link to="/bookings">
           <GetStarted />
         </Link>
       </div>
