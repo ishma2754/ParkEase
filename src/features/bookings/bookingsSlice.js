@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const initialState = {
   singlePark: null,
@@ -34,9 +35,11 @@ const bookingsSlice = createSlice({
           endTime < 10 ? "0" : ""
         }${endTime}:00`,
       };
+      toast.success("Booking Details Submitted")
     },
     setSelectedSlot: (state, action) => {
       state.selectedSlot = action.payload;
+      toast.success("You have selected a spot")
     },
     reSelectedSlot: (state) => {
       state.selectedSlot = null;
@@ -44,6 +47,7 @@ const bookingsSlice = createSlice({
 
     setUserLocation: (state, action) => {
       state.userLocation = action.payload;
+     
     },
     setDistance: (state, action) => {
       state.distance = action.payload;

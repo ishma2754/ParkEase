@@ -7,7 +7,7 @@ const ParkCard = ({
   onClick,
   containerClassName,
   imageClassName,
-  showButton
+  showButton,
 }) => {
   return (
     <Link
@@ -24,6 +24,7 @@ const ParkCard = ({
         <div className="absolute top-1 left-1 bg-gray-800 text-orange-400 px-2 py-1 rounded font-semibold font-poppins tracking-wide">
           Rs {park.price_per_hour} / hr
         </div>
+      
         {showButton && (
           <button className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-orange-500 text-white px-4 py-1 rounded-md font-semibold transition-colors duration-300 hover:bg-orange-600 z-10">
             Click Here

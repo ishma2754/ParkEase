@@ -1,8 +1,6 @@
-import {useNavigate } from "react-router-dom";
 import { ParkCard } from "../index";
 
 export default function DisplayPark({ distance, duration, park }) {
-  const navigate = useNavigate()
   if (!distance.text && !duration) return null;
 
   return (

@@ -14,6 +14,7 @@ import {
 } from "../features/bookings/parkingSlice";
 import { setUserLocation } from "../features/bookings/bookingsSlice";
 import styles from "../style";
+import { toast } from "react-toastify";
 
 const Bookings = () => {
   const { isLoaded } = useMap();
@@ -34,6 +35,8 @@ const Bookings = () => {
     setTimeout(() => {
       setCityLoading(false);
     }, 1000);
+    toast.success(`${city} selected successfully`)
+
   };
 
   const hasParksInCity = useMemo(
