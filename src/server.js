@@ -29,6 +29,7 @@ export function makeServer({ environment = "development" } = {}) {
         this.post("/auth/login", loginHandler.bind(this))
 
         this.passthrough("https://mocki.io/*");
+        this.passthrough("https://maps.googleapis.com/**");
         
     }
   });
