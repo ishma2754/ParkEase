@@ -10,29 +10,60 @@ const initialState = {
   error: null,
 };
 
+
+
+// export const fetchParkingData = createAsyncThunk(
+//   "parkingData/fetchParkingData",
+//   async () => {
+//     try {
+//       const urls = [
+//         "https://mocki.io/v1/1cb38734-a6b3-48b6-aa32-ffd6a756a64d",
+//         "https://mocki.io/v1/3f66c31a-49ef-4b4e-b4f5-043d90cdd466",
+//       ];
+
+//       const [citiesResponse, itParksResponse] = await Promise.all(
+//         urls.map((url) => axios.get(url))
+//       );
+
+//       return {
+//         cities: citiesResponse.data.cities,
+//         itParks: itParksResponse.data.IT_parks,
+//       };
+//     } catch (error) {
+//       throw new Error("data fetched failed");
+//     }
+//   }
+// );
+
 export const fetchParkingData = createAsyncThunk(
   "parkingData/fetchParkingData",
   async () => {
-    try {
-      const urls = [
-        "https://mocki.io/v1/1cb38734-a6b3-48b6-aa32-ffd6a756a64d",
-        "https://mocki.io/v1/3f66c31a-49ef-4b4e-b4f5-043d90cdd466",
-      ];
+    const urls = [
+      "https://mocki.io/v1/1cb38734-a6b3-48b6-aa32-ffd6a756a64d",
+      "https://mocki.io/v1/3f66c31a-49ef-4b4e-b4f5-043d90cdd466",
+    ];
 
-      const [citiesResponse, itParksResponse] = await Promise.all(
-        urls.map((url) => axios.get(url))
+    try {
+      const responses = await Promise.all(
+        urls.map((url) =>
+          fetch(url).then((res) => {
+            if (!res.ok) {
+              throw new Error(`Error fetching ${url}: ${res.statusText}`);
+            }
+            return res.json();
+          })
+        )
       );
 
       return {
-        cities: citiesResponse.data.cities,
-        itParks: itParksResponse.data.IT_parks,
+        cities: responses[0].cities,
+        itParks: responses[1].IT_parks,
       };
     } catch (error) {
-      throw new Error("data fetched failed");
+      throw new Error("Data fetch failed: " + error.message);
     }
   }
 );
-
 const parkingSlice = createSlice({
   name: "parking",
   initialState,

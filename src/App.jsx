@@ -13,6 +13,7 @@ import {
 } from "./pages";
 import { ErrorElement } from "./components";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import PrivateRoute from "./components/private-route/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -50,12 +51,17 @@ const router = createBrowserRouter([
       },
       {
         path: "mybookings",
-        element: <MyBookings />,
+        element: (
+          <PrivateRoute>
+            <MyBookings />
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
     path: "/login",
+
     element: <Login />,
   },
   {

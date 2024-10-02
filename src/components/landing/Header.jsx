@@ -1,24 +1,50 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../../style";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../features/authentication/authUserSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
+
+  const handleLogout = () => {
+    navigate("/");
+    dispatch(logout());
+  };
   return (
     <header className="bg-gray-900 py-2">
-      <div className={`container mx-auto ${styles.flexCenter}  sm:justify-end  pr-4`}>
+      <div
+        className={`container mx-auto ${styles.flexCenter}  sm:justify-end  pr-4`}
+      >
         <div className="flex gap-x-6">
-          <Link
-            className="text-xs sm:text-sm hover:text-blue-400 transition-colors text-gray-100"
-            to="/login"
-          >
-            Sign in
-          </Link>
+          {user ? (
+            <div className="flex gap-x-2 sm:gap-x-8 items-center">
+              <p className="text-xs sm:text-sm text-gray-200">Hello, {user.name}</p>
+              <button
+                className="btn btn-xs btn-outline btn-primary text-gray-200"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link
+                className="text-xs sm:text-sm hover:text-blue-400 transition-colors text-gray-100"
+                to="/login"
+              >
+                Sign in
+              </Link>
 
-          <Link
-            to="/register"
-            className="text-xs sm:text-sm hover:text-blue-400 transition-colors text-gray-100"
-          >
-            Create Account
-          </Link>
+              <Link
+                to="/register"
+                className="text-xs sm:text-sm hover:text-blue-400 transition-colors text-gray-100"
+              >
+                Create Account
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

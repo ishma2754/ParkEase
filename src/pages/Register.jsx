@@ -1,16 +1,20 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Button, InputField, Loader } from "../components/index"; 
-// import { registerUser } from "../features/auth/authSlice"; 
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, InputField, Loader } from "../components/index";
+import { registerUser } from "../features/authentication/authUserSlice";
+import { useNavigate, Link} from "react-router-dom";
 import styles from "../style";
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.auth);
 
   const validateForm = () => {
     const newErrors = {};
@@ -21,18 +25,20 @@ const Register = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const isValid = validateForm();
     if (isValid) {
-      setIsLoading(true);
+      console.log("Submitting registration:", formData);
       try {
-        await dispatch(registerUser(formData)); 
+        const result = await dispatch(registerUser(formData));
+        console.log("Registration result:", result);
         navigate("/login");
-      } catch (error) {
-        console.error(error);
-        setErrors({ general: "Registration failed. Please try again." });
-      } finally {
-        setIsLoading(false);
+      } catch (err) {
+        console.error("Registration error:", err);
+        setErrors({
+          general: err.message || "Registration failed. Please try again.",
+        });
       }
     }
   };
@@ -42,13 +48,17 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  if (isLoading) return <Loader />;
+  if (loading) return <Loader />;
 
   return (
     <div className={`${styles.flexCenter} h-screen bg-gray-950`}>
       <div className="bg-gray-950 p-4 rounded-lg max-w-md booking-card">
-        <h2 className="text-2xl text-center text-gray-200 mb-6 text-gradient font-bold font-poppins">Register</h2>
-        {errors.general && <div className="error-message mb-4">{errors.general}</div>}
+        <h2 className="text-2xl text-center text-gray-200 mb-6 text-gradient font-bold font-poppins">
+          Register
+        </h2>
+        {errors.general && (
+          <div className="error-message mb-4">{errors.general}</div>
+        )}
         <div className="mb-4">
           <label className="form-label">Name:</label>
           <InputField
@@ -83,13 +93,24 @@ const Register = () => {
             className="input-field"
             placeholder="Enter your password"
           />
-          {errors.password && <div className="error-message">{errors.password}</div>}
+          {errors.password && (
+            <div className="error-message">{errors.password}</div>
+          )}
         </div>
         <div className="flex justify-center">
           <Button onClick={handleSubmit} type="button">
             Register
           </Button>
         </div>
+        <p className="text-center mt-4 text-gray-200">
+          Already a member?{" "}
+          <Link
+            to="/login"
+            className="ml-2 text-blue-500 hover:text-blue-700 font-medium"
+          >
+            login
+          </Link>
+        </p>
       </div>
     </div>
   );

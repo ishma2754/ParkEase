@@ -1,4 +1,4 @@
-import { Map} from "../components";
+import { Map } from "../components";
 import { useMap } from "../MapProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -21,7 +21,7 @@ const MapBookings = () => {
   if (error) {
     return <ErrorElement />;
   }
-  if (!isLoaded) return <Loader/>;
+  if (!isLoaded) return <Loader />;
   return (
     <div className="flex flex-col h-screen">
       <Map />

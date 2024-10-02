@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Button, InputField, Loader } from "../components/index"; 
-// import { loginUser } from "../features/auth/authSlice"; 
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, InputField, Loader } from "../components/index";
+import { loginUser } from "../features/authentication/authUserSlice";
+import { useNavigate, Link } from "react-router-dom";
+import styles from "../style";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.auth);
 
   const validateForm = () => {
     const newErrors = {};
@@ -19,18 +20,22 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const isValid = validateForm();
     if (isValid) {
-      // setIsLoading(true);
+      console.log("Submitting:", formData);
       try {
-        await dispatch(loginUser(formData)); 
-        navigate("/"); 
-      } catch (error) {
-        console.error(error);
-        setErrors({ general: "Login failed. Please try again." });
-      } finally {
-        // setIsLoading(false);
+        const result = await dispatch(loginUser(formData));
+        console.log("Login result:", result);
+        if (result.meta.requestStatus === "fulfilled") {
+          navigate("/");
+        }
+      } catch (err) {
+        console.error("Login error:", err);
+        setErrors({
+          general: err.message || "Login failed. Please try again.",
+        });
       }
     }
   };
@@ -40,13 +45,18 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  if (isLoading) return <Loader />;
+  if (loading) return <Loader />;
 
   return (
-    <div className={`${styles.flexCenter} h-screen bg-gray-950`} >
+    <div className={`${styles.flexCenter} h-screen bg-gray-950`}>
       <div className="bg-gray-950 p-4 rounded-lg max-w-md booking-card">
-        <h2 className="text-2xl text-center text-gray-200 mb-6 text-gradient font-bold font-poppins">Login</h2>
-        {errors.general && <div className="error-message mb-4">{errors.general}</div>}
+        <h2 className="text-2xl text-center text-gray-200 mb-6 text-gradient font-bold font-poppins">
+          Login
+        </h2>
+        {errors.general && (
+          <div className="error-message mb-4">{errors.general}</div>
+        )}
+        {error && <div className="error-message mb-4">{error}</div>}
         <div className="mb-4">
           <label className="form-label">Email:</label>
           <InputField
@@ -69,13 +79,24 @@ const Login = () => {
             className="input-field"
             placeholder="Enter your password"
           />
-          {errors.password && <div className="error-message">{errors.password}</div>}
+          {errors.password && (
+            <div className="error-message">{errors.password}</div>
+          )}
         </div>
         <div className="flex justify-center">
           <Button onClick={handleSubmit} type="button">
             Login
           </Button>
         </div>
+        <p className="text-center mt-4 text-gray-200">
+          Not a member yet?{" "}
+          <Link
+            to="/register"
+            className="text-blue-500 hover:text-blue-700 font-medium"
+          >
+            register
+          </Link>
+        </p>
       </div>
     </div>
   );
