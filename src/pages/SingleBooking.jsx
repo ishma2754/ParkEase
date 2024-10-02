@@ -43,7 +43,7 @@ const SingleBooking = () => {
     if (singlePark) {
       setIsAvailableSlots(true);
       dispatch(reSelectedSlot());
-      checkAvailability(singlePark.basements, basement, hour, duration);
+      checkAvailability(singlePark.basements, singlePark.id, basement, hour, duration, date);
       dispatch(setBookingDetails({ basement, hour, duration, date }));
       setTimeout(() => {
         setIsAvailableSlots(false);

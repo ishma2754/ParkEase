@@ -116,7 +116,7 @@ const Confirmation = () => {
             )}
           </div>
           <div className="booking-details">
-            <p>{singlePark.name}</p>
+            <p className="text-gradient">{singlePark.name}</p>
             <p>{bookingsDetails.timeRange}</p>
             <p>{bookingsDetails.date}</p>
             <p>

@@ -78,9 +78,9 @@ const Map = () => {
   );
 
   return (
-    <div className="flex flex-col md:flex-row h-full border border-gray-200 mb-4 rounded-lg">
+    <div className="flex flex-col md:flex-row h-full mb-4 rounded-lg">
       <div className="w-full md:w-1/5 p-4 bg-[#14161a] text-gray-200 rounded-lg flex flex-col">
-        <h1 className="text-xl mt-2">Parking?</h1>
+        <h1 className="text-xl mt-2 text-gradient">Parking?</h1>
         <p className="text-lg mb-2">Enter your location here <img src={flag} alt="Flag" className="inline-block ml-2 h-6 w-6" /></p>
 
         <Places setUserLocation={handleLocationSelect} />
@@ -88,7 +88,7 @@ const Map = () => {
         {!hasParksInCity && userCity && (
           <p className="error-message mt-3">No services in this area</p>
         )}
-        {directions && hasParksInCity &&  (
+        {directions && (
           <div className="flex flex-col md:flex-row mt-4">
             <DisplayPark distance={distance} duration={duration} park={singlePark} />
           </div>
