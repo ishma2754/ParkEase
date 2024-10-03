@@ -84,3 +84,26 @@ export const loginHandler = function (schema, request) {
     );
   }
 };
+
+
+export const guestLoginHandler = function (schema) {
+  const guestUserId = "guestId"
+  const guestUser = {
+    _id: guestUserId,
+    email: "guestuser@example.com",
+    name: "Guest User",
+  };
+
+
+  const existingUser = schema.users.findBy({ email: guestUser.email });
+  if (!existingUser) {
+    schema.users.create(guestUser);
+  }
+
+  const encodedToken = sign(
+    { _id: guestUser._id, email: guestUser.email },
+    import.meta.env.VITE_JWT_SECRET
+  );
+
+  return new Response(200, {}, { foundUser: guestUser, encodedToken });
+};

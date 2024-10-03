@@ -14,6 +14,7 @@ const initialState = {
     timeRange: "",
   },
   selectedSlot: null,
+  tempBooking: null,
 };
 
 const bookingsSlice = createSlice({
@@ -35,11 +36,11 @@ const bookingsSlice = createSlice({
           endTime < 10 ? "0" : ""
         }${endTime}:00`,
       };
-      toast.success("Booking Details Submitted")
+      toast.success("Booking Details Submitted");
     },
     setSelectedSlot: (state, action) => {
       state.selectedSlot = action.payload;
-      toast.success("You have selected a spot")
+      toast.success("You have selected a spot");
     },
     reSelectedSlot: (state) => {
       state.selectedSlot = null;
@@ -47,17 +48,20 @@ const bookingsSlice = createSlice({
 
     setUserLocation: (state, action) => {
       state.userLocation = action.payload;
-     
     },
     setDistance: (state, action) => {
       state.distance = action.payload;
     },
-    setDuration:(state, action) => {
+    setDuration: (state, action) => {
       state.duration = action.payload;
+    },
+    setTempBooking: (state, action) => {
+      state.tempBooking = action.payload;
     },
     clearBookings: (state) => {
       return initialState;
     },
+   
   },
 });
 
@@ -69,6 +73,7 @@ export const {
   setUserLocation,
   setDistance,
   setDuration,
+  setTempBooking,
   clearBookings,
 } = bookingsSlice.actions;
 

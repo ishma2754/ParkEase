@@ -40,6 +40,26 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+
+export const guestLoginUser = createAsyncThunk(
+  "auth/guestLoginUser",
+  async () => {
+    const response = await fetch("/api/auth/guest-login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Guest login failed!");
+    }
+
+    return response.json();
+  }
+);
+
+
 const authUserSlice = createSlice({
   name: "auth",
   initialState: {
@@ -70,7 +90,6 @@ const authUserSlice = createSlice({
         state.token = action.payload.encodedToken;
         state.loading = false;
         state.error = null;
-        console.log("User Data in Redux State:", state.user);
         toast.success('logged in successfully');
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -88,7 +107,22 @@ const authUserSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.error.message;
         state.loading = false;
-      });
+      })
+      .addCase(guestLoginUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(guestLoginUser.fulfilled, (state, action) => {
+        state.user = action.payload.foundUser;
+        state.token = action.payload.encodedToken;
+        state.loading = false;
+        state.error = null;
+        toast.success('Logged in as Guest successfully');
+      })
+      .addCase(guestLoginUser.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.loading = false;
+      })
+      
   },
 });
 

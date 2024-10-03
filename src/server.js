@@ -2,6 +2,7 @@ import { Server, Model, RestSerializer } from "miragejs";
 import {
   loginHandler,
   signupHandler,
+  guestLoginHandler
 } from "./backend/controllers/AuthController";
 
 export function makeServer({ environment = "development" } = {}) {
@@ -27,6 +28,8 @@ export function makeServer({ environment = "development" } = {}) {
         this.namespace = "api";
         this.post("/auth/signup", signupHandler.bind(this))
         this.post("/auth/login", loginHandler.bind(this))
+        this.post("/auth/guest-login", guestLoginHandler.bind(this));
+
 
         this.passthrough("https://mocki.io/*");
         this.passthrough("https://maps.googleapis.com/**");

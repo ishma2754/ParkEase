@@ -25,7 +25,7 @@ const useCheckAvailability = () => {
         booking.details.basement === selectedBasement
     );
 
-    console.log("Filtered Booked Slots:", filteredBookedSlots);
+   
     Object.keys(spots).forEach((spot) => {
       const availability = spots[spot].availability;
       let isAvailable = true;

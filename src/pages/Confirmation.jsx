@@ -3,13 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { addBooking } from "../features/mybookings/bookedSlice";
 import { InputField, Button, Loader } from "../components/index";
 import { useNavigate } from "react-router-dom";
-import { clearBookings } from "../features/bookings/bookingsSlice";
+import {
+  clearBookings,
+  setTempBooking,
+} from "../features/bookings/bookingsSlice";
 import { basement } from "../assets";
 
 const Confirmation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const  user  = useSelector((state) => state.auth.user) || null;
 
   const {
     singlePark,
@@ -40,22 +44,30 @@ const Confirmation = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
-    const isValid = validateForm();
-    if (isValid) {
-      const bookingData = {
-        park: singlePark,
-        slot: selectedSlot,
-        details: bookingsDetails,
-        location: userLocation,
-        distance: distance,
-        duration: duration,
-        userName: formData.userName,
-        vehicleNumber: formData.vehicleNumber,
-      };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+    const bookingData = {
+      park: singlePark,
+      slot: selectedSlot,
+      details: bookingsDetails,
+      location: userLocation,
+      distance: distance,
+      duration: duration,
+      userName: formData.userName,
+      vehicleNumber: formData.vehicleNumber,
+      userId: user ? user._id : null,
+    };
+
+    if (user) {
       dispatch(addBooking(bookingData));
       dispatch(clearBookings());
       navigate("/mybookings");
+    } else {
+      dispatch(setTempBooking(bookingData));
+      navigate("/login");
     }
   };
 

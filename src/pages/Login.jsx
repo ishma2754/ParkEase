@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, InputField, Loader } from "../components/index";
-import { loginUser, clearErrors } from "../features/authentication/authUserSlice";
+import {
+  loginUser,
+  clearErrors,
+  guestLoginUser,
+} from "../features/authentication/authUserSlice";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "../style";
+import { addBooking } from "../features/mybookings/bookedSlice";
+import { clearBookings } from "../features/bookings/bookingsSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -11,6 +17,7 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const { loading, error } = useSelector((state) => state.auth);
+  const { tempBooking } = useSelector((state) => state.bookings);
 
   const validateForm = () => {
     const newErrors = {};
@@ -25,22 +32,57 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-
-  const handleSubmit = (e) => {
+ 
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
       return;
     }
     dispatch(clearErrors());
-    dispatch(loginUser(formData))
-      .then((response) => {
-        if (response.meta.requestStatus === "fulfilled") {
-          navigate("/");
-        }
-      })
+
+    const response = await dispatch(loginUser(formData));
+
+    if (response.meta.requestStatus === "fulfilled") {
      
+      const user = response.payload.foundUser;
+      const userId = user._id;
+
+      if (tempBooking) {
+        const bookingData = {
+          ...tempBooking,
+          userId,
+        };
+
+        dispatch(addBooking(bookingData));
+        dispatch(clearBookings());
+        navigate("/mybookings");
+      } else {
+        navigate("/");
+      }
+    }
   };
 
+  const handleGuestLogin = async () => {
+    const response = await dispatch(guestLoginUser());
+
+    if (response.meta.requestStatus === "fulfilled") {
+      const user = response.payload.foundUser;
+      const userId = user._id;
+
+      if (tempBooking) {
+        const bookingData = {
+          ...tempBooking,
+          userId,
+        };
+
+        dispatch(addBooking(bookingData));
+        dispatch(clearBookings());
+        navigate("/mybookings");
+      } else {
+        navigate("/");
+      }
+    }
+  };
   if (loading) return <Loader />;
 
   return (
@@ -49,7 +91,7 @@ const Login = () => {
         <h2 className="text-2xl text-center text-gray-200 mb-6 text-gradient font-bold font-poppins">
           Login
         </h2>
-     
+
         {error && <div className="error-message mb-4">{error}</div>}
         <div className="mb-4">
           <label className="form-label">Email:</label>
@@ -77,9 +119,15 @@ const Login = () => {
             <div className="error-message">{errors.password}</div>
           )}
         </div>
-        <div className="flex justify-center">
+        <div className="flex flex-col justify-center">
           <Button onClick={handleSubmit} type="button">
             Login
+          </Button>
+          <Button
+            className="w-full py-2 px-4  text-gray-200 rounded-lg mt-2 hover:bg-pink-400 bg-pink-500"
+            onClick={handleGuestLogin}
+          >
+            GUEST USER
           </Button>
         </div>
         <p className="text-center mt-4 text-gray-200">
