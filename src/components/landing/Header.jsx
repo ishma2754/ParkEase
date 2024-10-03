@@ -20,9 +20,11 @@ const Header = () => {
         <div className="flex gap-x-6">
           {user ? (
             <div className="flex gap-x-2 sm:gap-x-8 items-center">
-              <p className="text-xs sm:text-sm text-gray-200">Hello, {user.name}</p>
+              <p className="text-xs sm:text-sm hover:text-blue-400 transition-colors text-gray-100">
+                Hello, {user.name}
+              </p>
               <button
-                className="btn btn-xs btn-outline btn-primary text-gray-200"
+                className="text-xs sm:text-sm hover:text-blue-400 transition-colors text-gray-100"
                 onClick={handleLogout}
               >
                 Logout

@@ -20,29 +20,26 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const isValid = validateForm();
-    if (isValid) {
-      console.log("Submitting:", formData);
-      try {
-        const result = await dispatch(loginUser(formData));
-        console.log("Login result:", result);
-        if (result.meta.requestStatus === "fulfilled") {
-          navigate("/");
-        }
-      } catch (err) {
-        console.error("Login error:", err);
-        setErrors({
-          general: err.message || "Login failed. Please try again.",
-        });
-      }
-    }
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+    dispatch(loginUser(formData))
+      .then((response) => {
+        if (response.meta.requestStatus === "fulfilled") {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        setErrors((prev) => ({ ...prev, login: error.message }));
+      });
   };
 
   if (loading) return <Loader />;
@@ -53,8 +50,8 @@ const Login = () => {
         <h2 className="text-2xl text-center text-gray-200 mb-6 text-gradient font-bold font-poppins">
           Login
         </h2>
-        {errors.general && (
-          <div className="error-message mb-4">{errors.general}</div>
+        {errors.login && (
+          <div className="error-message mb-4">{errors.login}</div>
         )}
         {error && <div className="error-message mb-4">{error}</div>}
         <div className="mb-4">

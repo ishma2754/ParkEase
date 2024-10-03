@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, InputField, Loader } from "../components/index";
 import { registerUser } from "../features/authentication/authUserSlice";
-import { useNavigate, Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styles from "../style";
 
 const Register = () => {
@@ -25,22 +25,20 @@ const Register = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const isValid = validateForm();
-    if (isValid) {
-      console.log("Submitting registration:", formData);
-      try {
-        const result = await dispatch(registerUser(formData));
-        console.log("Registration result:", result);
-        navigate("/login");
-      } catch (err) {
-        console.error("Registration error:", err);
-        setErrors({
-          general: err.message || "Registration failed. Please try again.",
-        });
-      }
+    if (!validateForm()) {
+      return;
     }
+    dispatch(registerUser(formData))
+      .then((response) => {
+        if (response.meta.requestStatus === "fulfilled") {
+          navigate("/login");
+        }
+      })
+      .catch((error) => {
+        setErrors((prev) => ({ ...prev, register: error.message }));
+      });
   };
 
   const handleChange = (e) => {
@@ -56,9 +54,10 @@ const Register = () => {
         <h2 className="text-2xl text-center text-gray-200 mb-6 text-gradient font-bold font-poppins">
           Register
         </h2>
-        {errors.general && (
+        {errors.register && (
           <div className="error-message mb-4">{errors.general}</div>
         )}
+        {error && <div className="error-message mb-4">{error}</div>}
         <div className="mb-4">
           <label className="form-label">Name:</label>
           <InputField

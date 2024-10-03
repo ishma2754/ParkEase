@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+
 
 const initialState = {
   cities: [],
@@ -12,29 +12,6 @@ const initialState = {
 
 
 
-// export const fetchParkingData = createAsyncThunk(
-//   "parkingData/fetchParkingData",
-//   async () => {
-//     try {
-//       const urls = [
-//         "https://mocki.io/v1/1cb38734-a6b3-48b6-aa32-ffd6a756a64d",
-//         "https://mocki.io/v1/3f66c31a-49ef-4b4e-b4f5-043d90cdd466",
-//       ];
-
-//       const [citiesResponse, itParksResponse] = await Promise.all(
-//         urls.map((url) => axios.get(url))
-//       );
-
-//       return {
-//         cities: citiesResponse.data.cities,
-//         itParks: itParksResponse.data.IT_parks,
-//       };
-//     } catch (error) {
-//       throw new Error("data fetched failed");
-//     }
-//   }
-// );
-
 export const fetchParkingData = createAsyncThunk(
   "parkingData/fetchParkingData",
   async () => {
@@ -43,17 +20,17 @@ export const fetchParkingData = createAsyncThunk(
       "https://mocki.io/v1/3f66c31a-49ef-4b4e-b4f5-043d90cdd466",
     ];
 
+    const fetchData = async (url) => {
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error(`Error fetching ${url}: ${res.statusText}`);
+      }
+      return res.json();
+    };
+
     try {
-      const responses = await Promise.all(
-        urls.map((url) =>
-          fetch(url).then((res) => {
-            if (!res.ok) {
-              throw new Error(`Error fetching ${url}: ${res.statusText}`);
-            }
-            return res.json();
-          })
-        )
-      );
+      const responses = await Promise.all(urls.map(fetchData));
+      
 
       return {
         cities: responses[0].cities,
@@ -64,6 +41,9 @@ export const fetchParkingData = createAsyncThunk(
     }
   }
 );
+
+
+
 const parkingSlice = createSlice({
   name: "parking",
   initialState,

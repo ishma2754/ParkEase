@@ -1,6 +1,5 @@
-
-
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
@@ -14,7 +13,7 @@ export const loginUser = createAsyncThunk(
     });
 
     if (!response.ok) {
-      throw new Error("Login failed!");
+      throw new Error("Login failed! User Not found");
     }
 
     return response.json();
@@ -53,6 +52,7 @@ const authUserSlice = createSlice({
       state.user = null;
       state.token = null;
       state.error = null;
+      toast.success('Logout Successfully')
 
     }
   },

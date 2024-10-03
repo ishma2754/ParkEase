@@ -13,7 +13,7 @@ import {
 } from "./pages";
 import { ErrorElement } from "./components";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import PrivateRoute from "./components/private-route/PrivateRoute";
+import PrivateRoute from "./routes/PrivateRoute";
 
 const router = createBrowserRouter([
   {
