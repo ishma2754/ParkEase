@@ -17,6 +17,7 @@ export const loginUser = createAsyncThunk(
     }
 
     return response.json();
+   
   }
 );
 
@@ -54,7 +55,10 @@ const authUserSlice = createSlice({
       state.error = null;
       toast.success('Logout Successfully')
 
-    }
+    },
+    clearErrors: (state) => {
+      state.error = null; 
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -65,6 +69,9 @@ const authUserSlice = createSlice({
         state.user = action.payload.foundUser;
         state.token = action.payload.encodedToken;
         state.loading = false;
+        state.error = null;
+        console.log("User Data in Redux State:", state.user);
+        toast.success('logged in successfully');
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.error = action.error.message;
@@ -85,5 +92,5 @@ const authUserSlice = createSlice({
   },
 });
 
-export const {logout} = authUserSlice.actions;
+export const {logout, clearErrors} = authUserSlice.actions;
 export default authUserSlice.reducer;

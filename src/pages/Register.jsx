@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, InputField, Loader } from "../components/index";
-import { registerUser } from "../features/authentication/authUserSlice";
+import { clearErrors, registerUser } from "../features/authentication/authUserSlice";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "../style";
 
@@ -30,15 +30,12 @@ const Register = () => {
     if (!validateForm()) {
       return;
     }
-    dispatch(registerUser(formData))
-      .then((response) => {
-        if (response.meta.requestStatus === "fulfilled") {
-          navigate("/login");
-        }
-      })
-      .catch((error) => {
-        setErrors((prev) => ({ ...prev, register: error.message }));
-      });
+    dispatch(clearErrors())
+    dispatch(registerUser(formData)).then((response) => {
+      if (response.meta.requestStatus === "fulfilled") {
+        navigate("/login");
+      }
+    });
   };
 
   const handleChange = (e) => {
@@ -54,9 +51,6 @@ const Register = () => {
         <h2 className="text-2xl text-center text-gray-200 mb-6 text-gradient font-bold font-poppins">
           Register
         </h2>
-        {errors.register && (
-          <div className="error-message mb-4">{errors.general}</div>
-        )}
         {error && <div className="error-message mb-4">{error}</div>}
         <div className="mb-4">
           <label className="form-label">Name:</label>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, InputField, Loader } from "../components/index";
-import { loginUser } from "../features/authentication/authUserSlice";
+import { loginUser, clearErrors } from "../features/authentication/authUserSlice";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "../style";
 
@@ -31,15 +31,14 @@ const Login = () => {
     if (!validateForm()) {
       return;
     }
+    dispatch(clearErrors());
     dispatch(loginUser(formData))
       .then((response) => {
         if (response.meta.requestStatus === "fulfilled") {
           navigate("/");
         }
       })
-      .catch((error) => {
-        setErrors((prev) => ({ ...prev, login: error.message }));
-      });
+     
   };
 
   if (loading) return <Loader />;
@@ -50,9 +49,7 @@ const Login = () => {
         <h2 className="text-2xl text-center text-gray-200 mb-6 text-gradient font-bold font-poppins">
           Login
         </h2>
-        {errors.login && (
-          <div className="error-message mb-4">{errors.login}</div>
-        )}
+     
         {error && <div className="error-message mb-4">{error}</div>}
         <div className="mb-4">
           <label className="form-label">Email:</label>

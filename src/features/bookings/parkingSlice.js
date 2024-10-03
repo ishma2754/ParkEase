@@ -30,8 +30,6 @@ export const fetchParkingData = createAsyncThunk(
 
     try {
       const responses = await Promise.all(urls.map(fetchData));
-      
-
       return {
         cities: responses[0].cities,
         itParks: responses[1].IT_parks,

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import bookedSlice from "../../features/mybookings/bookedSlice";
 const useCheckAvailability = () => {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [allSlotsOccupied, setAllSlotsOccupied] = useState(false);
