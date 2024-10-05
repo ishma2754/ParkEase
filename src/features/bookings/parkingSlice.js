@@ -14,7 +14,7 @@ const initialState = {
 
 export const fetchParkingData = createAsyncThunk(
   "parkingData/fetchParkingData",
-  async () => {
+  async (_, {rejectWithValue}) => {
     const urls = [
       "https://mocki.io/v1/1cb38734-a6b3-48b6-aa32-ffd6a756a64d",
       "https://mocki.io/v1/3f66c31a-49ef-4b4e-b4f5-043d90cdd466",
@@ -23,7 +23,7 @@ export const fetchParkingData = createAsyncThunk(
     const fetchData = async (url) => {
       const res = await fetch(url);
       if (!res.ok) {
-        throw new Error(`Error fetching ${url}: ${res.statusText}`);
+        return rejectWithValue(`Error fetching ${url}: ${res.statusText}`);
       }
       return res.json();
     };
@@ -35,7 +35,7 @@ export const fetchParkingData = createAsyncThunk(
         itParks: responses[1].IT_parks,
       };
     } catch (error) {
-      throw new Error("Data fetch failed: " + error.message);
+      return rejectWithValue("Data fetch failed: " + error.message);
     }
   }
 );
@@ -57,6 +57,7 @@ const parkingSlice = createSlice({
     builder
       .addCase(fetchParkingData.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchParkingData.fulfilled, (state, action) => {
         state.loading = false;

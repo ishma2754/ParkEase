@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async (formData) => {
+  async (formData, { rejectWithValue }) => {
     const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
@@ -12,18 +12,18 @@ export const loginUser = createAsyncThunk(
       body: JSON.stringify(formData),
     });
 
-    if (!response.ok) {
-      throw new Error("Login failed! User Not found");
+    try {
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      return rejectWithValue("Failed to parse response", error.message);
     }
-
-    return response.json();
-   
   }
 );
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async (userData) => {
+  async (userData, { rejectWithValue }) => {
     const response = await fetch("/api/auth/signup", {
       method: "POST",
       headers: {
@@ -32,14 +32,14 @@ export const registerUser = createAsyncThunk(
       body: JSON.stringify(userData),
     });
 
-    if (!response.ok) {
-      throw new Error("Registration failed!");
+    try {
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      return rejectWithValue("Failed to parse response", error.message);
     }
-
-    return response.json();
   }
 );
-
 
 export const guestLoginUser = createAsyncThunk(
   "auth/guestLoginUser",
@@ -51,14 +51,14 @@ export const guestLoginUser = createAsyncThunk(
       },
     });
 
-    if (!response.ok) {
-      throw new Error("Guest login failed!");
+    try {
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      return rejectWithValue("Failed to parse response", error.message);
     }
-
-    return response.json();
   }
 );
-
 
 const authUserSlice = createSlice({
   name: "auth",
@@ -73,11 +73,10 @@ const authUserSlice = createSlice({
       state.user = null;
       state.token = null;
       state.error = null;
-      toast.success('Logout Successfully')
-
+      toast.success("Logout Successfully");
     },
     clearErrors: (state) => {
-      state.error = null; 
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
@@ -90,7 +89,7 @@ const authUserSlice = createSlice({
         state.token = action.payload.encodedToken;
         state.loading = false;
         state.error = null;
-        toast.success('logged in successfully');
+        toast.success("logged in successfully");
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.error = action.error.message;
@@ -116,15 +115,14 @@ const authUserSlice = createSlice({
         state.token = action.payload.encodedToken;
         state.loading = false;
         state.error = null;
-        toast.success('Logged in as Guest successfully');
+        toast.success("Logged in as Guest successfully");
       })
       .addCase(guestLoginUser.rejected, (state, action) => {
         state.error = action.error.message;
         state.loading = false;
-      })
-      
+      });
   },
 });
 
-export const {logout, clearErrors} = authUserSlice.actions;
+export const { logout, clearErrors } = authUserSlice.actions;
 export default authUserSlice.reducer;
