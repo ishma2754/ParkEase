@@ -4,13 +4,13 @@ import {
   setDistance,
   setDuration,
 } from "../../features/bookings/bookingsSlice";
-import { ParkCard } from "../index";
+import { ParkCard, Skeleton } from "../index";
 import styles from "../../style";
 
 
 const ParksGrid = ({ userCity }) => {
   const dispatch = useDispatch();
-  const { itParks, selectedComplex, priceSort } = useSelector((state) => state.parking);
+  const { itParks, selectedComplex, priceSort, loading } = useSelector((state) => state.parking);
   const { userLocation } = useSelector((state) => state.bookings);
 
   const parksInCity = userCity
@@ -52,7 +52,9 @@ const ParksGrid = ({ userCity }) => {
 
   return (
     <div className="p-5 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {sortedParks.length > 0 ? (
+      {loading ? (
+        Array.from({ length: 5 }).map((_, index) => <Skeleton key={index} />) 
+      ) :sortedParks.length > 0 ? (
         sortedParks.map((itPark) => (
           <ParkCard
             key={itPark.id}

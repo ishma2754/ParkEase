@@ -6,6 +6,7 @@ import {
   Loader,
   ErrorElement,
   Places,
+  Skeleton,
 } from "../components/index";
 import { useEffect, useState, useMemo } from "react";
 import {
@@ -35,8 +36,7 @@ const Bookings = () => {
     setTimeout(() => {
       setCityLoading(false);
     }, 1000);
-    toast.success(`${city} selected successfully`)
-
+    toast.success(`${city} selected successfully`);
   };
 
   const hasParksInCity = useMemo(
@@ -44,8 +44,14 @@ const Bookings = () => {
     [userCity, cities]
   );
 
-  if (loading || cityLoading) {
-    return <Loader />;
+  if (cityLoading) {
+    return (
+      <div className="p-5 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <Skeleton key={index} />
+        ))}
+      </div>
+    );
   }
 
   if (!isLoaded) {
