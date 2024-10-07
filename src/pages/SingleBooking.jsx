@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleParkData } from "../features/bookings/singleParkSlice";
 import {
   setSinglePark,
   setBookingDetails,
@@ -21,17 +20,12 @@ const SingleBooking = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isAvailableSlots, setIsAvailableSlots] = useState(false);
-  const { singleParkData, loading, error } = useSelector(
-    (state) => state.singlePark
-  );
+  const { itParks,  error } = useSelector((state) => state.parking);
 
-  const { availableSlots, checkAvailability, allSlotsOccupied } = useCheckAvailability();
+  const { availableSlots, checkAvailability, allSlotsOccupied } =
+    useCheckAvailability();
 
-  useEffect(() => {
-    dispatch(fetchSingleParkData());
-  }, []);
-
-  const singlePark = singleParkData.find((park) => park.id === Number(id));
+  const singlePark = itParks.find((park) => park.id === Number(id));
 
   useEffect(() => {
     if (singlePark) {
@@ -43,7 +37,14 @@ const SingleBooking = () => {
     if (singlePark) {
       setIsAvailableSlots(true);
       dispatch(reSelectedSlot());
-      checkAvailability(singlePark.basements, singlePark.id, basement, hour, duration, date);
+      checkAvailability(
+        singlePark.basements,
+        singlePark.id,
+        basement,
+        hour,
+        duration,
+        date
+      );
       dispatch(setBookingDetails({ basement, hour, duration, date }));
       setTimeout(() => {
         setIsAvailableSlots(false);
@@ -51,7 +52,7 @@ const SingleBooking = () => {
     }
   };
 
-  if (loading) return <Loader />;
+  
   if (error) return <ErrorElement />;
   if (!singlePark)
     return (
@@ -88,7 +89,11 @@ const SingleBooking = () => {
               Fetching Availability.Please Wait....
             </p>
           ) : (
-            <SlotDisplay availableSlots={availableSlots} data={singlePark} allSlotsOccupied={allSlotsOccupied}/>
+            <SlotDisplay
+              availableSlots={availableSlots}
+              data={singlePark}
+              allSlotsOccupied={allSlotsOccupied}
+            />
           )}
         </div>
       </div>

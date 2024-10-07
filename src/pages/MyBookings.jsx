@@ -2,6 +2,7 @@ import { useMap } from "../MapProvider.jsx";
 import { useSelector } from "react-redux";
 import { BookingsMap } from "../components";
 
+
 const litresPerKM = 1 / 19;
 const petrolCostPerLitre = 100;
 const costPerKM = litresPerKM * petrolCostPerLitre;
@@ -13,6 +14,8 @@ const MyBookings = () => {
   const user = useSelector((state) => state.auth.user);
 
   if (!isLoaded) return <div className="text-gray-200">Loading map...</div>;
+
+ 
 
   const userBookings = booked.filter((booking) => booking.userId === user._id);
 
