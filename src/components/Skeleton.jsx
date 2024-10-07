@@ -1,6 +1,6 @@
 const Skeleton = () => {
   return (
-    <div className="border p-4 rounded shadow-2xl w-[80%] max-w-[500px]">
+    <div className="border p-4 shadow-2xl max-w-[500px]  w-full shadow-cyan-500/50 hover:shadow-lg hover:shadow-gray-200 transition-shadow duration-300 rounded-lg overflow-hidden mb-4;">
       {/* Skeleton for the image */}
       <div className="relative h-40 mb-4 bg-gray-300 animate-pulse">
         <svg
