@@ -49,6 +49,9 @@ const Login = () => {
     const response = await dispatch(guestLoginUser());
     if (response.meta.requestStatus === "fulfilled") {
       handleBookingResponse(response.payload.foundUser._id);
+    }else {
+     
+      setErrors({ login: response.payload });
     }
   };
 

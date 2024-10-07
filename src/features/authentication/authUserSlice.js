@@ -12,6 +12,11 @@ export const loginUser = createAsyncThunk(
       body: JSON.stringify(formData),
     });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      return rejectWithValue(errorData.message || "Login failed");
+    }
+
     try {
       const result = await response.json();
       return result;
@@ -94,6 +99,7 @@ const authUserSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.error = action.error.message;
         state.loading = false;
+        toast.error(`User credentials not found`);
       })
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
