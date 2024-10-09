@@ -21,14 +21,15 @@ const Bookings = () => {
   const { isLoaded } = useMap();
   const [userCity, setUserCity] = useState("Bengaluru");
   const [cityLoading, setCityLoading] = useState(false);
-  const dispatch = useDispatch();
-  const { loading, error, cities } = useSelector((state) => state.parking);
+   const dispatch = useDispatch();
+  const { cities, loading, error } = useSelector((state) => state.parking);
 
   useEffect(() => {
     dispatch(fetchParkingData());
-  }, []);
+  }, [dispatch]);
 
   const handleLocationSelect = (location, city) => {
+    console.log("Selected Location:", location, "City:", city);
     setCityLoading(true);
     dispatch(setUserLocation(location));
     setUserCity(city);
@@ -43,6 +44,7 @@ const Bookings = () => {
     () => userCity && cities.some((city) => city.name === userCity),
     [userCity, cities]
   );
+
 
   if (cityLoading) {
     return (

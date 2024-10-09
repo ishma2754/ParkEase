@@ -8,6 +8,8 @@ const ParkCard = ({
   containerClassName,
   imageClassName,
   showButton,
+  distanceData,
+  durationText,
 }) => {
   return (
     <Link
@@ -24,7 +26,16 @@ const ParkCard = ({
         <div className="absolute top-1 left-1 bg-gray-800 text-orange-400 px-2 py-1 rounded font-semibold font-poppins tracking-wide">
           Rs {park.price_per_hour} / hr
         </div>
-
+        {distanceData && durationText && (
+          <>
+            <div className="absolute top-10 left-1 bg-gray-800 text-orange-400 px-2 py-1 rounded font-semibold font-poppins tracking-wide">
+              {distanceData.text} Far Away
+            </div>
+            <div className="absolute top-20 left-1 bg-gray-800 text-orange-400 px-2 py-1 rounded font-semibold font-poppins tracking-wide">
+              {durationText} To Take
+            </div>
+          </>
+        )}
         {showButton && (
           <button className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-teal-500 text-white px-4 py-1 rounded-md font-semibold transition-colors duration-300 hover:bg-orange-600 z-10">
             Click Here

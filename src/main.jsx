@@ -11,14 +11,11 @@ import MapProvider from "./MapProvider.jsx";
 
 makeServer();
 
-
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <Provider store={store}>
-      <MapProvider>
-        <App />
-        <ToastContainer position="top-center" />
-      </MapProvider>
-    </Provider>
-  </StrictMode>
+  <Provider store={store}>
+    <MapProvider>
+      <App />
+      <ToastContainer position="top-center" />
+    </MapProvider>
+  </Provider>
 );

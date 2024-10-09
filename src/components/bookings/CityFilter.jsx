@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectComplex,
   selectPriceSort,
+  selectDistanceFilter 
 } from "../../features/bookings/parkingSlice";
 import { control, flag } from "../../assets";
 import { SelectInput, Button } from "../index";
@@ -10,7 +11,7 @@ import { SelectInput, Button } from "../index";
 const CityFilter = ({ userCity }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const { cities, selectedComplex, priceSort } = useSelector(
+  const { cities, selectedComplex, priceSort, distanceFilter} = useSelector(
     (state) => state.parking
   );
 
@@ -24,6 +25,11 @@ const CityFilter = ({ userCity }) => {
     dispatch(selectPriceSort(price));
   };
 
+  const handleDistanceFilter = (e) => {
+    const distance = e.target.value;
+    dispatch(selectDistanceFilter(distance));
+  }
+
   const complexes = userCity
     ? cities.find((city) => city.name == userCity)?.complex || []
     : [];
@@ -31,6 +37,7 @@ const CityFilter = ({ userCity }) => {
   const handleReset = () => {
     dispatch(selectComplex(""));
     dispatch(selectPriceSort(""));
+    dispatch(selectDistanceFilter(""));
   };
 
   return (
@@ -73,6 +80,14 @@ const CityFilter = ({ userCity }) => {
               options={["low", "high"]}
               disabled={!userCity}
             />
+            <SelectInput
+              name="distance"
+              value={distanceFilter || ""}
+              onChange={handleDistanceFilter}
+              className="bg-gray-800 text-gray-100 font-medium mt-3"
+              options={["0-5 km", "5-10 km", "> 10 km"]}
+              disabled={!userCity}
+            />
           </div>
         </>
       ) : (
@@ -80,6 +95,7 @@ const CityFilter = ({ userCity }) => {
           <p className="">City</p>
           <p className="">Complex</p>
           <p className="">Price</p>
+          <p>Distance</p>
         </div>
       )}
       <Button

@@ -12,7 +12,7 @@ const MapBookings = () => {
 
   useEffect(() => {
     dispatch(fetchParkingData());
-  }, []);
+  }, [dispatch]);
 
   if (loading) {
     return <Loader />;

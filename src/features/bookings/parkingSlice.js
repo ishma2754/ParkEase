@@ -6,6 +6,7 @@ const initialState = {
   itParks: [],
   selectedComplex: "",
   priceSort: "",
+  distanceFilter: '',
   loading: false,
   error: null,
 };
@@ -52,6 +53,9 @@ const parkingSlice = createSlice({
     selectPriceSort: (state, action) => {
       state.priceSort = action.payload;
     },
+    selectDistanceFilter: (state, action) => {
+      state.distanceFilter = action.payload; 
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -71,5 +75,5 @@ const parkingSlice = createSlice({
   },
 });
 
-export const { selectComplex, selectPriceSort } = parkingSlice.actions;
+export const { selectComplex, selectPriceSort, selectDistanceFilter } = parkingSlice.actions;
 export default parkingSlice.reducer;
