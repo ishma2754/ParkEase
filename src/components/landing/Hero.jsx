@@ -1,5 +1,5 @@
-import styles from "../../style";
 import { Link } from "react-router-dom";
+import styles from "../../style";
 import { parking } from "../../assets";
 import { GetStarted } from "../index";
 const Hero = () => {
@@ -17,7 +17,7 @@ const Hero = () => {
             <span className="text-gradient">Parking</span>{" "}
           </h1>
           <div className="ss:flex hidden md:mr-4 mr-0">
-            <Link to="/bookings">
+            <Link to="/listbookings">
               <GetStarted />
             </Link>
           </div>
@@ -44,7 +44,7 @@ const Hero = () => {
       </div>
 
       <div className={`ss:hidden ${styles.flexCenter}`}>
-        <Link to="/bookings">
+        <Link to="/listbookings">
           <GetStarted />
         </Link>
       </div>

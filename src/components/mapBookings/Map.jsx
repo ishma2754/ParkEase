@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useMap } from "../../MapProvider";
 import {
   setUserLocation,
   setSinglePark,
@@ -15,6 +16,7 @@ import {
 import { Places, DisplayPark } from "../index";
 import { useSelector } from "react-redux";
 import { flag } from "../../assets";
+import { Loader } from "../index";
 import {
   mapStyles,
   defaultOptions,
@@ -25,16 +27,16 @@ import {
 
 const Map = () => {
   const dispatch = useDispatch();
-  const { userLocation, singlePark, distance, duration } = useSelector(
-    (state) => state.bookings
-  );
-
+  const { isLoaded } = useMap();
   // This state holds the data returned by the Google Maps Directions API.
   // Initially set to null, it will be updated when a user selects a destination park,
   // allowing to render a route on the map.
   const [directions, setDirections] = useState(null);
-
   const [userCity, setUserCity] = useState(null);
+
+  const { userLocation, singlePark, distance, duration } = useSelector(
+    (state) => state.bookings
+  );
 
   // mapRef: This ref holds the instance of the Google Map. By using useRef, can access the map's methods (like panTo) directly
   // without triggering re-renders. This allows for smoother interactions, as  can immediately pan the map to a selected
@@ -60,11 +62,10 @@ const Map = () => {
   );
 
   // Callback to store map reference when loaded
-  // onLoad: This callback is triggered when the Google Map component has finished loading. 
-  // It saves the map instance in mapRef.current, allowing direct access to map methods (like panTo) 
+  // onLoad: This callback is triggered when the Google Map component has finished loading.
+  // It saves the map instance in mapRef.current, allowing direct access to map methods (like panTo)
   // without causing re-renders
   const onLoad = useCallback((map) => (mapRef.current = map), []);
-
 
   // Function to fetch directions from the user's location to a specific park
   const fetchDirections = (park) => {
@@ -79,7 +80,7 @@ const Map = () => {
       (result, status) => {
         // Callback function to handle the response from the Directions Service
         if (status === "OK" && result) {
-          setDirections(result); 
+          setDirections(result);
           dispatch(setSinglePark(park));
           dispatch(setDistance(result.routes[0].legs[0].distance)); // Extract the distance as object with text and value from the response
           dispatch(setDuration(result.routes[0].legs[0].duration.text));
@@ -94,7 +95,6 @@ const Map = () => {
     mapRef.current?.panTo(position); // Move the map's center to the user's location
   };
 
-  
   // Check if there are parks available in the selected city
   // Users can select a city using the Places component, which utilizes the Google Places Autocomplete API.
   // When a location is selected, the city is extracted from the address components.
@@ -104,6 +104,10 @@ const Map = () => {
     () => userCity && cities.some((city) => city.name === userCity),
     [userCity, cities]
   );
+
+  if (!isLoaded) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex flex-col md:flex-row h-full mb-4 rounded-lg">

@@ -11,7 +11,7 @@ const ParkCard = ({
 }) => {
   return (
     <Link
-      to={`/bookings/${park.id}`}
+      to={`/listbookings/${park.id}`}
       className={`${containerClassName}`}
       onClick={onClick}
     >

@@ -1,12 +1,10 @@
 import { Map } from "../components";
-import { useMap } from "../MapProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchParkingData } from "../features/bookings/parkingSlice";
 import { Loader, ErrorElement } from "../components/index";
 
 const MapBookings = () => {
-  const { isLoaded } = useMap();
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.parking);
 
@@ -14,7 +12,7 @@ const MapBookings = () => {
     dispatch(fetchParkingData());
   }, [dispatch]);
 
-  if (loading || !isLoaded) {
+  if (loading) {
     return <Loader />;
   }
 

@@ -4,19 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --black-gradient: linear-gradient(
-    144.39deg,
-    #ffffff -278.56%,
-    #6d6d6d -78.47%,
-    #11101d 91.61%
-  );
-  --card-shadow: 0px 20px 100px -10px rgba(66, 71, 91, 0.1);
-} */
-
-/* {
+* {
   scroll-behavior: smooth;
-}  */
+}
 
 .text-gradient {
   background: radial-gradient(
@@ -56,28 +46,8 @@
 }
 
 .bg-hover {
-  background: #4B5563; 
+  background: #4b5563;
 }
-
-
-
-
-/* .bg-black-gradient-2 {
-  background: linear-gradient(
-    -168.39deg,
-    #ffffff -278.56%,
-    #6d6d6d -78.47%,
-    #11101d 91.61%
-  );
-} */
-
-/* .bg-gray-gradient {
-  background: linear-gradient(
-    153.47deg,
-    rgba(255, 255, 255, 0) -341.94%,
-    #14101d 95.11%
-  );
-} */
 
 .sidebar {
   -webkit-animation: slide-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
@@ -129,11 +99,11 @@
   .booking-card {
     @apply w-full shadow-md shadow-cyan-500/50 hover:shadow-lg hover:shadow-gray-200 transition-shadow duration-300 rounded-lg overflow-hidden mb-4;
   }
-  
+
   .form-label {
     @apply text-gray-200 font-semibold font-poppins;
   }
-  
+
   .input-field {
     @apply w-full mt-1 p-2 font-semibold text-gray-100 rounded bg-gray-800;
   }

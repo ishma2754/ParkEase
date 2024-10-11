@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addBooking } from "../features/mybookings/bookedSlice";
 import { InputField, Button, Loader } from "../components/index";
-import { useNavigate } from "react-router-dom";
 import {
   clearBookings,
   setTempBooking,
@@ -13,7 +13,7 @@ const Confirmation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const  user  = useSelector((state) => state.auth.user) || null;
+  const user  = useSelector((state) => state.auth.user) || null;
 
   const {
     singlePark,

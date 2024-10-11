@@ -1,7 +1,7 @@
 // The `SingleSlot` component represents an individual parking slot in a parking management application.
+import { useDispatch} from "react-redux";
 import { InputField } from "../index";
 import { car } from "../../assets";
-import { useDispatch} from "react-redux";
 import { setSelectedSlot } from "../../features/bookings/bookingsSlice";
 import styles from "../../style";
 

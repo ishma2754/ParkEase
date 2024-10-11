@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import { slides } from "../../constants";
 
 export default function Carousel({
-  data,
-  autoSlide = false,
-  autoSlideInterval = 3000,
+  data
 }) {
   const [curr, setCurr] = useState(0);
 
@@ -14,11 +12,7 @@ export default function Carousel({
   const next = () =>
     setCurr((curr) => (curr === slides.length - 1 ? 0 : curr + 1));
 
-  useEffect(() => {
-    if (!autoSlide) return;
-    const slideInterval = setInterval(next, autoSlideInterval);
-    return () => clearInterval(slideInterval);
-  }, []);
+
   return (
     <div className="overflow-hidden relative h-40 w-100 lg:w-2/3 rounded-lg mx-auto">
       <div className="absolute top-0 left-0 right-0 p-4 text-gray-100 text-center z-10">

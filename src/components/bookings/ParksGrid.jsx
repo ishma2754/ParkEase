@@ -1,5 +1,5 @@
-import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   setSinglePark,
   setDistance,
@@ -10,13 +10,13 @@ import styles from "../../style";
 
 const ParksGrid = ({ userCity }) => {
   const dispatch = useDispatch();
+  const [parkDistances, setParkDistances] = useState({});
+  const [parkDuration, setParkDuration] = useState({});
+
   const { itParks, selectedComplex, priceSort, distanceFilter } = useSelector(
     (state) => state.parking
   );
   const { userLocation } = useSelector((state) => state.bookings);
-
-  const [parkDistances, setParkDistances] = useState({});
-  const [parkDuration, setParkDuration] = useState({});
 
   // Filter parks based on the user's city
   const parksInCity = userCity

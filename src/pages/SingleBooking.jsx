@@ -29,7 +29,7 @@ const SingleBooking = () => {
   return (
     <div className="container mb-6">
       <div className="mb-6 mx-auto">
-        <Carousel data={singlePark} />
+        <Carousel data={singlePark}  />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

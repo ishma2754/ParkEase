@@ -1,4 +1,3 @@
-
 import { useSelector, useDispatch } from "react-redux";
 import { setAvailableSlots, setAllSlotsOccupied } from "../../features/bookings/bookingsSlice";
 

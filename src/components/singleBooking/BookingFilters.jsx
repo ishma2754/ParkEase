@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styles from "../../style";
 import { Button, SelectInput, InputField } from "../index";
 import {
@@ -11,7 +12,6 @@ import {
   reSelectedSlot,
   setBookingDetails,
 } from "../../features/bookings/bookingsSlice";
-import { useDispatch } from "react-redux";
 import useCheckAvailability from "../../hooks/availability/useCheckAvailability";
 
 const BookingFilters = ({ basements, singlePark }) => {
@@ -21,7 +21,6 @@ const BookingFilters = ({ basements, singlePark }) => {
    * Custom hook to check the availability of parking slots in a selected basement of a park.
    * This hook manages the state of available slots and gives a method to check availability based on user input.
    */
-
   const { checkAvailability } = useCheckAvailability();
   const { min, max } = getDateRange();
 
@@ -49,6 +48,12 @@ const BookingFilters = ({ basements, singlePark }) => {
     if (singlePark) {
       dispatch(toggleAvailableSlots(true));
       dispatch(reSelectedSlot());
+
+    // Call the custom hook to check the availability of parking slots.
+    // Pass the necessary parameters:
+    // - singlePark.basements: The basements available in the selected park.
+    // - singlePark.id: The ID of the selected park.
+    // - basement: The basement selected by the user.
       checkAvailability(
         singlePark.basements,
         singlePark.id,

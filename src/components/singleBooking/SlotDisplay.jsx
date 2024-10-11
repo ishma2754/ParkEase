@@ -88,7 +88,7 @@ const SlotDisplay = ({ data }) => {
 
               {/* Button to navigate to the confirmation page */}
               <Button
-                onClick={() => navigate(`/bookings/${data.id}/confirm`)}
+                onClick={() => navigate(`/listbookings/${data.id}/confirm`)}
                 className="mt-2"
               >
                 Book Now

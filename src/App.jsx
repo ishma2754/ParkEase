@@ -7,7 +7,7 @@ import { ErrorElement, Loader } from "./components";
 const HomeLayout = lazy(() => import("./pages/HomeLayout"));
 const Landing = lazy(() => import("./pages/Landing"));
 const About = lazy(() => import("./pages/About"));
-const Bookings = lazy(() => import("./pages/Bookings"));
+const ListBookings = lazy(() => import("./pages/ListBookings"));
 const MyBookings = lazy(() => import("./pages/MyBookings"));
 const SingleBooking = lazy(() => import("./pages/SingleBooking"));
 const MapBookings = lazy(() => import("./pages/MapBookings"));
@@ -51,16 +51,16 @@ const router = createBrowserRouter([
         errorElement: <ErrorElement />,
       },
       {
-        path: "bookings",
+        path: "listbookings",
         element: (
           <Suspense fallback={<Loader />}>
-            <Bookings />
+            <ListBookings/>
           </Suspense>
         ),
         errorElement: <ErrorElement />,
       },
       {
-        path: "bookings/:id",
+        path: "listbookings/:id",
         element: (
           <Suspense fallback={<Loader />}>
             <SingleBooking />
@@ -69,7 +69,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorElement />,
       },
       {
-        path: "bookings/:id/confirm",
+        path: "listbookings/:id/confirm",
         element: (
           <Suspense fallback={<Loader />}>
             <Confirmation />

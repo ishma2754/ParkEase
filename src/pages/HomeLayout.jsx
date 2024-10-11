@@ -3,7 +3,7 @@ import { Header, Navbar } from "../components";
 import styles from "../style";
 const HomeLayout = () => {
   return (
-    <div className="bg-primary w-full overflow-hidden min-h-screen">
+    <div className="bg-primary w-full min-h-screen overflow-hidden">
       <Header />
       <div className={`${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>

@@ -10,14 +10,14 @@ export const navLinks = [
     url: "/about",
   },
   {
+    id: "listbooking",
+    title: "ListBookings",
+    url: "/listbookings",
+  },
+  {
     id: "mapbookings",
     title: "MapBookings",
     url: "/mapbookings",
-  },
-  {
-    id: "booking",
-    title: "Bookings",
-    url: "/bookings",
   },
   {
     id: "myBookings",

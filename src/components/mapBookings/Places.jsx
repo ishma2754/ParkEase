@@ -48,8 +48,12 @@ export default function Places({ setUserLocation }) {
 
   const handleKeyDown = (e) => {
     if (e.key === "ArrowDown") {
+      //The focussedIndex starts at -1 to represent that no suggestion is focused initially.
+      // The first time the user navigates down using the "ArrowDown" key, 
+      //it updates focussedIndex to 0, thus focusing on the first suggestion.
       // Move focus to the next suggestion, wrapping around if at the end
-      // (-1 + 1) % 4 (if there 4 suggestions for locations)
+      //(if there 4 suggestions for locations)
+      // prevIndex is 3 → focussedIndex becomes (3 + 1) % 4 = 0 (focuses back on Suggestion 1).
       // This results in 0, meaning the first suggestion  is now focused.
       setFocussedIndex((prevIndex) => (prevIndex + 1) % data.length);
       e.preventDefault();
