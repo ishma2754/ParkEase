@@ -22,6 +22,8 @@ const Skeleton = () => {
 
       {/* Skeleton for the total basements */}
       <div className="h-4 bg-gray-300 rounded-full mb-2 animate-pulse"></div>
+      <div className="h-4 bg-gray-300 rounded-full mb-2 animate-pulse"></div>
+      <div className="h-4 bg-gray-300 rounded-full mb-2 animate-pulse"></div>
     </div>
   );
 };

@@ -15,8 +15,13 @@ import {
 import { Places, DisplayPark } from "../index";
 import { useSelector } from "react-redux";
 import { flag } from "../../assets";
-import { mapStyles } from "../../constants";
-
+import {
+  mapStyles,
+  defaultOptions,
+  closeOptions,
+  middleOptions,
+  farOptions,
+} from "../../constants";
 
 const Map = () => {
   const dispatch = useDispatch();
@@ -24,15 +29,25 @@ const Map = () => {
     (state) => state.bookings
   );
 
+  // This state holds the data returned by the Google Maps Directions API.
+  // Initially set to null, it will be updated when a user selects a destination park,
+  // allowing to render a route on the map.
   const [directions, setDirections] = useState(null);
 
   const [userCity, setUserCity] = useState(null);
+
+  // mapRef: This ref holds the instance of the Google Map. By using useRef, can access the map's methods (like panTo) directly
+  // without triggering re-renders. This allows for smoother interactions, as  can immediately pan the map to a selected
+  // park's location without the use of state updates.
   const mapRef = useRef();
 
   const { itParks, cities } = useSelector((state) => state.parking);
 
+  // Memoize the center of the map to avoid recalculating center coordinates on every render
+
   const center = useMemo(() => ({ lat: 12.9716, lng: 77.5946 }), []);
 
+  // Memoize parks data to prevent unnecessary re-renders
   const parks = useMemo(() => itParks, [itParks]);
 
   const options = useMemo(
@@ -44,8 +59,14 @@ const Map = () => {
     []
   );
 
+  // Callback to store map reference when loaded
+  // onLoad: This callback is triggered when the Google Map component has finished loading. 
+  // It saves the map instance in mapRef.current, allowing direct access to map methods (like panTo) 
+  // without causing re-renders
   const onLoad = useCallback((map) => (mapRef.current = map), []);
 
+
+  // Function to fetch directions from the user's location to a specific park
   const fetchDirections = (park) => {
     if (!userLocation) return;
     const service = new google.maps.DirectionsService();
@@ -56,10 +77,11 @@ const Map = () => {
         travelMode: google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
+        // Callback function to handle the response from the Directions Service
         if (status === "OK" && result) {
-          setDirections(result);
+          setDirections(result); 
           dispatch(setSinglePark(park));
-          dispatch(setDistance(result.routes[0].legs[0].distance));
+          dispatch(setDistance(result.routes[0].legs[0].distance)); // Extract the distance as object with text and value from the response
           dispatch(setDuration(result.routes[0].legs[0].duration.text));
         }
       }
@@ -69,9 +91,15 @@ const Map = () => {
   const handleLocationSelect = (position, city) => {
     dispatch(setUserLocation(position));
     setUserCity(city);
-    mapRef.current?.panTo(position);
+    mapRef.current?.panTo(position); // Move the map's center to the user's location
   };
 
+  
+  // Check if there are parks available in the selected city
+  // Users can select a city using the Places component, which utilizes the Google Places Autocomplete API.
+  // When a location is selected, the city is extracted from the address components.
+  // The selected city filters available parking options, showing only relevant parks.
+  // The hasParksInCity check confirms if parks are available in the selected city.
   const hasParksInCity = useMemo(
     () => userCity && cities.some((city) => city.name === userCity),
     [userCity, cities]
@@ -81,7 +109,10 @@ const Map = () => {
     <div className="flex flex-col md:flex-row h-full mb-4 rounded-lg">
       <div className="w-full md:w-1/5 p-4 bg-[#14161a] text-gray-200 rounded-lg flex flex-col">
         <h1 className="text-xl mt-2 text-gradient">Parking?</h1>
-        <p className="text-lg mb-2">Enter your location here <img src={flag} alt="Flag" className="inline-block ml-2 h-6 w-6" /></p>
+        <p className="text-lg mb-2">
+          Enter your location here{" "}
+          <img src={flag} alt="Flag" className="inline-block ml-2 h-6 w-6" />
+        </p>
 
         <Places setUserLocation={handleLocationSelect} />
         {!userLocation && <p>Enter the address of your location</p>}
@@ -90,7 +121,11 @@ const Map = () => {
         )}
         {directions && (
           <div className="flex flex-col md:flex-row mt-4">
-            <DisplayPark distance={distance} duration={duration} park={singlePark} />
+            <DisplayPark
+              distance={distance}
+              duration={duration}
+              park={singlePark}
+            />
           </div>
         )}
       </div>
@@ -157,36 +192,3 @@ const Map = () => {
 };
 
 export default Map;
-
-const defaultOptions = {
-  strokeOpacity: 0.5,
-  strokeWeight: 2,
-  clickable: false,
-  draggable: false,
-  editable: false,
-  visible: true,
-};
-
-const closeOptions = {
-  ...defaultOptions,
-  zIndex: 3,
-  fillOpacity: 0.05,
-  strokeColor: "#8BC34A",
-  fillColor: "#8BC34A",
-};
-
-const middleOptions = {
-  ...defaultOptions,
-  zIndex: 2,
-  fillOpacity: 0.05,
-  strokeColor: "#FBC02D",
-  fillColor: "#FBC02D",
-};
-
-const farOptions = {
-  ...defaultOptions,
-  zIndex: 1,
-  fillOpacity: 0.05,
-  strokeColor: "#FF5252",
-  fillColor: "#FF5252",
-};

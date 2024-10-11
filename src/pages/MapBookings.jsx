@@ -14,14 +14,14 @@ const MapBookings = () => {
     dispatch(fetchParkingData());
   }, [dispatch]);
 
-  if (loading) {
+  if (loading || !isLoaded) {
     return <Loader />;
   }
 
   if (error) {
     return <ErrorElement />;
   }
-  if (!isLoaded) return <Loader />;
+
   return (
     <div className="flex flex-col h-screen">
       <Map />

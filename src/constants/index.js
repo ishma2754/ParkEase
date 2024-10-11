@@ -171,6 +171,38 @@ export const slides = [
   "https://i.ibb.co/n3c0P5W/pexels-introspectivedsgn-4481037.jpg",
   "https://i.ibb.co/4YkdsL0/pexels-vlad-r-3753632-6099751.jpg",
   "https://i.ibb.co/DGYVN8c/pexels-brett-sayles-1756957-1.jpg",
-  "https://i.ibb.co/ZWNJJY1/pexels-carlnewton-2280148.jpg"
-
+  "https://i.ibb.co/ZWNJJY1/pexels-carlnewton-2280148.jpg",
 ];
+
+export const defaultOptions = {
+  strokeOpacity: 0.5,
+  strokeWeight: 2,
+  clickable: false,
+  draggable: false,
+  editable: false,
+  visible: true,
+};
+
+export const closeOptions = {
+  ...defaultOptions,
+  zIndex: 3,
+  fillOpacity: 0.05,
+  strokeColor: "#8BC34A",
+  fillColor: "#8BC34A",
+};
+
+export const middleOptions = {
+  ...defaultOptions,
+  zIndex: 2,
+  fillOpacity: 0.05,
+  strokeColor: "#FBC02D",
+  fillColor: "#FBC02D",
+};
+
+export const farOptions = {
+  ...defaultOptions,
+  zIndex: 1,
+  fillOpacity: 0.05,
+  strokeColor: "#FF5252",
+  fillColor: "#FF5252",
+};

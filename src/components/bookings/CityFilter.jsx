@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectComplex,
   selectPriceSort,
-  selectDistanceFilter 
+  selectDistanceFilter,
+  resetFilters,
 } from "../../features/bookings/parkingSlice";
 import { control, flag } from "../../assets";
 import { SelectInput, Button } from "../index";
@@ -11,7 +12,7 @@ import { SelectInput, Button } from "../index";
 const CityFilter = ({ userCity }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const { cities, selectedComplex, priceSort, distanceFilter} = useSelector(
+  const { cities, selectedComplex, priceSort, distanceFilter } = useSelector(
     (state) => state.parking
   );
 
@@ -28,17 +29,19 @@ const CityFilter = ({ userCity }) => {
   const handleDistanceFilter = (e) => {
     const distance = e.target.value;
     dispatch(selectDistanceFilter(distance));
-  }
+  };
 
+
+   // Get the complexes for the selected user city
   const complexes = userCity
     ? cities.find((city) => city.name == userCity)?.complex || []
     : [];
 
   const handleReset = () => {
-    dispatch(selectComplex(""));
-    dispatch(selectPriceSort(""));
-    dispatch(selectDistanceFilter(""));
+   dispatch(resetFilters())
   };
+
+  
 
   return (
     <div
@@ -62,7 +65,14 @@ const CityFilter = ({ userCity }) => {
       {open ? (
         <>
           <div className="pt-6 space-y-4">
-            <div className="text-gray-200 font-bold font-poppins">{userCity} <img src={flag} alt="Flag" className="inline-block ml-2 h-7 w-7" /></div>
+            <div className="text-gray-200 font-bold font-poppins">
+              {userCity}{" "}
+              <img
+                src={flag}
+                alt="Flag"
+                className="inline-block ml-2 h-7 w-7"
+              />
+            </div>
             <SelectInput
               name="complex"
               value={selectedComplex || ""}
@@ -91,10 +101,10 @@ const CityFilter = ({ userCity }) => {
           </div>
         </>
       ) : (
-        <div className="flex flex-col  items-center mt-2 cursor-pointer text-md font-bold text-gray-200">
-          <p className="">City</p>
-          <p className="">Complex</p>
-          <p className="">Price</p>
+        <div className="flex flex-col  items-center mt-2 cursor-pointer text-md font-bold font-poppins text-gray-200">
+          <p>City</p>
+          <p>Complex</p>
+          <p>Price</p>
           <p>Distance</p>
         </div>
       )}

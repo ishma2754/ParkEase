@@ -1,15 +1,28 @@
 import { useState } from "react";
 import styles from "../../style";
-import { Button, SelectInput } from "../index";
+import { Button, SelectInput, InputField } from "../index";
 import {
   generateDurationOptions,
   generateHourOptions,
   getDateRange,
 } from "../../utils/index";
+import {
+  toggleAvailableSlots,
+  reSelectedSlot,
+  setBookingDetails,
+} from "../../features/bookings/bookingsSlice";
+import { useDispatch } from "react-redux";
+import useCheckAvailability from "../../hooks/availability/useCheckAvailability";
 
-import InputField from "../InputField";
+const BookingFilters = ({ basements, singlePark }) => {
+  const dispatch = useDispatch();
 
-const BookingFilters = ({ onSubmit, basements }) => {
+  /**
+   * Custom hook to check the availability of parking slots in a selected basement of a park.
+   * This hook manages the state of available slots and gives a method to check availability based on user input.
+   */
+
+  const { checkAvailability } = useCheckAvailability();
   const { min, max } = getDateRange();
 
   const [formData, setFormData] = useState({
@@ -18,15 +31,6 @@ const BookingFilters = ({ onSubmit, basements }) => {
     duration: 1,
     date: min,
   });
-
-  const handleSubmit = () => {
-    onSubmit(
-      formData.basement,
-      formData.hour,
-      formData.duration,
-      formData.date
-    );
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,6 +43,26 @@ const BookingFilters = ({ onSubmit, basements }) => {
   };
 
   const hourOptions = generateHourOptions();
+
+  const handleBooking = () => {
+    const { basement, hour, duration, date } = formData; 
+    if (singlePark) {
+      dispatch(toggleAvailableSlots(true));
+      dispatch(reSelectedSlot());
+      checkAvailability(
+        singlePark.basements,
+        singlePark.id,
+        basement,
+        hour,
+        duration,
+        date
+      );
+      dispatch(setBookingDetails({ basement, hour, duration, date }));
+      setTimeout(() => {
+        dispatch(toggleAvailableSlots(false));
+      }, 1000);
+    }
+  };
 
   return (
     <div
@@ -109,7 +133,7 @@ const BookingFilters = ({ onSubmit, basements }) => {
         onChange={handleChange}
       />
 
-      <Button type="button" onClick={handleSubmit}>
+      <Button type="button" onClick={handleBooking}>
         Submit
       </Button>
     </div>

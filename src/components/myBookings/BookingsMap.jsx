@@ -33,7 +33,7 @@ const BookingsMap = ({ userLocation, selectedPark }) => {
     map.panTo(userLocation);
   }, []);
 
-  const fetchDirections = (park) => {
+  const fetchDirections = (park, userLocation) => {
     if (!userLocation) return;
     const service = new google.maps.DirectionsService();
     service.route(
@@ -82,7 +82,7 @@ const BookingsMap = ({ userLocation, selectedPark }) => {
                 lat: park.latitude,
                 lng: park.longitude,
               }}
-              onClick={() => fetchDirections(park)}
+              onClick={() => fetchDirections(park, userLocation)}
             />
           </>
         )}

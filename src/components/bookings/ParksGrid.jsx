@@ -5,21 +5,24 @@ import {
   setDistance,
   setDuration,
 } from "../../features/bookings/bookingsSlice";
-import { ParkCard, Skeleton } from "../index";
+import { ParkCard } from "../index";
 import styles from "../../style";
 
 const ParksGrid = ({ userCity }) => {
   const dispatch = useDispatch();
-  const { itParks, selectedComplex, priceSort, loading, distanceFilter } =
-    useSelector((state) => state.parking);
+  const { itParks, selectedComplex, priceSort, distanceFilter } = useSelector(
+    (state) => state.parking
+  );
   const { userLocation } = useSelector((state) => state.bookings);
 
   const [parkDistances, setParkDistances] = useState({});
   const [parkDuration, setParkDuration] = useState({});
 
+  // Filter parks based on the user's city
   const parksInCity = userCity
     ? itParks.filter((itPark) => itPark.city == userCity)
     : itParks;
+
   const filteredItParks = selectedComplex
     ? parksInCity.filter((itPark) => itPark.complex == selectedComplex)
     : parksInCity;
@@ -48,6 +51,7 @@ const ParksGrid = ({ userCity }) => {
   });
 
   useEffect(() => {
+    // Fetch directions for each park when parks or user location changes
     if (itParks.length > 0 && userLocation) {
       parksInCity.forEach((park) => {
         fetchDirections(userLocation, park);
@@ -55,6 +59,7 @@ const ParksGrid = ({ userCity }) => {
     }
   }, [itParks, userLocation]);
 
+  // Function to fetch directions from the user's location to a specific park
   const fetchDirections = (userLocation, park) => {
     if (!userLocation) return;
     const service = new google.maps.DirectionsService();
@@ -65,14 +70,15 @@ const ParksGrid = ({ userCity }) => {
         travelMode: google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
+        // Callback function to handle the response from the Directions Service
         if (status === "OK" && result) {
-          const distance = result.routes[0].legs[0].distance;
+          const distance = result.routes[0].legs[0].distance; // Extract the distance as object with text and value from the response
+          const duration = result.routes[0].legs[0].duration.text; // Extract the duration in text format
 
-          const duration = result.routes[0].legs[0].duration.text;
-
+          //to showcase distances and duration on each parking card
           setParkDistances((prev) => ({
             ...prev,
-            [park.id]: distance,
+            [park.id]: distance, // Associate the distance with the park ID
           }));
 
           setParkDuration((prev) => ({
@@ -88,22 +94,20 @@ const ParksGrid = ({ userCity }) => {
 
   const handleParkClick = (itPark) => {
     dispatch(setSinglePark(itPark));
-    const distanceData = parkDistances[itPark.id];
+    const distanceData = parkDistances[itPark.id]; // Get distance data for the selected park
     dispatch(setDistance(distanceData));
     dispatch(setDuration(parkDuration[itPark.id]));
   };
 
   return (
     <div className="p-5 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {loading ? (
-        Array.from({ length: 5 }).map((_, index) => <Skeleton key={index} />)
-      ) : sortedParks.length > 0 ? (
+      {sortedParks.length > 0 ? (
         sortedParks.map((itPark) => (
           <ParkCard
             key={itPark.id}
             park={itPark}
-            distanceData={parkDistances[itPark.id] || "Calculating..."}
-            durationText={parkDuration[itPark.id] || "calculating"}
+            distance={parkDistances[itPark.id]?.text || "Calculating..."}
+            duration={parkDuration[itPark.id] || "calculating"}
             onClick={() => handleParkClick(itPark)}
             containerClassName="booking-card rounded-br-3xl"
             imageClassName="h-40 lg:h-55 md:h-48 park-image z-30"

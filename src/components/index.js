@@ -1,6 +1,6 @@
-export { default as Navbar } from "./landing/Navbar";
+export { default as Navbar } from "./Navbar";
 export { default as Hero } from "./landing/Hero";
-export { default as Header } from "./landing/Header";
+export { default as Header } from "./Header";
 export { default as GetStarted } from "./landing/GetStarted";
 export { default as ErrorElement } from "./ErrorElement";
 export { default as CityFilter } from "./bookings/CityFilter";
@@ -20,3 +20,5 @@ export {default as ParkCard} from "./ParkCard"
 export {default as DisplayPark} from "./mapBookings/DisplayPark"
 export {default as Carousel} from "./singleBooking/Carousel"
 export {default as Skeleton} from "./Skeleton"
+export {default as LoadingSkeleton} from "./LoadingSkeleton"
+export {default as ParkNotFound} from "./singleBooking/ParkNotFound"

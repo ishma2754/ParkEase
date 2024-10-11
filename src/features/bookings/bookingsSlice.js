@@ -6,6 +6,9 @@ const initialState = {
   userLocation: { lat: 12.9716, lng: 77.5946 },
   distance: {},
   duration: "",
+  isAvailableSlots: false,
+  availableSlots: [],
+  allSlotsOccupied: false,
   bookingsDetails: {
     date: "",
     basement: "",
@@ -45,7 +48,15 @@ const bookingsSlice = createSlice({
     reSelectedSlot: (state) => {
       state.selectedSlot = null;
     },
-
+    toggleAvailableSlots: (state, action) => {
+      state.isAvailableSlots = action.payload;
+    },
+    setAvailableSlots: (state, action) => {
+      state.availableSlots = action.payload;
+    },
+    setAllSlotsOccupied: (state, action) => {
+      state.allSlotsOccupied = action.payload;
+    },
     setUserLocation: (state, action) => {
       state.userLocation = action.payload;
     },
@@ -61,7 +72,6 @@ const bookingsSlice = createSlice({
     clearBookings: (state) => {
       return initialState;
     },
-   
   },
 });
 
@@ -73,6 +83,9 @@ export const {
   setUserLocation,
   setDistance,
   setDuration,
+  toggleAvailableSlots,
+  setAllSlotsOccupied,
+  setAvailableSlots,
   setTempBooking,
   clearBookings,
 } = bookingsSlice.actions;

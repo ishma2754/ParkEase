@@ -56,6 +56,11 @@ const parkingSlice = createSlice({
     selectDistanceFilter: (state, action) => {
       state.distanceFilter = action.payload; 
     },
+    resetFilters: (state) => {
+      state.selectedComplex = "";
+      state.priceSort = "";
+      state.distanceFilter = "";
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -75,5 +80,5 @@ const parkingSlice = createSlice({
   },
 });
 
-export const { selectComplex, selectPriceSort, selectDistanceFilter } = parkingSlice.actions;
+export const { selectComplex, selectPriceSort, selectDistanceFilter, resetFilters } = parkingSlice.actions;
 export default parkingSlice.reducer;
