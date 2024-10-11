@@ -7,7 +7,7 @@ const BookingsMap = ({ userLocation, selectedPark }) => {
   const [directions, setDirections] = useState(null);
 
   if (!userLocation || !selectedPark) {
-    return <div className="text-gray-200">Loading map...</div>;
+    return <div className="text-gray-200 bg-primary">Loading map...</div>;
   }
 
   const mapRef = useRef();

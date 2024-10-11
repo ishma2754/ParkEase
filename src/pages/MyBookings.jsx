@@ -13,7 +13,7 @@ const MyBookings = () => {
   const { booked } = useSelector((state) => state.booked);
   const user = useSelector((state) => state.auth.user);
 
-  if (!isLoaded) return <div className="text-gray-200">Loading map...</div>;
+  if (!isLoaded) return <div className="text-gray-200 bg-primary">Loading map...</div>;
 
  
 

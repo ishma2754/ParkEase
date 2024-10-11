@@ -13,8 +13,19 @@ const Confirmation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  
+  const [formData, setFormData] = useState({
+    userName: "",
+    vehicleNumber: "",
+  });
+  const [errors, setErrors] = useState({});
+
   const user  = useSelector((state) => state.auth.user) || null;
 
+
+  //two slices bookings and booked
+  //booked slice have data when confirmed booking
+  //getting all the data from bookings slice
   const {
     singlePark,
     userLocation,
@@ -23,17 +34,15 @@ const Confirmation = () => {
     bookingsDetails,
     selectedSlot,
   } = useSelector((state) => state.bookings);
-  const [formData, setFormData] = useState({
-    userName: "",
-    vehicleNumber: "",
-  });
-  const [errors, setErrors] = useState({});
+
+
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
   }, []);
+
 
   const validateForm = () => {
     const newErrors = {};
@@ -66,6 +75,7 @@ const Confirmation = () => {
       dispatch(clearBookings());
       navigate("/mybookings");
     } else {
+      //temp bookings to add data to booked slice when login
       dispatch(setTempBooking(bookingData));
       navigate("/login");
     }

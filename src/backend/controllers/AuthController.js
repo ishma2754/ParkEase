@@ -27,6 +27,8 @@ export const signupHandler = function (schema, request) {
       name,
     };
     const createdUser = schema.users.create(newUser);
+
+    //Creating a JWT token with the user's ID and email
     const encodedToken = sign(
       { _id, email },
       import.meta.env.VITE_JWT_SECRET
