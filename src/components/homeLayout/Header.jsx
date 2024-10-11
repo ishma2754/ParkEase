@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../style";
+import styles from "../../style";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../features/authentication/authUserSlice";
+import { logout } from "../../features/authentication/authUserSlice";
 
 const Header = () => {
   const dispatch = useDispatch();

@@ -1,59 +1,89 @@
-import {
-  HomeLayout,
-  Landing,
-  ErrorPage,
-  Bookings,
-  MyBookings,
-  SingleBooking,
-  About,
-  Register,
-  Login,
-  MapBookings,
-  Confirmation,
-} from "./pages";
-import { ErrorElement } from "./components";
+import { Suspense, lazy } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./routes/PrivateRoute";
+import ErrorPage from "./pages/ErrorPage"
+import { ErrorElement, Loader } from "./components";
+
+const HomeLayout = lazy(() => import("./pages/HomeLayout"));
+const Landing = lazy(() => import("./pages/Landing"));
+const About = lazy(() => import("./pages/About"));
+const Bookings = lazy(() => import("./pages/Bookings"));
+const MyBookings = lazy(() => import("./pages/MyBookings"));
+const SingleBooking = lazy(() => import("./pages/SingleBooking"));
+const MapBookings = lazy(() => import("./pages/MapBookings"));
+const Confirmation = lazy(() => import("./pages/Confirmation"));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomeLayout />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <HomeLayout />
+      </Suspense>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <Landing />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Landing />
+          </Suspense>
+        ),
       },
       {
         path: "about",
-        element: <About />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <About />
+          </Suspense>
+        ),
       },
       {
         path: "mapbookings",
-        element: <MapBookings />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <MapBookings />
+          </Suspense>
+        ),
         errorElement: <ErrorElement />,
       },
       {
         path: "bookings",
-        element: <Bookings />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Bookings />
+          </Suspense>
+        ),
         errorElement: <ErrorElement />,
       },
       {
         path: "bookings/:id",
-        element: <SingleBooking />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <SingleBooking />
+          </Suspense>
+        ),
         errorElement: <ErrorElement />,
       },
       {
         path: "bookings/:id/confirm",
-        element: <Confirmation />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Confirmation />
+          </Suspense>
+        ),
         errorElement: <ErrorElement />,
       },
       {
         path: "mybookings",
         element: (
           <PrivateRoute>
-            <MyBookings />
+            <Suspense fallback={<Loader />}>
+              <MyBookings />
+            </Suspense>
           </PrivateRoute>
         ),
       },
@@ -61,12 +91,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-
-    element: <Login />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <Login />
+      </Suspense>
+    ),
   },
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <Suspense fallback={<Loader />}>
+        <Register />
+      </Suspense>
+    ),
   },
 ]);
 
