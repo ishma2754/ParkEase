@@ -20,11 +20,11 @@ const Header = () => {
         <div className="flex gap-x-6">
           {user ? (
             <div className="flex gap-x-2 sm:gap-x-8 items-center">
-              <p className="text-md  hover:text-blue-400 transition-colors text-gray-100 cursor-default">
+              <p className="text-sm  hover:text-blue-400 transition-colors text-gray-100 cursor-default">
                 Hello, {user.name}
               </p>
               <button
-                className="text-md  hover:text-blue-400 transition-colors text-gray-100"
+                className="text-sm  hover:text-blue-400 transition-colors text-gray-100"
                 onClick={handleLogout}
               >
                 Logout
@@ -33,7 +33,7 @@ const Header = () => {
           ) : (
             <>
               <Link
-                className="text-md hover:text-blue-400 transition-colors text-gray-100"
+                className="text-sm hover:text-blue-400 transition-colors text-gray-100"
                 to="/login"
               >
                 Sign in
@@ -41,7 +41,7 @@ const Header = () => {
 
               <Link
                 to="/register"
-                className="text-md hover:text-blue-400 transition-colors text-gray-100"
+                className="text-sm hover:text-blue-400 transition-colors text-gray-100"
               >
                 Create Account
               </Link>
