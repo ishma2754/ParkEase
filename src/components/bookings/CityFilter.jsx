@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectComplex,
@@ -31,17 +31,14 @@ const CityFilter = ({ userCity }) => {
     dispatch(selectDistanceFilter(distance));
   };
 
-
-   // Get the complexes for the selected user city
+  // Get the complexes for the selected user city
   const complexes = userCity
     ? cities.find((city) => city.name == userCity)?.complex || []
     : [];
 
   const handleReset = () => {
-   dispatch(resetFilters())
+    dispatch(resetFilters());
   };
-
-  
 
   return (
     <div
@@ -73,14 +70,6 @@ const CityFilter = ({ userCity }) => {
                 className="inline-block ml-2 h-7 w-7"
               />
             </div>
-            <SelectInput
-              name="complex"
-              value={selectedComplex || ""}
-              onChange={handleComplexChange}
-              className="bg-gray-800 text-gray-100 font-medium"
-              options={complexes}
-              disabled={!userCity}
-            />
 
             <SelectInput
               name="price"
@@ -98,14 +87,22 @@ const CityFilter = ({ userCity }) => {
               options={["0-5 km", "5-10 km", "> 10 km"]}
               disabled={!userCity}
             />
+            <SelectInput
+              name="complex"
+              value={selectedComplex || ""}
+              onChange={handleComplexChange}
+              className="bg-gray-800 text-gray-100 font-medium"
+              options={complexes}
+              disabled={!userCity}
+            />
           </div>
         </>
       ) : (
         <div className="flex flex-col  items-center mt-2 cursor-pointer text-md font-bold font-poppins text-gray-200">
           <p>City</p>
-          <p>Complex</p>
           <p>Price</p>
           <p>Distance</p>
+          <p>Complex</p>
         </div>
       )}
       <Button
