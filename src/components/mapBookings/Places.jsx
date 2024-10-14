@@ -99,7 +99,7 @@ export default function Places({ setUserLocation }) {
         disabled={!ready}
         onKeyDown={handleKeyDown}
         className="w-full p-2 font-semibold text-gray-100 rounded  bg-gray-800 border border-gray-200"
-        placeholder="Select your location"
+        placeholder="Enter your location"
       />
       {isDropdownVisible && status === "OK" && (
         <ul className="absolute z-50 w-full bg-gray-800 scroll-smooth rounded shadow-lg font-poppins max-h-60  overflow-y-auto">
