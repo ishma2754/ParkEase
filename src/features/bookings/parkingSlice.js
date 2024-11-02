@@ -1,24 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-
 const initialState = {
   cities: [],
   itParks: [],
   selectedComplex: "",
   priceSort: "",
-  distanceFilter: '',
+  distanceFilter: "",
   loading: false,
   error: null,
 };
 
-
-
 export const fetchParkingData = createAsyncThunk(
   "parkingData/fetchParkingData",
-  async (_, {rejectWithValue}) => {
+  async (_, { rejectWithValue }) => {
     const urls = [
-      "https://mocki.io/v1/1cb38734-a6b3-48b6-aa32-ffd6a756a64d",
-      "https://mocki.io/v1/3f66c31a-49ef-4b4e-b4f5-043d90cdd466",
+      "https://0f243156bc184e7183892d910ffa4125.api.mockbin.io/",
+      "https://68cf5a8faca940f0a9e524993c95b436.api.mockbin.io/",
     ];
 
     const fetchData = async (url) => {
@@ -41,8 +38,6 @@ export const fetchParkingData = createAsyncThunk(
   }
 );
 
-
-
 const parkingSlice = createSlice({
   name: "parking",
   initialState,
@@ -54,7 +49,7 @@ const parkingSlice = createSlice({
       state.priceSort = action.payload;
     },
     selectDistanceFilter: (state, action) => {
-      state.distanceFilter = action.payload; 
+      state.distanceFilter = action.payload;
     },
     resetFilters: (state) => {
       state.selectedComplex = "";
@@ -80,5 +75,10 @@ const parkingSlice = createSlice({
   },
 });
 
-export const { selectComplex, selectPriceSort, selectDistanceFilter, resetFilters } = parkingSlice.actions;
+export const {
+  selectComplex,
+  selectPriceSort,
+  selectDistanceFilter,
+  resetFilters,
+} = parkingSlice.actions;
 export default parkingSlice.reducer;
