@@ -14,8 +14,8 @@ export const fetchParkingData = createAsyncThunk(
   "parkingData/fetchParkingData",
   async (_, { rejectWithValue }) => {
     const urls = [
-      "https://mocki.io/v1/886281d3-b3e3-4ed2-a237-0735102eca6c",
-      "https://mocki.io/v1/9feb7f0f-efed-47b1-8f38-85729023b59a",
+      "https://mocki.io/v1/c2f01ed2-3e2a-4f58-b3eb-2fe1252bd4d5",
+      "https://mocki.io/v1/b5113455-47c9-4086-97d8-98e5411f63d9",
     ];
 
     const fetchData = async (url) => {
